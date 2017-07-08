@@ -24,7 +24,7 @@ namespace Leopard.Core
 
         private static void InitUser(CoreDbContext dc)
         {
-            if (dc.Bundles.Count() > 0) return;
+            if (dc.Bundles.Count(x => x.EntityName == "User Profile") > 0) return;
 
             BundleEntity bundle = dc.Bundles.Add(new BundleEntity { Name = "User Profile", EntityName = "User", Status = EntityStatus.Active }).Entity;
             dc.Bundles.Add(bundle);
@@ -45,6 +45,7 @@ namespace Leopard.Core
                 accountModel.FirstName = "Yaya";
                 accountModel.Email = "info@yaya.ai";
                 accountModel.Password = "Yayabot123";
+                accountModel.Description = "丫丫人工智能聊天机器人";
                 dc.Users.Add(accountModel);
             }
 
@@ -65,6 +66,8 @@ namespace Leopard.Core
                 accountModel.Description = "鹰潭东瑞实业有限公司";
                 dc.Users.Add(accountModel);
             }
+
+            dc.SaveChanges();
         }
 
     }
