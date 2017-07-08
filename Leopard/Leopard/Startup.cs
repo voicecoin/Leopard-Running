@@ -66,6 +66,10 @@ namespace Leopard
                     template: "api/{controller=Home}/{action=Index}/{id?}");
             });
 
+            // for wwwroot
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+            
             // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/static-files
             app.UseStaticFiles(new StaticFileOptions()
             {
