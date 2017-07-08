@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,11 @@ namespace Leopard.Core
     [Authorize]
     [Produces("application/json")]
     [Route("api/[controller]")]
+    [ServiceFilter(typeof(ApiExceptionFilter))]
     public class CoreController : ControllerBase
     {
+        public static IConfigurationRoot Configuration { get; set; }
+
         protected readonly CoreDbContext dc;
 
         public CoreController()

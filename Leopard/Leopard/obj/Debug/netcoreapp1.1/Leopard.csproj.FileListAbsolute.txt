@@ -1,9 +1,9 @@
 D:\Projects\Leopard-Running\Leopard\Leopard\bin\Debug\netcoreapp1.1\Leopard.deps.json
 D:\Projects\Leopard-Running\Leopard\Leopard\bin\Debug\netcoreapp1.1\Leopard.runtimeconfig.json
 D:\Projects\Leopard-Running\Leopard\Leopard\bin\Debug\netcoreapp1.1\Leopard.runtimeconfig.dev.json
-D:\Projects\Leopard-Running\Leopard\Leopard\obj\Debug\netcoreapp1.1\Leopard.AssemblyInfo.cs
-D:\Projects\Leopard-Running\Leopard\Leopard\obj\Debug\netcoreapp1.1\Leopard.csprojResolveAssemblyReference.cache
 D:\Projects\Leopard-Running\Leopard\Leopard\bin\Debug\netcoreapp1.1\Leopard.dll
 D:\Projects\Leopard-Running\Leopard\Leopard\bin\Debug\netcoreapp1.1\Leopard.pdb
+D:\Projects\Leopard-Running\Leopard\Leopard\obj\Debug\netcoreapp1.1\Leopard.AssemblyInfo.cs
 D:\Projects\Leopard-Running\Leopard\Leopard\obj\Debug\netcoreapp1.1\Leopard.dll
 D:\Projects\Leopard-Running\Leopard\Leopard\obj\Debug\netcoreapp1.1\Leopard.pdb
+D:\Projects\Leopard-Running\Leopard\Leopard\obj\Debug\netcoreapp1.1\Leopard.csprojResolveAssemblyReference.cache

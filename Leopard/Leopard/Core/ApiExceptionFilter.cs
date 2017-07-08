@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Leopard.Utility;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -24,6 +25,8 @@ namespace Leopard.Core
 
         public override void OnException(ExceptionContext context)
         {
+            context.Exception.Message.Log(MyLogLevel.ERROR);
+
             ApiError apiError = null;
             if (context.Exception is ApiException)
             {

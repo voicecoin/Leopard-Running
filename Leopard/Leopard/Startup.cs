@@ -30,6 +30,8 @@ namespace Leopard
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
+
+            CoreController.Configuration = Configuration;
         }
 
         public IConfigurationRoot Configuration { get; }
