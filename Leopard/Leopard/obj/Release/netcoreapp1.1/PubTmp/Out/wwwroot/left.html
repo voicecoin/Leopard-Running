@@ -1,0 +1,215 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<script>
+function menuEvent(){
+	$("#ui_a1").mouseover(function(){
+        $("#Img1").attr("src","images/icon_01_b.png");
+         });
+        $("#ui_a1").mouseout(function(){
+        $("#Img1").attr("src","images/icon_01_a.png");
+        }); 
+        $("#ui_a2").mouseover(function(){
+        $("#Img2").attr("src","images/icon_02_b.png");
+         });
+        $("#ui_a2").mouseout(function(){
+        $("#Img2").attr("src","images/icon_02_a.png");
+        }); 
+        $("#ui_a3").mouseover(function(){
+        $("#Img3").attr("src","images/icon_03_b.png");
+         });
+        $("#ui_a3").mouseout(function(){
+        $("#Img3").attr("src","images/icon_03_a.png");
+        }); 
+        $("#ui_a4").mouseover(function(){
+        $("#Img4").attr("src","images/icon_04_b.png");
+         });
+        $("#ui_a4").mouseout(function(){
+        $("#Img4").attr("src","images/icon_04_a.png");
+        }); 
+        $("#ui_a5").mouseover(function(){
+        $("#Img5").attr("src","images/icon_05_b.png");
+         });
+        $("#ui_a5").mouseout(function(){
+        $("#Img5").attr("src","images/icon_05_a.png");
+        }); 
+        $("#ui_a6").mouseover(function(){
+        $("#Img6").attr("src","images/icon_06_b.png");
+         });
+        $("#ui_a6").mouseout(function(){
+        $("#Img6").attr("src","images/icon_06_a.png");
+        }); 
+        $("#ui_a7").mouseover(function(){
+        $("#Img7").attr("src","images/icon_07_b.png");
+         });
+        $("#ui_a7").mouseout(function(){
+        $("#Img7").attr("src","images/icon_07_a.png");
+        }); 
+        $("#ui_a8").mouseover(function(){
+        $("#Img8").attr("src","images/icon_08_b.png");
+         });
+        $("#ui_a8").mouseout(function(){
+        $("#Img8").attr("src","images/icon_08_a.png");
+        }); 
+         $("#ui_a9").mouseover(function(){
+        $("#Img9").attr("src","images/icon_09_b.png");
+         });
+        $("#ui_a9").mouseout(function(){
+        $("#Img9").attr("src","images/icon_09_a.png");
+        }); 
+        $("#ui_a").mouseover(function(){
+        $("#ui_Image5").attr("src","images/ui_09_b.jpg");
+        });
+        $("#ui_a").mouseout(function(){
+        $("#ui_Image5").attr("src","images/ui_09.jpg");
+       });
+}
+menuEvent();
+
+
+function loadBots(){
+     $.post('https://api.yaya.ai/api/Agent/List', null,
+     function(json) {
+       //console.log(json);
+       bots = json;
+       var robts = '';
+       for (var i = 0; i < json.length; i++) {
+         var robt = json[i];
+         //robt.id='f3123461-cdeb-4f0f-bdea-8b2c984115e8';
+         robts += '<li><a href="javascript:void(0);" onclick="resetAgent(\''+robt.id+'\')">' + robt.name + '</a></li>';
+       }
+       $("#botlistmenu").html(robts);
+     });
+}
+
+function goIntent(){
+
+	  window.location.href='intent.html?agentId='+agentId;
+}
+
+function goEntity(){
+
+	  window.location.href='entities.html?agentId='+agentId;
+}
+
+function goDomains(){
+	window.location.href='domains.html?agentId='+agentId;
+}
+
+function goIntegrations(){
+	window.location.href='integrations.html?agentId='+agentId;
+}
+
+</script>
+
+	<div class="ui_side_top">
+
+		<a href="index.html"><img src="images/logo.png" /></a>
+
+	</div>
+	<div class="ui_side_btm">
+		<div class="ui_side_list">
+			<div class="ui_side_list_li"  id="ui_a1">
+				<div class="ui_side_list_li_left" >
+					<img id="Img1" src="images/icon_01_a.png" />
+				</div>
+				<div class="ui_side_list_li_right">
+					 <div class="dropdown">
+					  <button class="ui_btn" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+					    我的机器人
+					    <span class="caret"></span>
+					  </button>
+					  <ul id="botlistmenu" class="dropdown-menu" aria-labelledby="dropdownMenu1">
+					    <li><a href="#">我的机器人1</a></li>
+					    <li><a href="#">我的机器人2</a></li>
+					    <li><a href="#">我的机器人3</a></li>
+					  </ul>
+					</div>
+					<!--<a href=""><span class="ui_side_list_li_right_span">我的机器人<span class="caret"></span></span></a>-->
+					 <div class="ui_icon_right"><a href="setname.html"><img id="Img1" src="images/icon_08_a.png" /></a></div>
+				</div>
+			</div>
+		</div>
+		<div class="ui_side_list">
+			<div class="ui_side_list_li" id="ui_a2">
+				<div class="ui_side_list_li_left">
+					<img id="Img2"  src="images/icon_02_a.png" />
+				</div>
+				<div class="ui_side_list_li_right" >
+					<a href="javascript:void(0);" onclick="goIntent();"><span class="ui_side_list_li_right_span">使用场景<span>&nbsp; &nbsp;  +</span></span></a>
+				</div>
+			</div>
+		</div>
+		<div class="ui_side_list">
+			<div class="ui_side_list_li"  id="ui_a3">
+				<div class="ui_side_list_li_left">
+					<img id="Img3"  src="images/icon_03_a.png" />
+				</div>
+				<div class="ui_side_list_li_right">
+					<a href="javascript:void(0);"  onclick="goEntity();"><span class="ui_side_list_li_right_span">用户词库<span>&nbsp; &nbsp; +</span></span></a>
+				</div>
+			</div>
+		</div>
+		<div class="ui_side_list">
+			<div class="ui_side_list_li"  id="ui_a4">
+				<div class="ui_side_list_li_left">
+					<img  id="Img4" src="images/icon_04_a.png" />
+				</div>
+				<div class="ui_side_list_li_right">
+					<a href="javascript:void(0);"  onclick="goDomains();"><span class="ui_side_list_li_right_span">扩展组件</span></a>
+				</div>
+			</div>
+		</div>
+		<div class="ui_side_list">
+			<div class="ui_side_list_li" id="ui_a5">
+				<div class="ui_side_list_li_left">
+					<img id="Img5"  src="images/icon_05_a.png" />
+				</div>
+				<div class="ui_side_list_li_right">
+					<a href="javascript:void(0);"  onclick="goIntegrations();"><span class="ui_side_list_li_right_span">系统集成</span></a>
+				</div>
+			</div>
+		</div>
+		<div class="ui_list1">
+		<div class="ui_side_list">
+			<div class="ui_side_list_li"  id="ui_a6">
+				<div class="ui_side_list_li_left">
+					<img  id="Img6" src="images/icon_06_a.png" />
+				</div>
+				<div class="ui_side_list_li_right">
+					<a href=""><span class="ui_side_list_li_right_span">开发文档</span></a>
+				</div>
+			</div>
+		</div>
+		<div class="ui_side_list">
+			<div class="ui_side_list_li" id="ui_a7">
+				<div class="ui_side_list_li_left">
+					<img id="Img7" src="images/icon_07_a.png" />
+				</div>
+				<div class="ui_side_list_li_right">
+					<a href="http://www.bots123.com/"><span class="ui_side_list_li_right_span">开发论坛</span></a>
+				</div>
+			</div>
+		</div>
+                          </div>
+                          <div class="ui_list1">
+		<div class="ui_side_list">
+			<div class="ui_side_list_li" id="ui_a8">
+				<div class="ui_side_list_li_left">
+					<img id="Img8" src="images/icon_08_a.png" />
+				</div>
+				<div class="ui_side_list_li_right">
+					<a href=""><span class="ui_side_list_li_right_span">账号设置</span></a>
+				</div>
+			</div>
+		</div>
+		<div class="ui_side_list">
+			<div class="ui_side_list_li" id="ui_a9">
+				<div class="ui_side_list_li_left">
+					<img id="Img9" src="images/icon_09_a.png" />
+				</div>
+				<div class="ui_side_list_li_right">
+					<a href="https://api.yaya.ai/api/Account/Logout"><span class="ui_side_list_li_right_span">退出</span></a>
+				</div>
+			</div>
+		</div>
+                          </div>
+	</div>

@@ -1,0 +1,462 @@
+﻿<!DOCTYPE html>
+<html mip>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+  <meta name="description" content="最简易的聊天机器人设计及协作平台，十分钟轻松制作专属聊天机器人！集成最新机器学习，神经网络，知识图谱和自然语言处理技术。">
+  <title>丫丫聊天机器人定制平台</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css" >
+  <link rel="stylesheet" href="css/jquery.fullPage.css">
+  <link rel="stylesheet" type="text/css" href="css/robot.css">
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <script src="js/jquery-3.2.0.min.js"></script>
+  <script src="js/jQuery.fontFlex.js"></script>
+  <script src="js/jquery-ui.min.js"></script>
+  <script src="js/jquery.fullPage.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+
+ <style>
+.col_img{margin-left: 30%;}
+ #h2{padding:0 10px;font-size:24px;font-weight: 400;}
+ #h3{padding:0 10px;font-size:22px;font-weight: 400;}
+@media screen and (max-device-width: 480px){
+  body{
+    -webkit-text-size-adjust: none;
+  }
+}
+
+  @media screen and (max-width: 750px) {
+  	.thumbnail{width:100%;float:left;margin-top:15px;}
+    .col_img{float: left;width:40%;margin-left: 0%;}
+    .col_img img{height: 30vh;}
+    #colfont{width:100%;float:left;}
+    #colfont h3{font-size: 14px;font-weight:700;}
+    #colfont p{font-size: 12px;}
+    .user,#user_1{padding-top:0px;}
+    .headline h4{font-size:16px;padding:0 10px;}
+    .headline #h2{padding:0 10px;font-size: 16px;font-weight: 400;}
+    .headline #h3{padding:0 10px;font-size: 14px;font-weight: 400;}
+    .fonts h2{font-size:20px;}
+    .fonts h4{font-size:16px;}
+    .zc_box{margin:20px auto;}
+    .user_1 {padding-top: 0px;}
+	.navbar {margin-bottom: 0px;}
+}
+
+  </style>
+<script>
+$(function(){
+	
+	
+	$("#input1").focus(function(){
+	    $("#Image1").attr("src","images/zhuce_01_b.png");
+	    $("#zc_box1").css("border-color","#1698F3");
+	  });
+	  $("#input1").blur(function(){
+	    $("#Image1").attr("src","images/zhuce_01.png");
+	    $("#zc_box1").css("border-color","");
+	  });
+	  $("#input2").focus(function(){
+	    $("#Image2").attr("src","images/zhuce_02_b.png");
+	    $("#zc_box2").css("border-color","#1698F3");
+	  });
+	  $("#input2").blur(function(){
+	    $("#zc_box2").css("border-color","");
+	    $("#Image2").attr("src","images/zhuce_02.png");
+	  });
+	  $("#input3").focus(function(){
+	    $("#Image3").attr("src","images/zhuce_03_b.png");
+	    $("#zc_box3").css("border-color","#1698F3");
+	  });
+	  $("#input3").blur(function(){
+	    $("#Image3").attr("src","images/zhuce_03.png");
+	    $("#zc_box3").css("border-color","");
+	  });
+	  $("#code_input").focus(function(){
+	    $("#Image4").attr("src","images/zhuce_04_b.png");
+	    $("#zc_box4").css("border-color","#1698F3");
+	  });
+	  $("#code_input").blur(function(){
+	    $("#Image4").attr("src","images/zhuce_04.png");
+	    $("#zc_box4").css("border-color","");
+	  });
+
+
+	var wait=60;
+	function time(o) {
+			if (wait == 0) {
+				o.removeAttribute("disabled");			
+				o.value="免费获取验证码";
+				wait = 60;
+			} else {
+				o.setAttribute("disabled", true);
+				o.value="重新发送(" + wait + ")";
+				wait--;
+				setTimeout(function() {
+					time(o)
+				},
+				1000)
+			}
+		}
+	document.getElementById("btn").onclick=function(){time(this);};
+
+
+	 $("#nav_list").mouseleave(function(){
+		$("#nav_list").hide();
+	  });
+	
+	$('#fullpage').fullpage({
+		verticalCentered: false,
+		anchors: ['page1', 'page2','page3','page4'],
+		navigation: true,
+		navigationTooltips: ['', '', '','']
+	});
+
+	$("#login").on('click',function(){
+        window.location.href ="enroll.html";
+	})
+
+
+	/*$(".usershow").on("mouseenter",function(){
+	    //console.log("mouseenter");
+		$(this).removeClass("user_1");
+		$(this).addClass("user_2");
+	});
+
+	$(".usershow").on("mouseleave",function(){
+	    //console.log("mouseenter");
+		$(this).removeClass("user_2");
+		$(this).addClass("user_1");
+	});*/
+
+  // 所有元素
+  //$('body').fontFlex(14, 20, 70);
+  // H1元素
+   $('h2').fontFlex(20, 36, 70);
+   $('h3').fontFlex(18, 30, 60); 
+});
+
+
+
+
+
+</script>
+
+
+</head>
+
+<body>
+<div id="fullpage">
+<div class="section">
+<div class="warp">
+<div class="navbar navbar-default" role="navigation">
+  <div class="navbar-header">
+     　<!-- .navbar-toggle样式用于toggle收缩的内容，即nav-collapse collapse样式所在元素 -->
+       <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+         <span class="sr-only">Toggle Navigation</span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+       </button>
+      <div class="navbar-brand" id="navbar">
+	       <div class="navbar-brand_left">
+	       	<a href="#"><img src="images/logo.png" /></a>
+	       </div>
+	       <div class="navbar-brand_right">
+	       	<a href="##" class="navbar-brand"><span class="ch">中文</span></a><span class="lang">/</span><a href="##" class="navbar-brand"><span>EN</span></a>
+	       </div>
+       </div>
+  </div>
+  <!-- 屏幕宽度小于768px时，div.navbar-responsive-collapse容器里的内容都会隐藏，显示icon-bar图标，当点击icon-bar图标时，再展开。屏幕大于768px时，默认显示。 -->
+  <div id="nav_list" class="collapse navbar-collapse navbar-responsive-collapse" >
+    	<ul class="nav navbar-nav">
+      		<li class="nav_li"><a href="##">首页</a></li>
+            <li><a href="#page2">团队</a></li>
+      		<li><a href="http://forum.yaya.ai">讨论区</a></li>
+            <li><a href="##">接口文档</a></li>
+      		<li><a href="login.html">登入</a></li>
+      		<!--<li  class="active"><a href="enroll.html">免费注册</a></li>-->
+	 </ul>
+  </div>
+</div>
+
+<section id="section1" style="height:500px;">
+<div class="content">
+	<img class="img_lg"  src="images/login.png" style="width:170px;height:170px;">
+	<div class="headline">
+		<p id="h2">最简易的聊天机器人设计及协作平台</p>
+		<p id="h3">十分钟轻松制作我的聊天机器人！</p>
+		<h4>集成深度神经网络、知识图谱、和自然语言处理的超强技术</h4>
+	</div>
+		<div class="headactions">
+		<a class="btn btn-lg btn-primary" href="#page3" id="start">立即体验</a>
+		<!-- %a.btn.btn-lg.btn-default{href: '/downloads'}= t('.homepage_sec1_download') -->
+	</div>
+</div>
+</section>
+</div>
+</div>
+
+
+<div class="section" style="background-color:#1698F3;">
+
+
+    <div class="warp">
+<div class="navbar navbar-default" role="navigation">
+  <div class="navbar-header">
+     　<!-- .navbar-toggle样式用于toggle收缩的内容，即nav-collapse collapse样式所在元素 -->
+       <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+         <span class="sr-only">Toggle Navigation</span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+       </button>
+       <!-- 确保无论是宽屏还是窄屏，navbar-brand都显示 -->
+       <div class="navbar-brand" id="navbar">
+	       <div class="navbar-brand_left">
+	       	<img  src="images/logo.png" />
+	       </div>
+	       <div class="navbar-brand_right">
+	       	<a href="##" class="navbar-brand"><span class="ch">中文</span></a><span class="lang">/</span><a href="##" class="navbar-brand"><span>EN</span></a>
+	       </div>
+       </div>
+  </div>
+  <!-- 屏幕宽度小于768px时，div.navbar-responsive-collapse容器里的内容都会隐藏，显示icon-bar图标，当点击icon-bar图标时，再展开。屏幕大于768px时，默认显示。 -->
+  <div class="collapse navbar-collapse navbar-responsive-collapse" id="nav_list">
+    	<ul class="nav navbar-nav">
+      		<li class="nav_li"><a href="##">功能导览</a></li>
+      		<li><a href="##">接口文档</a></li>
+      		<li><a href="##">入门教程</a></li>
+      		<li><a href="##">浏览</a></li>
+      		<li><a href="##">讨论区</a></li>
+      		<li><a href="login.html">登入</a></li>
+      		<!--<li  class="active"><a href="##">免费注册</a></li>-->
+	 </ul>
+  </div>
+</div>
+
+
+
+
+<section id="sectiong2" style="overflow:hidden;">
+<div class="user">
+<div class="container-fluid">
+<div class="row">
+
+  <div class="col-sm-4 col-md-4 col-lg-4 user_1 usershow">
+    <div class="thumbnail">
+      
+      <div class="caption" id="colfont">
+      <img class="col_img" src="images/guanqingfeng_360.png" alt="..." />
+        <h3>关庆锋教授</h3>
+        <p>深度学习顾问。2008年美国加利福尼亚大学圣芭芭拉分校GIS专业博士 ，博士后研究员（美国科学院国家研究委员会博士后研究基金） ，美国内布拉斯加大学林肯分校，自然资源学院和先进土地管理信息技术中心助理教授。2012年入选中国“青年千人计划”。美国AAG信息基础设施组高性能计算委员会主席。</p>
+      </div>
+    </div>
+  </div>
+    <div class="col-sm-4 col-md-4 col-lg-4 user_1 usershow">
+    <div class="thumbnail">
+     
+      <div class="caption" id="colfont">
+       <img class="col_img" src="images/shenwei_360.png" alt="..." />
+        <h3>沈薇CEO</h3>
+        <p>原英雄互娱合伙创始人副总裁，2004年进入游戏行业，为第九城市上市前员工，任职：发行部、公共事务中心、总裁办总监，参与发型《魔兽世界》、《卓越之剑》、《奇迹世界》等大作，后就职巨人网络，担任公共事务中心总监。进入互联网前有丰富的媒体经验，曾担任浙江广电主持人，《上海壹周》责编。</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4 col-md-4 col-lg-4 user_1 usershow">
+    <div class="thumbnail">
+
+      <div class="caption" id="colfont">
+            <img class="col_img" src="images/bingliu_360.png" alt="..." />
+        <h3>刘冰教授</h3>
+        <p>自然语言处理顾问。刘冰教授，英国爱丁堡大学人工智能专业博士，目前担任伊利诺伊大学计算机科学系教授，在情感识别、观点挖掘、Lifelong机器学习、Machine Learning和NLP领域著述颇丰，同时担任ACM, IEEE and SIAM大数据研讨会主席。</p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+
+<div class="section" >
+    <div class="warp">
+<div class="navbar navbar-default" role="navigation">
+  <div class="navbar-header">
+     　<!-- .navbar-toggle样式用于toggle收缩的内容，即nav-collapse collapse样式所在元素 -->
+       <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+         <span class="sr-only">Toggle Navigation</span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+       </button>
+       <!-- 确保无论是宽屏还是窄屏，navbar-brand都显示 -->
+       <div class="navbar-brand" id="navbar">
+	       <div class="navbar-brand_left">
+	       	<img  src="images/logo.png" />
+	       </div>
+	       <div class="navbar-brand_right">
+	       	<a href="##" class="navbar-brand"><span class="ch">中文</span></a><span class="lang">/</span><a href="##" class="navbar-brand"><span>EN</span></a>
+	       </div>
+       </div>
+  </div>
+  <!-- 屏幕宽度小于768px时，div.navbar-responsive-collapse容器里的内容都会隐藏，显示icon-bar图标，当点击icon-bar图标时，再展开。屏幕大于768px时，默认显示。 -->
+  <div class="collapse navbar-collapse navbar-responsive-collapse" id="nav_list">
+    	<ul class="nav navbar-nav">
+      		<li class="nav_li"><a href="##">功能导览</a></li>
+      		<li><a href="##">接口文档</a></li>
+      		<li><a href="##">入门教程</a></li>
+      		<li><a href="##">浏览</a></li>
+      		<li><a href="##">讨论区</a></li>
+      		<li><a href="login.html">登入</a></li>
+      		<!--<li  class="active"><a href="##">免费注册</a></li>-->
+	 </ul>
+  </div>
+</div>
+<section id="sectiong2" style="height:430px;">
+<div class="content">
+	<div class="fonts">
+		<h2>现在就立即使用，进入交互新时代</h2>
+		<h4>一只最聪明的小鸭机器人，正等待破壳而出！！</h4>
+	</div>
+	<div class="zc_box">
+		<div class="zc_box_1" id="zc_box1">
+			<div class="zc_box_logo">
+				<img id="Image1" src="images/zhuce_01.png" />
+			</div>
+			<input id="input1" class='input-lg form-input name' name="" placeholder='用户名'>
+		</div>
+		<div class="zc_box_1" id="zc_box2">
+			<div class="zc_box_logo">
+				<img id="Image2" src="images/zhuce_02.png" />
+			</div>
+			<input id="input2" class='input-lg form-input name' name="" placeholder='手机号'>
+		</div>
+		<div class="zc_box_1" id="zc_box3">
+			<div class="zc_box_logo">
+				<img id="Image3" src="images/zhuce_03.png" />
+			</div>
+			<input id="input3" class='input-lg form-input name' name="" placeholder='密码'>
+		</div>
+		<div class="zc_box_1" id="zc_box4">
+			<div class="zc_box_logo">
+				<img id="Image4" src="images/zhuce_04.png" />
+			</div>
+			<input id="code_input" class='input-lg form-input name' name="" placeholder='验证码'>
+			<div class="code"><input type="button" id="btn" value="获取验证码" /></div>
+		</div>
+	</div>
+	<button type="button" id="login" class="btn btn-primary btn-lg btn-block">立即体验</button>
+	<span class="btn_comt">点”立即体验“按钮，视为您接受<a href="">使用协议</a><span>
+				
+</div>
+
+</section>
+
+
+</div>
+</div>
+
+
+<div class="section"  style="background-color:#E4E1E1;">
+    <div class="warp">
+<div class="navbar navbar-default" role="navigation">
+  <div class="navbar-header">
+     　<!-- .navbar-toggle样式用于toggle收缩的内容，即nav-collapse collapse样式所在元素 -->
+       <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+         <span class="sr-only">Toggle Navigation</span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+       </button>
+       <!-- 确保无论是宽屏还是窄屏，navbar-brand都显示 -->
+       <div class="navbar-brand" id="navbar">
+	       <div class="navbar-brand_left">
+	       	<img  src="images/logo.png" />
+	       </div>
+	       <div class="navbar-brand_right">
+	       	<a href="##" class="navbar-brand"><span class="ch">中文</span></a><span class="lang">/</span><a href="##" class="navbar-brand"><span>EN</span></a>
+	       </div>
+       </div>
+  </div>
+  <!-- 屏幕宽度小于768px时，div.navbar-responsive-collapse容器里的内容都会隐藏，显示icon-bar图标，当点击icon-bar图标时，再展开。屏幕大于768px时，默认显示。 -->
+  <div class="collapse navbar-collapse navbar-responsive-collapse" id="nav_list">
+    	<ul class="nav navbar-nav">
+      		<li class="nav_li"><a href="##">功能导览</a></li>
+      		<li><a href="##">接口文档</a></li>
+      		<li><a href="##">入门教程</a></li>
+      		<li><a href="##">浏览</a></li>
+      		<li><a href="##">讨论区</a></li>
+      		<li><a href="login.html">登入</a></li>
+      		<!--<li  class="active"><a href="##">免费注册</a></li>-->
+	 </ul>
+  </div>
+</div>
+<section id="sectiong2" style="height:430px;">
+<div class="content">
+	<div class="foot">
+    <div class="row">
+  <div class="col-sm-6 col-md-3">
+    <div class="thumbnail">
+      <div class="caption">
+        <h3><a href="">产品</a></h3>
+        <p><a href="http://forum.yaya.ai">聊天机器人开发者论坛</a></p>
+        <!--<p><a href="">接口</a></p>
+        <p><a href="">最近更新</a></p>-->
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-3">
+    <div class="thumbnail">
+      <div class="caption">
+        <h3><a href="">关于</a></h3>
+        <!--<p><a href="">使用条款</a></p>
+        <p><a href="">隐私协议</a></p>-->
+      </div>
+    </div>
+  </div>
+  <!--<div class="col-sm-6 col-md-3">
+    <div class="thumbnail">
+      <div class="caption">
+        <h3><a href="">帮助和教程</a></h3>
+        <p><a href="">入门教程</a></p>
+        <p><a href="">常见问题</a></p>
+      </div>
+    </div>
+  </div>-->
+  <div class="col-sm-6 col-md-3">
+    <div class="thumbnail">
+      <div class="caption">
+        <h3>联系方式</h3>
+        <p><!--联系电话：021-88888888--></p>
+        <p>邮箱：support@yaya.ai</p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+				
+</div>
+
+</section>
+
+
+<div style="text-align:center;font-size:12px;">Copyright © 2014-2017 爱用科技---最强的聊天机器人制作平台</div>
+
+</div>
+</div>
+
+
+
+</div>
+<script>
+var phoneWidth = parseInt(window.screen.width);
+var phoneHeight = parseInt(window.screen.height);
+//alert(phoneWidth+","+phoneHeight);
+</script>
+</body>
+</html>
