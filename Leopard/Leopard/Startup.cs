@@ -68,7 +68,6 @@ namespace Leopard
 
             // for wwwroot
             app.UseDefaultFiles();
-            app.UseStaticFiles();
             
             // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/static-files
             app.UseStaticFiles(new StaticFileOptions()

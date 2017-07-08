@@ -1,5 +1,7 @@
 ﻿using Leopard.DataContexts;
 using Leopard.DbTables;
+using Leopard.DmServices;
+using Leopard.DomainModels;
 using Leopard.Enums;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -26,46 +28,38 @@ namespace Leopard.Core
         {
             if (dc.Bundles.Count(x => x.EntityName == "User Profile") > 0) return;
 
-            BundleEntity bundle = dc.Bundles.Add(new BundleEntity { Name = "User Profile", EntityName = "User", Status = EntityStatus.Active }).Entity;
+            BundleEntity bundle = dc.Bundles.Add(new BundleEntity { Id = "b24a146f-c2b1-40bd-9b0f-665e2546017b", Name = "User Profile", EntityName = "User", Status = EntityStatus.Active }).Entity;
             dc.Bundles.Add(bundle);
 
             dc.SaveChanges();
 
             var rootUser = dc.Users.Find("8a9fd693-9038-4083-87f7-08e45eff61d2");
-            if (rootUser == null)//means app need create an root user
+            new DmAccount
             {
-                UserEntity accountModel = new UserEntity();
-                accountModel.Id = Guid.NewGuid().ToString();
-                accountModel.BundleId = bundle.Id;
-                accountModel.CreatedUserId = accountModel.Id;
-                accountModel.CreatedDate = DateTime.UtcNow;
-                accountModel.ModifiedUserId = accountModel.Id;
-                accountModel.ModifiedDate = DateTime.UtcNow;
-                accountModel.UserName = "info@yaya.ai";
-                accountModel.FirstName = "Yaya";
-                accountModel.Email = "info@yaya.ai";
-                accountModel.Password = "Yayabot123";
-                accountModel.Description = "丫丫人工智能聊天机器人";
-                dc.Users.Add(accountModel);
-            }
+                Id = "8a9fd693-9038-4083-87f7-08e45eff61d2",
+                BundleId = bundle.Id,
+                UserName = "info@yaya.ai",
+                CreatedUserId = "8a9fd693-9038-4083-87f7-08e45eff61d2",
+                ModifiedUserId = "8a9fd693-9038-4083-87f7-08e45eff61d2",
+                FirstName = "Yaya",
+                Email = "info@yaya.ai",
+                Password = "Yayabot123",
+                Description = "丫丫人工智能聊天机器人"
+            }.Create(dc);
 
             rootUser = dc.Users.Find("265d804d-0073-4a50-bd07-98a28e10f9fb");
-            if (rootUser == null)
+            new DmAccount
             {
-                UserEntity accountModel = new UserEntity();
-                accountModel.Id = Guid.NewGuid().ToString();
-                accountModel.BundleId = bundle.Id;
-                accountModel.CreatedUserId = accountModel.Id;
-                accountModel.CreatedDate = DateTime.UtcNow;
-                accountModel.ModifiedUserId = accountModel.Id;
-                accountModel.ModifiedDate = DateTime.UtcNow;
-                accountModel.UserName = "yrdrylcyp@163.com";
-                accountModel.FirstName = "灵溪山谷";
-                accountModel.Email = "yrdrylcyp@163.com";
-                accountModel.Password = "Yayabot123";
-                accountModel.Description = "鹰潭东瑞实业有限公司";
-                dc.Users.Add(accountModel);
-            }
+                Id = "265d804d-0073-4a50-bd07-98a28e10f9fb",
+                BundleId = bundle.Id,
+                UserName = "yrdrylcyp@163.com",
+                CreatedUserId = "265d804d-0073-4a50-bd07-98a28e10f9fb",
+                ModifiedUserId = "265d804d-0073-4a50-bd07-98a28e10f9fb",
+                FirstName = "东瑞实业",
+                Email = "yrdrylcyp@163.com",
+                Password = "Yayabot123",
+                Description = "鹰潭东瑞实业有限公司"
+            }.Create(dc);
 
             dc.SaveChanges();
         }
