@@ -24,7 +24,7 @@ namespace Leopard.Core
 
         private static void InitUser(CoreDbContext dc)
         {
-            if (dc.Bundles.Count(x => x.EntityName == "User Profile") > 0) return;
+            if (dc.Bundles.Count(x => x.EntityName == "User") > 0) return;
 
             BundleEntity bundle = dc.Bundles.Add(new BundleEntity { Name = "User Profile", EntityName = "User", Status = EntityStatus.Active }).Entity;
             dc.Bundles.Add(bundle);

@@ -5,6 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using log4net.Config;
+using log4net;
+using System.Reflection;
 
 namespace Leopard
 {

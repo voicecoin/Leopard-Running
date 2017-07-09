@@ -17,6 +17,8 @@ using AutoMapper;
 using Microsoft.Extensions.Options;
 using Leopard.Core;
 using Leopard.DataContexts;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.Net.Http.Headers;
 
 namespace Leopard
 {
@@ -30,6 +32,8 @@ namespace Leopard
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
+
+            CoreController.Configuration = Configuration;
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -43,7 +47,14 @@ namespace Leopard
             CoreDbContext.ConnectionString = Configuration.GetConnectionString("DefaultConnection");
 
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                /*options.OutputFormatters.Add(new XmlSerializerOutputFormatter());
+                options.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());*/
+                options.FormatterMappings.SetMediaTypeMappingForFormat("xml", new MediaTypeHeaderValue("application/xml"));
+                options.RespectBrowserAcceptHeader = true;
+            }).AddXmlSerializerFormatters()
+            .AddXmlDataContractSeria‌​lizerFormatters();
 
             services.AddScoped<ApiExceptionFilter>();
             //services.AddScoped<ITodoRepository, TodoRepository>();
