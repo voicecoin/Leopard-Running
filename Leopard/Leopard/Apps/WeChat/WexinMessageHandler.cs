@@ -47,19 +47,15 @@ namespace Leopard.Apps.WeChat
             request.AddParameter("text", requestMessage.Content);
             request.AddParameter("clientAccessToken", clientAccessToken);
 
-            /*
+            var responseMessage = CreateResponseMessage<ResponseMessageText>();
+            
             var response = client.Execute(request);
-
-            client.ExecuteAsync(request, (response) => {
+            responseMessage.Content = response.Result.Content;
+            /*client.ExecuteAsync(request, (response) => {
                 var result = Senparc.Weixin.MP.AdvancedAPIs.CustomApi.SendText("wx12b178fb4ffd4560", WeixinOpenId, response.Content);
             });
 
             return DefaultResponseMessage(requestMessage);*/
-
-            var responseMessage = CreateResponseMessage<ResponseMessageText>();
-            responseMessage.Content = "Test";
-
-            responseMessage.Log(MyLogLevel.DEBUG);
 
             return responseMessage;
         }

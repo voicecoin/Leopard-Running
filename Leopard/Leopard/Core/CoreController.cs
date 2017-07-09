@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Leopard.Core
 {
     [Authorize]
-    [Produces("application/json")]
+    [Produces("application/json", "application/xml")]
     [Route("api/[controller]")]
     [ServiceFilter(typeof(ApiExceptionFilter))]
     public class CoreController : ControllerBase

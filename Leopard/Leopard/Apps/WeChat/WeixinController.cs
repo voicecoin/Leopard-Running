@@ -22,7 +22,7 @@ namespace Leopard.Apps.WeChat
     /// </summary>
     [AllowAnonymous]
     [Route("/weixin")]
-    public class WeixinController : Controller
+    public class WeixinController : CoreController
     {
         private readonly string Token = "yayaweixin";
         private readonly string EncodingAESKey = "9Rn0jQZ3GgqaVdJKgWTc99U7YSMfb7x95ccBPlHEKA4";
@@ -49,6 +49,7 @@ namespace Leopard.Apps.WeChat
         // POST: v1/WeChat
         [HttpPost]
         [ActionName("Index")]
+        [FormatFilter]
         public async Task<ActionResult> Post(PostModel postModel)
         {
             //postModel.Log(MyLogLevel.DEBUG);
@@ -69,7 +70,13 @@ namespace Leopard.Apps.WeChat
             
             messageHandler.Execute();// 执行微信处理过程（第二步）
 
-            return new FixWeixinBugWeixinResult(messageHandler);// 返回（第三步）
+            var response = new FixWeixinBugWeixinResult(messageHandler);// 返回（第三步）
+
+            // Fix bug for .net mvc core
+            var result = new FixWeixinBugWeixinResult(response.Content);
+            result.ContentType = "application/xml";
+
+            return result;
         }
     }
 }
