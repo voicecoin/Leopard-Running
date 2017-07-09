@@ -14,6 +14,14 @@ namespace Leopard.Core.Account
     public class AccountController : CoreController
     {
         [HttpGet]
+        public async Task<IActionResult> GetUser()
+        {
+            var user = dc.Users.FirstOrDefault(x => x.Id == GetCurrentUser().Id);
+
+            return Ok(user);
+        }
+
+        [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetUser([FromRoute] String id)
         {

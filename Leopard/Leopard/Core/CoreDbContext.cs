@@ -33,15 +33,16 @@ namespace Leopard.DataContexts
             //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
 
-        public void Transaction(Action action)
+        public int Transaction(Action action)
         {
             using (IDbContextTransaction transaction = Database.BeginTransaction())
             {
+                int affected = 0;
                 try
                 {
                     action();
+                    affected = SaveChanges();
                     transaction.Commit();
-                    SaveChanges();
                 }
                 catch (Exception ex)
                 {
@@ -55,8 +56,11 @@ namespace Leopard.DataContexts
                         throw ex;
                     }
                 }
+
+                return affected;
             }
         }
+
     }
 }
 

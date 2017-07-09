@@ -45,7 +45,7 @@ namespace Leopard
             {
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true,
-                TokenValidationParameters = tokenValidationParameters
+                TokenValidationParameters = tokenValidationParameters,
             });
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
@@ -54,7 +54,8 @@ namespace Leopard
                 AutomaticChallenge = true,
                 AuthenticationScheme = "Cookie",
                 CookieName = Configuration.GetSection("TokenAuthentication:CookieName").Value,
-                TicketDataFormat = new CustomJwtDataFormat(SecurityAlgorithms.HmacSha256, tokenValidationParameters)
+                TicketDataFormat = new CustomJwtDataFormat(SecurityAlgorithms.HmacSha256, tokenValidationParameters),
+                LoginPath = Configuration.GetSection("TokenAuthentication:LoginPath").Value
             });
 
             app.UseMiddleware<TokenProviderMiddleware>(Options.Create(new TokenProviderOptions
