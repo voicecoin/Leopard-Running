@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using Leopard.DbTables;
-using Leopard.DomainModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +12,7 @@ namespace Leopard.Core
         {
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<UserEntity, DmAccount>().ReverseMap();
+
             });
         }
     }

@@ -59,6 +59,10 @@ namespace Leopard.DbTables
         /// </summary>
         [StringLength(4096)]
         public String Avatar { get; set; }
+        public string FullName
+        {
+            get { return LastName + ", " + FirstName; }
+        }
 
         public bool EmailConfirmed { get; set; }
         [StringLength(128)]

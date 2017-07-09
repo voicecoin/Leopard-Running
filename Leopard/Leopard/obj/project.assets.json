@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "targets": {
     ".NETCoreApp,Version=v1.1": {
       "AutoMapper/6.1.1": {
@@ -5995,7 +5995,7 @@
       ]
     },
     "Remotion.Linq/2.1.1": {
-      "sha512": "8WkJz2rCk4u3U2eeHmyW4U+f67US8FR54Rl62YVOPLlxQBcz21fAbdRppdKbnan2dv1VswOm0nE67cngTXgyxQ==",
+      "sha512": "E1L1OxR3Z5KhLuopvVHbpPpl3FllMPrap5TvX55j1wAu2XTJasSD18daVVyANKi5flbCb/YwduP35ZzPpz0lKg==",
       "type": "package",
       "path": "remotion.linq/2.1.1",
       "files": [
@@ -6849,7 +6849,7 @@
       ]
     },
     "System.Data.Common/4.3.0": {
-      "sha512": "RUaiikocm828r8sLykHs35+kcIWUYCE6ga93juuBFuRAschcZov1owtRQLIpiovlYZjtu+xAkDkfWZxMVSwdKQ==",
+      "sha512": "ubLY9Re0ruZR7tZ8qubl37nShoZPkFihXY+XtZE6/Aqx0cINRpEaAPdIBDalTrHGVrhXxT1wD74wTKeWUyBe7g==",
       "type": "package",
       "path": "system.data.common/4.3.0",
       "files": [
@@ -10312,7 +10312,7 @@
       ]
     },
     "System.Text.Encoding.CodePages/4.3.0": {
-      "sha512": "ciRSFNAjMEke4MheJcUr0HsfTkr4nobaL8jkS4Q+HGn98tSIGz2/01b11s6KxaTv/xCaGT5VO5GnlCxXyPvyIQ==",
+      "sha512": "IH0yYKBTOvfXd2d61xja20p+lEP8f1EWBK412Ut/YoDZzPMxY8QLY+WJqPZKtjregZXjvV4PNwUhsCmc7q7zsw==",
       "type": "package",
       "path": "system.text.encoding.codepages/4.3.0",
       "files": [
@@ -11266,15 +11266,15 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\owner\\.nuget\\packages\\": {}
+    "C:\\Users\\hank\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\Leopard-Running\\Leopard\\Leopard\\Leopard.csproj",
+      "projectUniqueName": "C:\\Users\\hank\\Source\\Repos\\Leopard-Running\\Leopard\\Leopard\\Leopard.csproj",
       "projectName": "Leopard",
-      "projectPath": "D:\\Projects\\Leopard-Running\\Leopard\\Leopard\\Leopard.csproj",
-      "outputPath": "D:\\Projects\\Leopard-Running\\Leopard\\Leopard\\obj\\",
+      "projectPath": "C:\\Users\\hank\\Source\\Repos\\Leopard-Running\\Leopard\\Leopard\\Leopard.csproj",
+      "outputPath": "C:\\Users\\hank\\Source\\Repos\\Leopard-Running\\Leopard\\Leopard\\obj\\",
       "projectStyle": "PackageReference",
       "originalTargetFrameworks": [
         "netcoreapp1.1"
