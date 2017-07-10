@@ -46,10 +46,12 @@ function bottestdiaolog(){
   			modal: true,
   			height: 900,
   			beforeClose: function( event, ui ) {
+  				console.log(".ui_right_main beforeClose");
   				nowBotContent=$(".ui_right_main").html();
   				
   			},
   			close: function( event, ui ) {
+  				console.log(".ui_right_main close");
   				$(".ui_right").html(nowBotContent);
   			}
   		}

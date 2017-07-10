@@ -124,9 +124,10 @@
 	background-color:rgb(255, 205, 246)
 }
   </style>
+  <link rel="stylesheet" type="text/css" href="css/intent.css" />
   <script type="text/javascript" src="js/jquery.min.js"></script>
   <script src="js/jquery.cookie.js"></script>
-  <script src="js/jquery-ui.min.js"></script>
+  <script src="js/jquery-ui.js"></script>
   <script type="text/javascript" src="js/jquery.z-pager.js"></script>
   <script src="js/jquery.tagsinput.js"></script>
   <script src="js/bootstrap.min.js"></script>
@@ -150,14 +151,20 @@ function genIntentData(){
 	var intentNow={};
 	intentNow.id=$("#intent-id").val();
 	intentNow.name=$("#intent-name").val();
-	intentNow.contexts=$("#tags_in").val().split(",");
+	if($("#tags_in").val().length>0)
+		intentNow.contexts=$("#tags_in").val().split(",");
+	else
+		intentNow.contexts=[];
 	intentNow.userSays=[];
 	
 	$.each($(".usersay"), function() {
         //console.log($(this).attr('id'));
         var usersay={};
         usersay.id=$(this).attr('id');
-        usersay.data=[];
+		if(typeof(usersay.id)=="undefined"){
+			usersay.id=''
+		}
+		usersay.data=[];
         var texts=$(this).find(".usersaytext:first span");
         $.each(texts,function(){
         	var dataitem={};
@@ -179,9 +186,15 @@ function genIntentData(){
 	
 	intentNow.responses=[];
 	var response={};
-	response.id='';
+	response.id=$("#responseId").val();
 	response.intentId=intentId;
+	if(response.intentId==null){
+		response.intentId='';
+	}
 	response.affectedContexts=[];
+	response.action=$("#action").val();
+
+
 	if($("#tags_out").val().length>0){
 		//console.log('$("#tags_out").val()='+$("#tags_out").val());
 		var tarray=$("#tags_out").val().split(',');
@@ -202,14 +215,70 @@ function genIntentData(){
 		message.intentResponseId=$(this).attr('data-intentResponseId');
 		message.type=$(this).attr('data-type');
 		message.platform=$(this).attr('data-platform');
-		message.speech=$(this).html();
+		
+		$.each($(".parameterdiv"),function(){});
+		
+		message.speech=[];
+		message.speech.push($(this).html());
 		response.messages.push(message);
 	});
 	
 	response.parameters=[];
 	
+
+	$.each($(".parameterdiv"),function(){
+		var parameter={};
+		//parameter.isList=false;
+		parameter.id=$(this).attr('id');
+		if(parameter.id.indexOf('tmpparameter')>-1){
+			parameter.id='';
+		}
+		parameter.name=$(this).find('.parameter-name:first').val();
+		if(parameter.name.length==0){
+			return true;
+		}
+		parameter.dataType=$(this).find('.parameter-dataType').val();
+		parameter.value=$(this).find('.parameter-value').val();
+		//parameter.defaultValue='';
+		parameter.required=$(this).find('.parameter-required').is(':checked');
+		parameter.prompts=JSON.parse($(this).find('.parameter-prompts').val());
+		response.parameters.push(parameter);
+	});
+
 	intentNow.responses.push(response);
 	console.dir(intentNow);
+
+	if(intentNow.id.length>0){
+		$.ajax({
+			url: 'http://api.yaya.ai/v1/Intents/'+agentId,
+			type: 'PUT',
+			datType: "JSON",
+			contentType: "application/json",
+			data: JSON.stringify(intentNow),
+			success: function(json) {
+				//$("#pageContainer1").zPager('pageData',$("#pageContainer1"),$("#pageContainer1").find(".current").attr("page-id"));
+				s_tip("场景已保存","ok");
+			},error: function(e) {
+				//self.entity=null;
+				s_tip(e,"fail");
+			}
+		});
+	}else{
+		$.ajax({
+			url: 'http://api.yaya.ai/v1/Intents/'+agentId,
+			type: 'POST',
+			datType: "JSON",
+			contentType: "application/json",
+			data: JSON.stringify(intentNow),
+			success: function(json) {
+				//$("#pageContainer1").zPager('pageData',$("#pageContainer1"),$("#pageContainer1").find(".current").attr("page-id"));
+				s_tip("场景已保存","ok");
+			},error: function(e) {
+				//self.entity=null;
+				s_tip(e,"fail");
+			}
+		});
+	}
 }
 
 
@@ -327,7 +396,7 @@ function intentEventHandle(){
 			if($(this).val().length>0){
 				var speech={
                     "id":"",
-                    "intentResponseId":"=",
+                    "intentResponseId":"",
                     "speech":$(this).val(),
                     "type":"Text",
                     "platform":0
@@ -417,11 +486,12 @@ function intentEventHandle(){
 						//s_tip("保存成功",'ok');
 						$(this).html('&nbsp;');
 						var userSay={};
+						userSay.id='';
 						userSay.data=json;
-						
 						var userSaysHtml=addUserSay(userSay);
 						$(".usersaystable").append(userSaysHtml);
 						usersayEventHandler();
+						$("#addUserSay").html('&nbsp;');
 					},error: function(e) {
 						//s_tip(e,'fail');
 					}
@@ -482,6 +552,148 @@ function parameterEventHandler(){
 		}
 		hideOrShowPrompts();
 	});
+	
+	$(".parameter-prompts").off("focus").on('focus',function(e){
+		
+		var parametername=$(this).parent().parent().find(".parameter-name:first").val();
+		var parameterdataType=$(this).parent().parent().find(".parameter-dataType:first").val();
+		var parametervalue=$(this).parent().parent().find(".parameter-value:first").val();
+		var parameterprompts=$(this).parent().parent().find(".parameter-prompts:first").val();
+		if(parameterprompts.length==0){
+			parameterprompts=[];
+		}
+		var parameterid=$(this).parent().parent().attr("id");
+		nowParameterPrompts.id=parameterid;
+		nowParameterPrompts.parametername=parametername;
+		nowParameterPrompts.parameterdataType=parameterdataType;
+		nowParameterPrompts.parametervalue=parametervalue;
+		nowParameterPrompts.parameterprompts=JSON.parse(parameterprompts);
+		initParameterPrompts();
+		
+		
+		
+		
+	});
+	
+	
+}
+
+
+
+var nowParameterPrompts={};
+
+function initParameterPrompts(){
+	$("#prompt-name").val(nowParameterPrompts.parametername);
+	$("#prompt-datatype").html(nowParameterPrompts.parameterdataType);
+	$("#prompt-value").html(nowParameterPrompts.parametervalue);
+	var html='';
+	for(var i=0;i<nowParameterPrompts.parameterprompts.length;i++){
+		html+='<div class="prompt-row">';
+		html+='<div class="prompt-cell prompt-cell-first">';
+		html+=(i+1);
+		html+='</div>';
+		html+='<div class="prompt-cell prompt-cell-second">';
+		html+='<div class="borderless" contenteditable="true" onkeydown="enter_parameter_prompt(this,event)" onkeyup="create_parameter_prompt(this,event)" placeholder="输入提示语句…">'+nowParameterPrompts.parameterprompts[i]+'</div>';
+		html+='</div>';
+		html+='<div class="prompt-cell prompt-cell-actions">';
+		html+='<a href="javascript:void(0)" class="ico-item" style="display: none;"><span class="flaticon glyphicon glyphicon-resize-vertical m_title ui-sortable-handle"></span></a>';
+		html+='<a class="visible-on-hover prompt-remove" href="javascript:void(0)" onclick="prompt_remove_rows(this)" style="display: none;"><span class="glyphicon glyphicon-trash"></span></a>';
+		html+='</div>';
+		html+='</div>';
+	}
+	$("#ownParameterId").val(nowParameterPrompts.id);
+	$(".intent-param-prompts-editor").html(html);
+	
+	create_empty_prompt();
+	
+	$("#default-window-box").show();
+	$(".close").off("click").on('click',function(e){
+		$("#default-window-box").hide();
+	});
+	
+    $("#intent-param-prompts-editor").off("mouseover").on("mouseover",".prompt-row",function() {
+		$(this).find(".prompt-cell-actions a").css("display", "inline-block");
+	});
+    $("#intent-param-prompts-editor").off("mouseout").on("mouseout",".prompt-row",function() {
+		$(this).find(".prompt-cell-actions a").css("display", "none");
+	});
+	
+    $("#close_default_window").off('click').on('click',function(){
+
+    	$("#"+nowParameterPrompts.id).find(".parameter-name:first").val($("#prompt-name").val());
+    	$("#"+nowParameterPrompts.id).find(".parameter-value:first").val($("#prompt-value").html());
+    	if ($(".default-window-box").find("#intent-param-prompts-editor").length > 0) {
+            //保存强制参数为空时，回复提醒
+            var _prompt_param = $(".default-window-box .prompt-cell-second").find(".borderless");
+            var tmpprompts = [];
+            $.each(_prompt_param, function(m, n) {
+                if ($(n).html() != "") {
+                	tmpprompts.push($(n).html());
+                }
+            });
+            
+            if (tmpprompts.length > 0) {
+            	$("#"+nowParameterPrompts.id).find(".parameter-prompts:first").val(JSON.stringify(tmpprompts));
+            } else {
+            	$("#"+nowParameterPrompts.id).find(".parameter-prompts:first").val("[]");
+            }
+        }
+    	$("#default-window-box").hide();
+    }
+    );
+}
+
+function prompt_remove_rows(obj) {
+    var _this = $(obj).parents(".prompt-table");
+    $(obj).parents(".prompt-row").remove();
+    if(_this.attr("id") == "intent-param-prompts-editor"){
+        resetNumber($("#intent-param-prompts-editor"));
+    }
+}
+
+function create_empty_prompt(){
+	var content = "<div class=\"prompt-row\">";
+	content += "<div class=\"prompt-cell prompt-cell-first\"></div>";
+	content += "<div class=\"prompt-cell prompt-cell-second\">";
+	content += "<div class=\"borderless\" contenteditable=\"true\" onkeydown=\"enter_parameter_prompt(this,event)\" onkeyup=\"create_parameter_prompt(this,event)\" placeholder=\"输入提示语句...\"></div></div>";
+	content += "<div class=\"prompt-cell prompt-cell-actions\">";
+	content += "<a href=\"javascript:void(0)\" class=\"ico-item\"><span class=\"flaticon glyphicon glyphicon-resize-vertical m_title\"></span></a>";
+	content += "<a class=\"visible-on-hover prompt-remove\" href=\"javascript:void(0)\" onclick=\"prompt_remove_rows(this)\">";
+	content += "<span class=\"glyphicon glyphicon-trash\"></span></a></div></div>";
+	$("#intent-param-prompts-editor").append(content);
+	resetNumber($("#intent-param-prompts-editor"));
+}
+
+function create_parameter_prompt(obj, event, type) {
+    var _i = $(obj).parents(".prompt-row").find(".prompt-cell-first").html();
+	var e = event || window.event;
+	if($.trim($(obj).html()) != ""){
+
+		var sum = $("#intent-param-prompts-editor .prompt-row").size();
+		
+		if($(obj).parents(".prompt-row").index()+1 == sum){
+			create_empty_prompt();
+			
+		}
+	}
+}
+function enter_parameter_prompt(obj,event,type){
+	e = event || window.event;
+	if($.trim($(obj).html()) == "" && e.keyCode == 13){
+		$(obj).html("").focus();
+		e.preventDefault();
+	}else if($.trim($(obj).html()) != ""){
+		if(e.keyCode == 13 && e.shiftKey == false){
+			e.preventDefault();
+			$(obj).parents(".prompt-row").next(".prompt-row").find(".borderless").focus();
+		}
+	}
+}
+function resetNumber(obj){
+    var len = obj.find(".prompt-row").size();
+    for(var i =0;i<len;i++){
+        obj.find(".prompt-row").eq(i).find(".prompt-cell-first").html(i+1);
+    }
 }
 
 function hideOrShowPrompts(){
@@ -632,6 +844,7 @@ function loadIntent(id){
 	}else{
 		 var data={};
 		 data.agentId = agentId;
+		 intentId=id;
 		 data.intentId =id;// '059a2116-6b02-47b7-9b74-1f40fd4d68cf';//id;
 		 var self=this;
 
@@ -669,7 +882,7 @@ function addUserSay(userSay){
 		 
 		 datahtml+='<span';
 		 if(data[j].meta!=null){
-			 datahtml+=' class="isMeta"';
+			 datahtml+=' class="isMeta" style="background-color:'+data[j].color+'"';
 			 metaarray.push(data[j]);
 		 }
 		 datahtml+='>';
@@ -735,17 +948,18 @@ function addParameter(){
 function genParameter(parameter){
 	 if(parameter==null){
 		 parameter={};
-		 parameter.isList=false;
+		 //parameter.isList=false;
 		 parameter.name='';
 		 parameter.dataType='';
-		 parameter.value='';
-		 parameter.defaultValue='';
+		 parameter.value=[];
+		 //parameter.defaultValue='';
 		 parameter.required=true;
-		 parameter.prompts='';
-		 
+		 parameter.prompts=[];
+		 var date=new Date();
+		 parameter.id='tmpparameter'+date.getTime();
 	 }
 	 var parametersHtml='';
-	 parametersHtml+='<div class="ub" style="width:100%;background: #f8f8f8;min-height:40px;height:auto;color: #9399a6;">';
+	 parametersHtml+='<div id="'+parameter.id+'"class="ub parameterdiv" style="width:100%;background: #f8f8f8;min-height:40px;height:auto;color: #9399a6;">';
 	 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc" style="width:10%;word-wrap: break-word;word-break: break-all;">';
 	 parametersHtml+='<div class="checkbox checkbox-primary checkbox-single">';
 	 
@@ -772,12 +986,14 @@ function genParameter(parameter){
 	 parametersHtml+='</div>';
 	 
 	 
-	 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc" style="width:16%">';
-	 parametersHtml+='<input type="text" class="parameter-defaultValue" value="'+(parameter.defaultValue==null?'':parameter.defaultValue)+'" placeholder="添加默认值...">';
-	 parametersHtml+='</div>';
+	 //parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc" style="width:16%">';
+	 //parametersHtml+='<input type="text" class="parameter-defaultValue" value="'+(parameter.defaultValue==null?'':parameter.defaultValue)+'" placeholder="添加默认值...">';
+	 //parametersHtml+='</div>';
 	 
 	 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc ppdiv" style="width:16%">';
-	 parametersHtml+='<input type="text" class="parameter-prompts" value="'+(parameter.prompts==null?'':parameter.prompts)+'" placeholder="添加提示...">';
+	 
+	 var showprompts=JSON.stringify(parameter.prompts==null?"[]":parameter.prompts);
+	 parametersHtml+="<input type='text' class='parameter-prompts' value='"+showprompts+"' placeholder='添加提示...'>";
 	 parametersHtml+='</div>';
 	 
 	 /*parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc entityselect parameter-dataType"  style="width:16%">';
@@ -932,7 +1148,7 @@ function initIntent(intent){
 function addSpeech(speech){
 	var speechhtml='';
 	speechhtml+='<div class="ub " style="width:100%;height:auto;margin-bottom: -1px; border: 1px solid rgb(221, 221, 221);">';
-	speechhtml+='<div data-id="'+speech.id+'" data-intentResponseId="'+speech.intentResponseId+'" data-type="'+speech.type+'" data-platform="'+speech.platform+'" class="ub ub-ver ub-pc template-editor-holder" contenteditable="" placeholder="输入机器人回复" data-distinguish="true" style="width:90%;">'+speech.speech+'</div>';
+	speechhtml+='<div data-id="'+speech.id+'" data-intentResponseId="'+speech.intentResponseId+'" data-type="'+speech.type+'" data-platform="'+speech.platform+'" class="ub ub-ver ub-pc template-editor-holder speechdiv" contenteditable="" placeholder="输入机器人回复" data-distinguish="true" style="width:90%;">'+speech.speech+'</div>';
 	speechhtml+='<div class="ub ub-ver ub-ac ub-pc" style="width:10%">';
 	speechhtml+='<a href="javascript:void(0)" class="ico-item no-result delspeech" style="display: inline;"><span class="glyphicon glyphicon-trash del_icon"></span></a>';
 	speechhtml+='</div>';
@@ -1011,11 +1227,67 @@ function loadLeft(){
 </div>
 </div>
 
-
-
-
-
-
+<div id="default-window-box" title="会话测试"  class="default-window-box" style="opacity: 1;display:none;">
+<div class="inner-container active"> 
+   <div class="default-modal-header">
+    <button type="button" class="close right">&times;</button>
+    <h4 class="title">为&quot;aaa&quot;添加提示语</h4>
+    <input type="hidden" id="ownParameterId">
+   </div>
+   <div class="default-modal-body">
+    <div class="row params-modal-head clearfix">
+     <div class="params-attribute-cell prompt-name">
+      名称
+     </div>
+     <div class="params-attribute-cell prompt-datatype">
+      类型
+     </div>
+     <div class="params-attribute-cell prompt-value">
+      取值
+     </div>
+    </div>
+    <div class="row params-modal-attributes clearfix">
+     <div class="params-attribute-cell">
+      <input type="text" id="prompt-name" data-key="false" class="prompt-name" value="aaa" placeholder="Enter name..." />
+     </div>
+     <div class="params-attribute-cell">
+      <label class="aly-input prompt-datatype" id="prompt-datatype" placeholder="选择类型..."></label>
+     </div>
+     <div class="params-attribute-cell">
+      <div class="textcomplete-wrapper">
+       <ul class="dropdown-menu-p">
+        <li class="textcomplete-item active"><a href="javascript:void(0)">${aaa}</a></li>
+       </ul>
+       <label id="prompt-value" class="prompt-value" contenteditable="true" placeholder="输入默认值">${aaa}</label>
+      </div>
+     </div>
+    </div>
+    <div class="prompt-table">
+     <div class="prompt-cell prompt-cell-first"></div>
+     <div class="prompt-cell prompt-cell-second">
+      提示语
+     </div>
+    </div>
+    <div class="prompt-table intent-param-prompts-editor ui-sortable" id="intent-param-prompts-editor">
+     <div class="prompt-row">
+      <div class="prompt-cell prompt-cell-first">
+       1
+      </div>
+      <div class="prompt-cell prompt-cell-second">
+       <div class="borderless" contenteditable="true" onkeydown="enter_prompt(this,event)" onkeyup="create_prompt(this,event)" placeholder="输入提示语句…"></div>
+      </div>
+      <div class="prompt-cell prompt-cell-actions">
+       <a href="javascript:void(0)" class="ico-item" style="display: none;"><span class="flaticon glyphicon glyphicon-resize-vertical m_title ui-sortable-handle"></span></a>
+       <a class="visible-on-hover prompt-remove" href="javascript:void(0)" onclick="prompt_remove_rows(this)" style="display: none;"><span class="glyphicon glyphicon-trash"></span></a>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="modal-footer">
+    <button type="button" id="close_default_window" class="btn btn-default">保存</button>
+   </div>
+  </div> 
+</div>
 
 
 </body>

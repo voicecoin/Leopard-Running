@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html mip>
 
 <head>
@@ -39,12 +39,11 @@ $(document).ready(function(){
 	   data.userName=$("#userName").val();
 	   data.password=$("#pw").val();
 	   //data.grant_type='password';
-	   $.post('/token', data, function(json, status) {
+	   $.post('http://www.yaya.ai/token', data,function(json) {
 	    	if(json.msg=='success'){
-                var s = Date.parse(json.expires_in);
-	    		var d=new Date(s);
-                $.cookie("userId", json.user_id, { "expires": d });
-                $.cookie("access_token", json.access_token, { "expires": d });
+	    		var s = new Date();
+	    		var d=new Date(s.getTime()+(json.expires_in*1000));
+	    		$.cookie("userId",json.user_id,{"expires":d});
 	    		window.location.href='revise.html';
 	    	}else{
 	    		s_tip("用户名或密码错误",'fail');
@@ -68,7 +67,11 @@ $(document).ready(function(){
 <div class="content">
 	<div class="">
 		<div class="logiin_btn">
-		        	<div class="logiin_btn_top"><a href="/"><img class="img_lg" src="images/login.png"></a></div>
+		        	<div class="logiin_btn_top"><img class="img_lg"  src="images/login.png"></div>
+		        	<div class="logiin_btn_btm">
+			        	<button type="button" class="btn btn-primary btn-lg" id="denglu">登&nbsp录</button>
+			        	<button type="button" class="btn btn-default btn-lg active" id="zhuce">注&nbsp册</button>
+			 </div>
 		</div>
 		<div class="zc_box">
 			<div class="zc_box_1" id="zc_box">

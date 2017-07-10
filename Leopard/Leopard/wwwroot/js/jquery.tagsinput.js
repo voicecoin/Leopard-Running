@@ -94,11 +94,7 @@
 				var values=realValue.split('|');
 				
 				value = values[0];
-				
-				
-				
-				
-				
+
 				if(values.length>1)
 					leftNum=values[1];
 				
