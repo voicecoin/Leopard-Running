@@ -41,6 +41,8 @@ namespace Leopard
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<ApiExceptionFilter>();
+
             // https://docs.microsoft.com/en-us/aspnet/core/security/cors
             services.AddCors();
 
@@ -56,7 +58,6 @@ namespace Leopard
             }).AddXmlSerializerFormatters()
             .AddXmlDataContractSeria‌​lizerFormatters();
 
-            services.AddScoped<ApiExceptionFilter>();
             //services.AddScoped<ITodoRepository, TodoRepository>();
         }
 
