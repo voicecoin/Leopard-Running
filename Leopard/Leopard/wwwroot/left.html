@@ -66,18 +66,18 @@ menuEvent();
 
 
 function loadBots(){
-     $.post('https://api.yaya.ai/api/Agent/List', null,
-     function(json) {
-       //console.log(json);
-       bots = json;
-       var robts = '';
-       for (var i = 0; i < json.length; i++) {
-         var robt = json[i];
-         //robt.id='f3123461-cdeb-4f0f-bdea-8b2c984115e8';
-         robts += '<li><a href="javascript:void(0);" onclick="resetAgent(\''+robt.id+'\')">' + robt.name + '</a></li>';
-       }
-       $("#botlistmenu").html(robts);
-     });
+	$.get('http://api.yaya.ai/v1/Agents/'+$.cookie("userId")+'/Query', null,function(json) {
+		bots = json.items;
+	       var robts = '';
+	       for (var i = 0; i < bots.length; i++) {
+	         var robt = bots[i];
+	         //robt.id='f3123461-cdeb-4f0f-bdea-8b2c984115e8';
+	         robts += '<li><a href="javascript:void(0);" onclick="resetAgent(\''+robt.id+'\')">' + robt.name + '</a></li>';
+	       }
+	       $("#botlistmenu").html(robts);
+		
+	});
+
 }
 
 function goIntent(){
@@ -123,8 +123,8 @@ function goIntegrations(){
 					    <li><a href="#">我的机器人3</a></li>
 					  </ul>
 					</div>
-					<!--<a href=""><span class="ui_side_list_li_right_span">我的机器人<span class="caret"></span></span></a>-->
-					 <div class="ui_icon_right"><a href="setname.html"><img id="Img1" src="images/icon_08_a.png" /></a></div>
+					<!--<a href=""><span class="ui_side_list_li_right_span">我的机器人<span class="caret"></span></span></a>
+					 <div class="ui_icon_right"><a href="setname.html"><img id="Img1" src="images/icon_08_a.png" /></a></div>-->
 				</div>
 			</div>
 		</div>

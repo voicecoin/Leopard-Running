@@ -29,8 +29,8 @@ body{background: url(../images/bg.png) repeat;background-size:100%;font-family: 
 .zc_box input{border:1px solid #FFFFFF;outline:medium; margin-left: -16px;width:84%;}
 
 .zc_box_1{border:1px solid #D0D0D0;margin-bottom: 8px;}
-.zc_box_logo{float:left; line-height: 42px;margin-left: 5px;width:42px;}
-#code_input{width:40%;}
+.zc_box_logo{float:left; line-height: 42px;width:42px;}
+
 .code{float:right;width:120px;line-height: 40px;height:40px;margin-top:3px;margin-right: -17px;margin-left: 20px;}
 .code input{background-color: #E4E1E1;}
 /*.code a{color:#000000;}
@@ -419,7 +419,7 @@ a:active,a:hover,a:link,a:visited {
 }
 
 
-.top-panel .inner-header .md-input {
+.md-input {
     display: block;
     width: 100%;
     font-weight: 400;
@@ -914,3 +914,4 @@ img {
     background-position: -96px -128px;
 
 }
+

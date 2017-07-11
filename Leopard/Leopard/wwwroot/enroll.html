@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html mip>
 
 <head>
@@ -23,12 +23,12 @@ $(document).ready(function(){
     $("#zc_box1").css("border-color","");
   });
   $("#input2").focus(function(){
-    $("#Image2").attr("src","images/zhuce_02_b.png");
+    $("#Image2").attr("src","images/mail_02_b.png");
     $("#zc_box2").css("border-color","#1698F3");
   });
   $("#input2").blur(function(){
     $("#zc_box2").css("border-color","");
-    $("#Image2").attr("src","images/zhuce_02.png");
+    $("#Image2").attr("src","images/mail_02.png");
   });
   $("#input3").focus(function(){
     $("#Image3").attr("src","images/zhuce_03_b.png");
@@ -88,12 +88,11 @@ $("#regButton").on('click',function(){
 function submitEnroll(){
 	var data={};
 	data.email=$("#email").val();
-	//data.userName=$("#userName").val();
-    data.userName = $("#email").val();
+	data.userName=$("#userName").val();
 	data.Password=$('#Password').val();
 	data.confirmPassword=$('#confirmPassword').val();
 	
-	$.post('/api/account', data, function (json, status) {
+	$.post('http://www.yaya.ai/api/account/EmailRegister', data,function (json) {
 		//window.location.href='revise.html';
 		if(json!=null){
 			window.location.href='login.html';
@@ -114,7 +113,7 @@ function enrollValidate(id){
 		  		validating: 'glyphicon glyphicon-refresh'
 		  	},
 		  	fields: {
-		  		/*userName: {
+		  		userName: {
 		  			validators: {
 		  				notEmpty: {
 		  					message: '请输入用户名'
@@ -125,7 +124,7 @@ function enrollValidate(id){
 	                         message: '用户名长度必须在6到30之间'
 	                    }
 		  			}
-		  		},*/
+		  		},
 		  		email: {
 		  			validators: {
 		  				notEmpty: {
@@ -147,10 +146,10 @@ function enrollValidate(id){
 	                         max: 30,
 	                         message: '密码长度必须在6到30之间'
 	                    },
-	                    /*different: {//不能和用户名相同
+	                    different: {//不能和用户名相同
 	                         field: 'userName',
 	                         message: '不能和用户名相同'
-	                    },*/
+	                    },
 	                    regexp: {
 	                         regexp: /^(?=.*[A-Z].*$)(?=.*[a-z].*$)(?=.*[0-9].*$)(?=.*[\x21-\x7e].*$)/,
 	                         message: '至少一位大写字母，小写字母以及特殊字符'
@@ -171,10 +170,10 @@ function enrollValidate(id){
 	                         field: 'Password',
 	                         message: '两次密码不一致'
 	                    },
-	                    /*different: {//不能和用户名相同
+	                    different: {//不能和用户名相同
 	                         field: 'userName',
 	                         message: '不能和用户名相同'
-	                    },*/
+	                    },
 	                    regexp: {
 	                         regexp: /^(?=.*[A-Z].*$)(?=.*[a-z].*$)(?=.*[0-9].*$)(?=.*[\x21-\x7e].*$)/,
 	                         message: '至少一位大写字母，小写字母以及特殊字符'
@@ -197,19 +196,23 @@ function enrollValidate(id){
 <div class="content">
 	<div class="">
 		<div class="logiin_btn">
-		        	<div class="logiin_btn_top"><a href="/"><img class="img_lg" src="images/login.png"></a></div>
+		        	<div class="logiin_btn_top"><img class="img_lg"  src="images/login.png"></div>
+		        	<div class="logiin_btn_btm">
+			        	<button type="button" class="btn btn-primary btn-lg" id="denglu">登&nbsp录</button>
+			        	<button type="button" class="btn btn-default btn-lg active" id="zhuce">注&nbsp册</button>
+			 </div>
 		</div>
 		<form id="formReg" method="post" class="class="form-horizontal">
 		<div class="zc_box">
-			<!--<div class="form-group zc_box_1" id="zc_box1">
+			<div class="form-group zc_box_1" id="zc_box1">
 				<div class="zc_box_logo" >
 					<img id="Image1" src="images/zhuce_01.png" />
 				</div>
 				<input id="userName" class='input-lg form-input name form-control' name="userName" placeholder='用户名'>
-			</div>-->
+			</div>
 		<div class="form-group zc_box_1"  id="zc_box2">
 			<div class="zc_box_logo">
-				<img id="Image2" src="images/zhuce_02.png" />
+				<img id="Image2" src="images/mail_02.png" />
 			</div>
 			<input id="email" class='input-lg form-input name form-control' name="email" placeholder='邮箱'>
 		</div>
