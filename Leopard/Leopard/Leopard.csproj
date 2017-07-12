@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="App_Data\Logs\**" />
+    <Content Remove="App_Data\Logs\**" />
+    <EmbeddedResource Remove="App_Data\Logs\**" />
+    <None Remove="App_Data\Logs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="wwwroot\favicon.ico" />
   </ItemGroup>
   <ItemGroup>

@@ -42,7 +42,8 @@ $(document).ready(function(){
 	   $.post('http://www.yaya.ai/token', data,function(json) {
 	    	if(json.msg=='success'){
 	    		var s = new Date();
-	    		var d=new Date(s.getTime()+(json.expires_in*1000));
+                var d = new Date(s.getTime() + (json.expires_in * 1000));
+                $.cookie("access_token", json.access_token, { "expires": d });
 	    		$.cookie("userId",json.user_id,{"expires":d});
 	    		window.location.href='revise.html';
 	    	}else{
