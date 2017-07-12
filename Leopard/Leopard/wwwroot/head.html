@@ -9,10 +9,22 @@ function logout(){
 }
 
 $(document).ready(function(){
-    //$.get('http://www.yaya.ai/api/UserInfo', null,function(json) {
-    //	console.log(json);
-    	
-    //});
+	$.ajax({
+		url: 'http://www.yaya.ai/api/Account',
+		type: "GET",
+		datType: "JSON",
+		contentType: "application/json",
+		beforeSend: function(request) {
+            request.setRequestHeader("Authorization", "bearer "+$.cookie("access_token"));
+        },
+		data: {},
+		success: function (json) {
+			console.log(json);
+			$("#firstName").html(json.firstName);
+		},error: function(e) {
+			//s_tip(JSON.stringify(e),'fail');
+		}
+	});
 
 });
 </script>
@@ -46,7 +58,7 @@ $(document).ready(function(){
       		<li  class="active">
       			<div class="dropdown">
 				  <button class="btn btn-default btn-lg dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-				    Guest
+				    <span id="firstName">Guest</span>
 				    <span class="caret"></span>
 				  </button>
 				  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" style="z-index:2">

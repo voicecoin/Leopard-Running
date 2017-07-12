@@ -98,6 +98,13 @@ function goIntegrations(){
 	window.location.href='integrations.html?agentId='+agentId;
 }
 
+function logoutLeft(){
+	$.get('http://www.yaya.ai/api/Account/Logout', null,function(json) {
+    	window.location.href="login.html";
+    	
+    });
+}
+
 </script>
 
 	<div class="ui_side_top">
@@ -207,7 +214,7 @@ function goIntegrations(){
 					<img id="Img9" src="images/icon_09_a.png" />
 				</div>
 				<div class="ui_side_list_li_right">
-					<a href="https://api.yaya.ai/api/Account/Logout"><span class="ui_side_list_li_right_span">退出</span></a>
+					<a href="javascript:void(0);" onclick="logoutLeft();"><span class="ui_side_list_li_right_span">退出</span></a>
 				</div>
 			</div>
 		</div>

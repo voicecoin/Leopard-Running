@@ -1,10 +1,11 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html mip>
 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <meta name="description" content="最简易的聊天机器人设计及协作平台，十分钟轻松制作我的聊天机器人！集成深度神经网络、知识图谱、和自然语言处理的超强技术" />
   <title>登录</title>
   <link rel="stylesheet" href="css/bootstrap.min.css" >
   <link rel="stylesheet" type="text/css" href="css/robot.css">
@@ -42,8 +43,8 @@ $(document).ready(function(){
 	   $.post('http://www.yaya.ai/token', data,function(json) {
 	    	if(json.msg=='success'){
 	    		var s = new Date();
-                var d = new Date(s.getTime() + (json.expires_in * 1000));
-                $.cookie("access_token", json.access_token, { "expires": d });
+	    		var d=new Date(s.getTime()+(json.expires_in*1000));
+	    		$.cookie("access_token", json.access_token, { "expires": d });
 	    		$.cookie("userId",json.user_id,{"expires":d});
 	    		window.location.href='revise.html';
 	    	}else{
@@ -69,6 +70,10 @@ $(document).ready(function(){
 	<div class="">
 		<div class="logiin_btn">
 		        	<div class="logiin_btn_top"><img class="img_lg"  src="images/login.png"></div>
+		        	<div class="logiin_btn_btm">
+			        	<button type="button" class="btn btn-primary btn-lg" id="denglu">登&nbsp录</button>
+			        	<button type="button" class="btn btn-default btn-lg active" id="zhuce">注&nbsp册</button>
+			 </div>
 		</div>
 		<div class="zc_box">
 			<div class="zc_box_1" id="zc_box">

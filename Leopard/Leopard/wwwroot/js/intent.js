@@ -113,7 +113,7 @@ function genIntentData(){
 
 	if(intentNow.id.length>0){
 		$.ajax({
-			url: 'http://api.yaya.ai/v1/Intents/'+agentId,
+			url: 'http://api.yaya.ai/v1/Intents/'+intentNow.id,
 			type: 'PUT',
 			datType: "JSON",
 			contentType: "application/json",
@@ -286,8 +286,6 @@ function intentEventHandle(){
 	});
 	
 
-	
-	
 	$(".template-editor-holder").off("click").on('click',function(){
 		
 		
@@ -326,23 +324,26 @@ function intentEventHandle(){
 	
 	$("#addUserSay").off("blur").on('blur',function(){
 		//$(this).html("&nbsp;");
-		$(this).html("");
+		$(this).val("");
 		$(this).css('border-left','0px solid #37a0e1');
+		$("#ui_Image1").attr("src","images/ui_09.jpg")
 		//#37a0e1
 		//border: 3px solid #37a0e1;
 	});
 	
+	$("#addUserSay").off("focus").on('focus',function(){
+		$("#ui_Image1").attr("src","images/ui_09_b.jpg")
+	})
 
 	$("#addUserSay").off("keyup").on('keyup',function(e){
-		e.stopPropagation();
-		var v=$(this).html().replace('&nbsp;','').replace(/\r\n/g,'').replace(/\n/g,'');
+		var v=$(this).val().replace('&nbsp;','').replace(/\r\n/g,'').replace(/\n/g,'');
 		if(e.keyCode == 13){
+			e.preventDefault();
+			//e.preventDefault();
 			if(v.length==0){
 				s_tip("请输入用户提问",'fail');
-				$(this).html('&nbsp;');
+				$(this).val("");
 			}else{
-				
-				
 				$.ajax({
 					url: 'http://api.yaya.ai/v1/Intents/Markup?text='+v,
 					type: "GET",
@@ -351,49 +352,20 @@ function intentEventHandle(){
 					data: {},
 					success: function (json) {
 						//s_tip("保存成功",'ok');
-						$(this).html('&nbsp;');
+						//$(this).html('&nbsp;');
 						var userSay={};
 						userSay.id='';
 						userSay.data=json;
 						var userSaysHtml=addUserSay(userSay);
 						$(".usersaystable").append(userSaysHtml);
 						usersayEventHandler();
-						$("#addUserSay").html('&nbsp;');
+						$("#addUserSay").val("");
 					},error: function(e) {
 						//s_tip(e,'fail');
 					}
 				});
-				/*
-				console.log(v);
-				var userSay={};
-				userSay.data=[];
-				var t=
-				 {
-	                    "text":v,
-	                    "alias":null,
-	                    "meta":null,
-	                    "userDefined":false
-	             };
-				userSay.data.push(t);
-				var userSaysHtml=addUserSay(userSay);
-				$(".usersaystable").append(userSaysHtml);
-				$(this).html('&nbsp;');
-				$(".usersay").off('click').on('click',function(){
-					
-					$(".usersayentity").addClass('uhide');
-					 $(this).find('.usersayentity').removeClass('uhide');
-				});
-				
-				
-				$(".delusersayicon").off('click').on('click',function(){
-					$(this).parent().parent().parent().remove();
-				});
-				
-				
-				$(".delusersaymetaicon").off('click').on('click',function(){
-					$(this).parent().parent().parent().remove();
-				});*/
 			}
+			return true;
 		}
 	});
 	
@@ -420,7 +392,10 @@ function parameterEventHandler(){
 		autoCompleteEntity($(this).attr('id'),$(this).val());
 	});
 	
-	
+	$(".parameter-dataType").off("focus").on('focus',function(e){
+		console.log(".parameter-dataType="+$(this).attr('id'));
+		autoCompleteEntity($(this).attr('id'),'');
+	});
 	
 	$(".parameter-required").off("change").on('change',function(e){
 		console.log($(this).is(':checked'));
@@ -487,7 +462,7 @@ function initParameterPrompts(){
 	$(".intent-param-prompts-editor").html(html);
 	
 	create_empty_prompt();
-	
+	$("#default-window-box .title").html("为\""+nowParameterPrompts.parametername+"\"添加提示语");
 	$("#default-window-box").show();
 	$(".close").off("click").on('click',function(e){
 		$("#default-window-box").hide();
