@@ -34,7 +34,7 @@ $(document).ready(function(){
   
   
 
-  $(".btn-primary").click(function(){
+  $(".btn-primary,#gologin").click(function(){
 	  
 	   var data={};
 	   data.userName=$("#userName").val();
@@ -54,7 +54,7 @@ $(document).ready(function(){
 	   
 	   
   });
-  $("#zhuce").click(function(){
+  $("#goenroll").click(function(){
 	   window.location.href='enroll.html';
  });
 });
@@ -69,10 +69,10 @@ $(document).ready(function(){
 <div class="content">
 	<div class="">
 		<div class="logiin_btn">
-		        	<div class="logiin_btn_top"><img class="img_lg"  src="images/login.png"></div>
+		        	<div class="logiin_btn_top"><a href="index.html"><img class="img_lg"  src="images/login.png"></a></div>
 		        	<div class="logiin_btn_btm">
-			        	<button type="button" class="btn btn-primary btn-lg" id="denglu">登&nbsp录</button>
-			        	<button type="button" class="btn btn-default btn-lg active" id="zhuce">注&nbsp册</button>
+			        	<button type="button" class="btn btn-primary btn-lg focusbutton" id="gologin">登&nbsp录</button>
+			        	<button type="button" class="btn btn-default btn-lg buttondefault" id="goenroll">注&nbsp册</button>
 			 </div>
 		</div>
 		<div class="zc_box">

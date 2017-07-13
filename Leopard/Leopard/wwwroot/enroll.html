@@ -1,49 +1,53 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html mip>
 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+  <meta name="description" content="最简易的聊天机器人设计及协作平台，十分钟轻松制作我的聊天机器人！集成深度神经网络、知识图谱、和自然语言处理的超强技术" />
   <title>立即注册</title>
   <link rel="stylesheet" href="css/bootstrap.min.css" >
   <link rel="stylesheet" href="css/bootstrapValidator.css" />
   <link rel="stylesheet" type="text/css" href="css/robot.css">
+  <link rel="stylesheet" href="css/jquery-ui.css" >
   <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-ui.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/bootstrapValidator.js"></script>
+  <script src="js/main.js"></script>
 <script>
 $(document).ready(function(){
-  $("#input1").focus(function(){
+  $("#userName").focus(function(){
     $("#Image1").attr("src","images/zhuce_01_b.png");
     $("#zc_box1").css("border-color","#1698F3");
   });
-  $("#input1").blur(function(){
+  $("#userName").blur(function(){
     $("#Image1").attr("src","images/zhuce_01.png");
     $("#zc_box1").css("border-color","");
   });
-  $("#input2").focus(function(){
+  $("#email").focus(function(){
     $("#Image2").attr("src","images/mail_02_b.png");
     $("#zc_box2").css("border-color","#1698F3");
   });
-  $("#input2").blur(function(){
+  $("#email").blur(function(){
     $("#zc_box2").css("border-color","");
     $("#Image2").attr("src","images/mail_02.png");
   });
-  $("#input3").focus(function(){
+  $("#Password").focus(function(){
     $("#Image3").attr("src","images/zhuce_03_b.png");
     $("#zc_box3").css("border-color","#1698F3");
   });
-  $("#input3").blur(function(){
+  $("#Password").blur(function(){
     $("#Image3").attr("src","images/zhuce_03.png");
     $("#zc_box3").css("border-color","");
   });
-  $("#code_input").focus(function(){
-    $("#Image4").attr("src","images/zhuce_04_b.png");
+  $("#confirmPassword").focus(function(){
+    $("#Image4").attr("src","images/zhuce_03_b.png");
     $("#zc_box4").css("border-color","#1698F3");
   });
-  $("#code_input").blur(function(){
-    $("#Image4").attr("src","images/zhuce_04.png");
+  $("#confirmPassword").blur(function(){
+    $("#Image4").attr("src","images/zhuce_03.png");
     $("#zc_box4").css("border-color","");
   });
 /*
@@ -67,14 +71,14 @@ document.getElementById("btn").onclick=function(){time(this);};
 */
 
 
-$("#denglu").click(function(){
-	   window.location.href='revise.html';
+$("#gologin").click(function(){
+	   window.location.href='login.html';
 });
-$("#zhuce").click(function(){
-	   window.location.href='enroll.html';
-});
+
+
+
 enrollValidate('#formReg');
-$("#regButton").on('click',function(){
+$("#regButton,#goenroll").on('click',function(){
 	
 	var bootstrapValidator = $("#formReg").data('bootstrapValidator');
 	bootstrapValidator.validate();
@@ -95,7 +99,7 @@ function submitEnroll(){
 	$.post('http://www.yaya.ai/api/account/EmailRegister', data,function (json) {
 		//window.location.href='revise.html';
 		if(json!=null){
-			window.location.href='login.html';
+			//window.location.href='login.html';
 		}else{
 			//s_tip(json.Message,'fail');
 		}
@@ -196,7 +200,11 @@ function enrollValidate(id){
 <div class="content">
 	<div class="">
 		<div class="logiin_btn">
-		        	<div class="logiin_btn_top"><img class="img_lg"  src="images/login.png"></div>
+		        	<div class="logiin_btn_top"><a href="index.html"><img class="img_lg"  src="images/login.png"></a></div>
+		        	<div class="logiin_btn_btm">
+			        	<button type="button" class="btn btn-primary btn-lg buttondefault" id="gologin">登&nbsp录</button>
+			        	<button type="button" class="btn btn-default btn-lg focusbutton" id="goenroll">注&nbsp册</button>
+			        </div>
 		</div>
 		<form id="formReg" method="post" class="class="form-horizontal">
 		<div class="zc_box">
@@ -221,7 +229,7 @@ function enrollValidate(id){
 		
 		<div class="form-group zc_box_1"  id="zc_box4">
 			<div class="zc_box_logo">
-				<img id="Image3" src="images/zhuce_03.png" />
+				<img id="Image4" src="images/zhuce_03.png" />
 			</div>
 			<input id="confirmPassword" class='input-lg form-input name form-control' name="confirmPassword" type="password" placeholder='确认密码'>
 		</div>
@@ -237,11 +245,13 @@ function enrollValidate(id){
 		</div> -->
 	</div>
 	<button id="regButton" type="button" class="btn btn-primary btn-lg btn-block">免费注册</button>
-	<span class="btn_comt">点”免费注册“按钮，视为您接受<a style="color:#F67F21;" href="">使用协议</a><span>
+	<span class="btn_comt">点”免费注册“按钮，视为您接受<a style="color:#F67F21;" href="javascript:void(0);" onclick="showagree();">使用协议</a><span>
 				
 	</div>
-</div>
-</section>
 
+</section>
+<div id="dialog-modal" title="用户协议"  style="display:none;">
+
+</div>
 </body>
 </html>

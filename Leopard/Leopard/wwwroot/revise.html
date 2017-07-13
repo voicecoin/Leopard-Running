@@ -133,8 +133,8 @@
     		$("#start").html('+ 创建');
     		$("#bottitle").html("创建聊天机器人");
     	}else{
-    		$("#start").html('+ 更新');
-    		$("#bottitle").html("修改聊天机器人");
+    		$("#start").html('+ 保存');
+    		$("#bottitle").html("设置聊天机器人");
     	}
         $("#updateId").val(currentBot.id);
         $("#name").val(currentBot.name);
@@ -223,6 +223,7 @@
         var userId=$.cookie("userId");
         if(userId==null){
         	//window.location.href="login.html";
+        	$("#nobotmsg").show();
         	return;
         }
         $.get('http://api.yaya.ai/v1/Agents/'+userId+'/Query', null,function(json) {
@@ -230,75 +231,81 @@
           $("#createDiv").show();
           
           bots = json.items;
-          var robts = '';
-          for (var i = 0; i < bots.length; i++) {
-            var robt = bots[i];
-            robts += '<div id="bot'+robt.id+'" class="col-md-3 col-sm-6">';
-            robts += '<div class="cont_2" id="conts' + robt.id + '" style="">';
-            robts += '	    <div class="cont_2_top">';
-            robts += '<img src="images/int_02.jpg" data-bd-imgshare-binded="1">';
-            robts += '</div>';
-            robts += '<div class="cont_2_btm">';
-            robts += '<span>' + robt.name + '</span>';
-            robts += '<p>' + getDateDiff(getDateTimeStamp(robt.createdDate)) + '创建</p>';
-            robts += '</div>';
-            robts += '</div>';
-            robts += '<div class="cont_2" id="ashow' + robt.id + '" style="display: none;">';
-            robts += '<div class="cont_2_hide">';
-            
-            robts += '<div class="cont_2_11"><a href="javascript:void(0);" onclick="editIntent(\''+robt.id+'\')">编辑场景</a></div>';
-            robts += '<div class="cont_2_11"><a href="javascript:void(0);" onclick="editEntity(\''+robt.id+'\')">编辑词库</a></div>';
-            
-            robts += '<div class="row" style="font-size:1.5em;">';
-            robts += '	<div class="col-md-2"></div>';
-            robts += '	<div class="col-md-2"><a href="javascript:void(0);" onclick="editBot(\'' + robt.id + '\');"><span class="glyphicon glyphicon-cog"></span></a></div>';
-            //glyphicon glyphicon-share
-            //robts += '	<div class="col-md-2"><a class="contshow" href="##" id="shareshow1"><span><img src="images/ui_font.jpg" data-bd-imgshare-binded="1"></span></a></div>';
-            robts += '	<div class="col-md-2"><a href="##"><span class="glyphicon glyphicon-share"></span></a></div>';
-            
-            robts += '	<div class="col-md-2"><a href="javascript:void(0);" onclick="testdialog(\'' + robt.id + '\');"><span class="glyphicon glyphicon-play"></span></a></div>';
-            robts += '	<div class="col-md-2 ">';
-            robts += '<li class="dropdown col-center-block" style="list-style-type:none">';
-            robts += '<a href="#" class="dropdown-toggle" data-toggle="dropdown">';
-    		robts += '<span class="glyphicon glyphicon-option-vertical"></span>';
-    		robts += '</a>';
-    		robts += '<ul class="dropdown-menu directionup">';
-    		robts += '<li><a href="#">创建副本</a></li>';
-    		robts += '<li><a href="#">移动</a></li>';
-    		robts += '<li class="divider"></li>';
-    		robts += '<li><a href="javascript:void(0);" onclick="delBot(\''+robt.id+'\')">删除</a></li>';
-    		robts += '</ul>';
-    		robts += '</li>';
-    		robts += ' </div>';
-    		 robts += '	<div class="col-md-2"></div>';
-            robts += ' </div>';
-            robts += '</div>';
-            robts += '</div>';
-            robts += '</div>';
+          
+          if(bots.length>0){
+        	  var robts = '';
+              for (var i = 0; i < bots.length; i++) {
+                var robt = bots[i];
+                robts += '<div id="bot'+robt.id+'" class="col-md-3 col-sm-6">';
+                robts += '<div class="cont_2" id="conts' + robt.id + '" style="">';
+                robts += '	    <div class="cont_2_top">';
+                robts += '<img src="images/int_02.jpg" data-bd-imgshare-binded="1">';
+                robts += '</div>';
+                robts += '<div class="cont_2_btm">';
+                robts += '<span>' + robt.name + '</span>';
+                robts += '<p>' + getDateDiff(getDateTimeStamp(robt.createdDate)) + '创建</p>';
+                robts += '</div>';
+                robts += '</div>';
+                robts += '<div class="cont_2" id="ashow' + robt.id + '" style="display: none;">';
+                robts += '<div class="cont_2_hide">';
+                
+                robts += '<div class="cont_2_11"><a href="javascript:void(0);" onclick="editIntent(\''+robt.id+'\')">编辑场景</a></div>';
+                robts += '<div class="cont_2_11"><a href="javascript:void(0);" onclick="editEntity(\''+robt.id+'\')">编辑词库</a></div>';
+                
+                robts += '<div class="row" style="font-size:1.5em;">';
+                robts += '	<div class="col-md-2"></div>';
+                robts += '	<div class="col-md-2"><a href="javascript:void(0);" onclick="editBot(\'' + robt.id + '\');"><span class="glyphicon glyphicon-cog"></span></a></div>';
+                //glyphicon glyphicon-share
+                //robts += '	<div class="col-md-2"><a class="contshow" href="##" id="shareshow1"><span><img src="images/ui_font.jpg" data-bd-imgshare-binded="1"></span></a></div>';
+                robts += '	<div class="col-md-2"><a href="##"><span class="glyphicon glyphicon-share"></span></a></div>';
+                
+                robts += '	<div class="col-md-2"><a href="javascript:void(0);" onclick="testdialog(\'' + robt.id + '\');"><span class="glyphicon glyphicon-play"></span></a></div>';
+                robts += '	<div class="col-md-2 ">';
+                robts += '<li class="dropdown col-center-block" style="list-style-type:none">';
+                robts += '<a href="#" class="dropdown-toggle" data-toggle="dropdown">';
+        		robts += '<span class="glyphicon glyphicon-option-vertical"></span>';
+        		robts += '</a>';
+        		robts += '<ul class="dropdown-menu directionup">';
+        		robts += '<li><a href="#">创建副本</a></li>';
+        		//robts += '<li><a href="#">移动</a></li>';
+        		robts += '<li class="divider"></li>';
+        		robts += '<li><a href="javascript:void(0);" onclick="delBot(\''+robt.id+'\')">删除</a></li>';
+        		robts += '</ul>';
+        		robts += '</li>';
+        		robts += ' </div>';
+        		 robts += '	<div class="col-md-2"></div>';
+                robts += ' </div>';
+                robts += '</div>';
+                robts += '</div>';
+                robts += '</div>';
+              }
+              $(".row").html(robts);
+    	      
+              $(".row").on('mouseenter', '.cont_2', function() {
+                var id = $(this).attr("id").replace("conts", '').replace("ashow", '');
+                $("#conts" + id).hide();
+                $("#ashow" + id).show();
+              });
+
+              $(".row").on('mouseleave', '.cont_2',  function() {
+                var id = $(this).attr("id").replace("conts", '').replace("ashow", '');
+                $("#ashow" + id).hide();
+                $("#conts" + id).show();
+              });
+
+              $(".row").on('mouseenter', '.contshow', function() {
+                var id = $(this).attr("id").replace("shareshow", '').replace("bdbox", '');
+                $("#bdbox" + id).show();
+              });
+
+              $(".row").on('mouseenter', '.contshow', function() {
+                var id = $(this).attr("id").replace("shareshow", '').replace("bdbox", '');
+                $("#bdbox" + id).hide();
+              });
+          }else{
+        	  $("#nobotmsg").show();
           }
-          $(".row").html(robts);
-	      
-          $(".row").on('mouseenter', '.cont_2', function() {
-            var id = $(this).attr("id").replace("conts", '').replace("ashow", '');
-            $("#conts" + id).hide();
-            $("#ashow" + id).show();
-          });
-
-          $(".row").on('mouseleave', '.cont_2',  function() {
-            var id = $(this).attr("id").replace("conts", '').replace("ashow", '');
-            $("#ashow" + id).hide();
-            $("#conts" + id).show();
-          });
-
-          $(".row").on('mouseenter', '.contshow', function() {
-            var id = $(this).attr("id").replace("shareshow", '').replace("bdbox", '');
-            $("#bdbox" + id).show();
-          });
-
-          $(".row").on('mouseenter', '.contshow', function() {
-            var id = $(this).attr("id").replace("shareshow", '').replace("bdbox", '');
-            $("#bdbox" + id).hide();
-          });
+         
 			
         });
       }
@@ -349,6 +356,14 @@
     <div id="header"></div>
     <div class="content">
       <!-- 机器人列表 -->
+       <div id="nobotmsg" style="display:none">
+       <img class="img_lg" src="images/int_01.png">
+	   <div class="headline">
+			<h2>你还没有创建聊天机器人</h2>
+			<h4>您可以在这里创建，或者选择模板创建</h4>
+	   </div>
+      </div>
+      
       <div class="row"></div>
       <div id="createDiv" style="margin-bottom: 30px;display:none">
         <a href="javascript:void();" onclick="showCreate();">

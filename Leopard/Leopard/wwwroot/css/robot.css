@@ -56,10 +56,16 @@ body{background: url(../images/bg.png) repeat;background-size:100%;font-family: 
 
 /*娉ㄥ唽鍜岀櫥褰�*/
 .logiin_btn_btm button{width:100px;height:45px;}
-#denglu{margin-right:20px;margin-left: 20px;color:#ffffff;background-color: #3787CC;border:#3787CC;}
-#denglu:hover{background-color: #3787CC;border:#3787CC;}
-#zhuce{margin-left:20px;margin-right:20px;color:#ffffff;background-color: #F67F21;border:#F67F21;}
-#zhuce:hover{background-color: #C86415;border:#C86415;}
+.buttondefault{margin-right:20px;margin-left: 20px;color:#ffffff;background-color: #3787CC;border:#3787CC;}
+.buttondefault:hover{background-color: #3787CC;border:#3787CC;color:#ffffff;}
+.focusbutton{
+	background-color: #F67F21;
+    border: #F67F21;
+    color:#ffffff;
+}
+.focusbutton:hover{
+	background-color: #F67F21;border:#F67F21;color:#ffffff;
+}
 .en{display:block;margin-left:20px;padding-top:20px;}
 .en a{color:#8D8B8B;}
 .en a:hover{color:#BDBBBB;text-decoration:none;}
@@ -914,4 +920,5 @@ img {
     background-position: -96px -128px;
 
 }
+
 

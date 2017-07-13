@@ -62,3 +62,29 @@ function s_tip(context,s_class){
 		$(".s_tip").removeClass(s_class).remove();
 	},5000);
 }
+
+
+function showagree(){
+	
+	if($('#fullpage').length>0){
+		$.fn.fullpage.setAllowScrolling(false);
+	}
+	
+	
+	$.get("agreement.html",function(data){
+		$("#dialog-modal").html(data);
+		$("#dialog-modal").dialog(
+		  		{
+		  			modal: true,
+		  			height:500,
+		  			width:750,
+		  			beforeClose: function( event, ui ) {
+		  				if($('#fullpage').length>0){
+		  					$.fn.fullpage.setAllowScrolling(true);
+		  				}
+		  			}
+		  		}
+			);
+	});
+  
+}

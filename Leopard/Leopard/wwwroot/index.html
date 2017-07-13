@@ -20,6 +20,7 @@
   <script src="js/jquery.fullPage.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/bootstrapValidator.js"></script>
+  <script src="js/main.js"></script>
 
  <style>
 .col_img{margin-left: 30%;}
@@ -254,21 +255,7 @@ function enrollValidate(id){
 		  });
 }
 
-function showagree(){
-	
-	$.get("agreement.html",function(data){
-		$("#dialog-modal").html(data);
-		$("#dialog-modal").dialog(
-		  		{
-		  			modal: true,
-		  			height:500,
-		  			width:750,
-		  			source:"agreement.html"
-		  		}
-			);
-	});
-  
-}
+
 
 </script>
 
@@ -312,7 +299,7 @@ function showagree(){
 
 <section id="section1" style="height:500px;">
 <div class="content">
-	<a href="index.html"><img class="img_lg"  src="images/login.png" style="width:170px;height:170px;"></a>
+	<a href="javascript:void(0);"><img class="img_lg"  src="images/login.png" style="width:170px;height:170px;"></a>
 	<div class="headline">
 		<p id="h2">最简易的聊天机器人设计及协作平台</p>
 		<p id="h3">十分钟轻松制作我的聊天机器人！</p>
@@ -331,7 +318,7 @@ function showagree(){
 <div class="section" style="background-color:#1698F3;">
 
 
-    <div class="warp">
+<div class="warp">
 <div class="navbar navbar-default" role="navigation">
   <div class="navbar-header">
      　<!-- .navbar-toggle样式用于toggle收缩的内容，即nav-collapse collapse样式所在元素 -->
@@ -476,7 +463,7 @@ function showagree(){
 		</div>
 		</div>
 		</form>
-	<button type="button" id="login" class="btn btn-primary btn-lg btn-block">注册</button>
+	<button type="button" id="login" class="btn btn-primary btn-lg btn-block">立即体验</button>
 	<span class="btn_comt">点”注册“按钮，视为您接受<a href="javascript:void(0);" onclick="showagree();">使用协议</a><span>
 				
 </div>
@@ -562,7 +549,7 @@ function showagree(){
     </div>
   </div>
 </div>
-	<div class="row" style="margin-top: 200px;">
+	<div class="row" style="margin-top: 20px;">
 	<div class="col-md-12">
 		© 2012-2017 YayaBot — 深圳爱用科技有限公司
 	</div>

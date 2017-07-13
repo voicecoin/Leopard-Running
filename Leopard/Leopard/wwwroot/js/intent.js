@@ -25,9 +25,11 @@ function genIntentData(){
         //console.log($(this).attr('id'));
         var usersay={};
         usersay.id=$(this).attr('id');
+        usersay.intentId=intentNow.id;
 		if(typeof(usersay.id)=="undefined"){
 			usersay.id=''
 		}
+		usersay.text='';
 		usersay.data=[];
         var texts=$(this).find(".usersaytext:first span");
         $.each(texts,function(){
@@ -40,6 +42,7 @@ function genIntentData(){
         	}else{
         		dataitem.text=$(this).html();
         	}
+        	usersay.text+=dataitem.text;
         	usersay.data.push(dataitem);
         	
         });
@@ -261,15 +264,20 @@ function intentEventHandle(){
 		e.stopPropagation();
 		if(e.keyCode == 13){
 			if($(this).val().length>0){
-				var speech={
+				
+				var speechDom=$(".messagediv");
+				
+				speechDom.append(genSpeechHTML($(this).val()));
+				
+				/*var speech={
                     "id":"",
                     "intentResponseId":"",
-                    "speech":$(this).val(),
+                    "speech":[$(this).val()],
                     "type":"Text",
                     "platform":0
                 };
 				var html=addSpeech(speech);
-				$("#replytable").append(html);	 
+				$("#replytable").append(html);*/
 				$(this).val('');
 			}
 		}
@@ -441,7 +449,7 @@ var nowParameterPrompts={};
 
 function initParameterPrompts(){
 	$("#prompt-name").val(nowParameterPrompts.parametername);
-	$("#prompt-datatype").html(nowParameterPrompts.parameterdataType);
+	$("#prompt-datatype").val(nowParameterPrompts.parameterdataType);
 	$("#prompt-value").html(nowParameterPrompts.parametervalue);
 	var html='';
 	for(var i=0;i<nowParameterPrompts.parameterprompts.length;i++){
@@ -475,6 +483,11 @@ function initParameterPrompts(){
 		$(this).find(".prompt-cell-actions a").css("display", "none");
 	});
 	
+    $("#prompt-datatype").off("focus").on("focus",function(){
+    	autoCompleteEntity($(this).attr('id'), '');
+    });
+    
+    
     $("#close_default_window").off('click').on('click',function(){
 
     	$("#"+nowParameterPrompts.id).find(".parameter-name:first").val($("#prompt-name").val());
@@ -626,6 +639,10 @@ function autoCompleteEntity(id,key){
 function setValueToInput(id,value){
 	if(id.indexOf("pd")>-1){
 		$("#"+id).val(value);
+	}else if(id.indexOf("prompt-datatype")>-1){
+		$("#"+id).val(value);
+		var nowParameterId=$("#ownParameterId").val();
+		$("#pd"+nowParameterId).val(value);
 	}else{
 		var t=$("#"+id).find('.entityselect:first').children('span').get(0);
 		t.innerHTML="@"+value;
@@ -643,6 +660,9 @@ function initAutoCompleteDiv(id,data){
 	var _top=0;
 	//参数类型
 	if(id.indexOf("pd")>-1){
+		_left=$("#"+id).offset().left;
+		_top=$("#"+id).offset().top+20;
+	}else if(id.indexOf("prompt-datatype")>-1){
 		_left=$("#"+id).offset().left;
 		_top=$("#"+id).offset().top+20;
 	}else{
@@ -1003,17 +1023,29 @@ function initIntent(intent){
 	 entityEventHander();*/
 }
 
+function genSpeechHTML(speech){
+	var speechhtml='<div class="ub">';
+	speechhtml+='<div class="ub ub-ver ub-pc template-editor-holder speechdiv" contenteditable="" placeholder="输入机器人回复" data-distinguish="true" style="width:90%;">'+speech+'</div>';
+	speechhtml+='<div class="ub ub-ver ub-ac ub-pc" style="width:10%">';
+	speechhtml+='<a href="javascript:void(0)" class="ico-item no-result delspeech" style="display: inline;"><span class="glyphicon glyphicon-trash del_icon"></span></a>';
+	speechhtml+='</div>';
+	speechhtml+='</div>';
+	return speechhtml;
+}
+
 function addSpeech(speech){
 	var speechhtml='';
 	speechhtml+='<div data-id="'+speech.id+'" data-intentResponseId="'+speech.intentResponseId+'" data-type="'+speech.type+'" data-platform="'+speech.platform+'" class="ub ub-ver messagediv" style="width:100%;height:auto;margin-bottom: -1px; border: 1px solid rgb(221, 221, 221);">';
 	
 	for(var i=0;i<speech.speech.length;i++){
-		speechhtml+='<div class="ub">';
+		
+		speechhtml+=genSpeechHTML(speech.speech[i]);
+		/*speechhtml+='<div class="ub">';
 		speechhtml+='<div class="ub ub-ver ub-pc template-editor-holder speechdiv" contenteditable="" placeholder="输入机器人回复" data-distinguish="true" style="width:90%;">'+speech.speech[i]+'</div>';
 		speechhtml+='<div class="ub ub-ver ub-ac ub-pc" style="width:10%">';
 		speechhtml+='<a href="javascript:void(0)" class="ico-item no-result delspeech" style="display: inline;"><span class="glyphicon glyphicon-trash del_icon"></span></a>';
 		speechhtml+='</div>';
-		speechhtml+='</div>';
+		speechhtml+='</div>';*/
 	}
 
 	speechhtml+='</div>';
