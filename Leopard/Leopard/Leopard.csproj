@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="wwwroot\docs\basics.html" />
     <Content Include="wwwroot\favicon.ico" />
   </ItemGroup>
   <ItemGroup>
