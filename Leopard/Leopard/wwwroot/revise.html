@@ -176,8 +176,21 @@
 	  			height:500,
 	  			title:currentBot.name+" 会话测试"
 	  		}
-	  	);  
+	  	); 
+		
+		$("#testtxt").off("keyup").on('keyup',function(e){
+			var v=$(this).val().replace('&nbsp;','').replace(/\r\n/g,'').replace(/\n/g,'');
+			if(e.keyCode == 13 ){
+				if(v.length>0){
+					sendTest();
+				}
+				return false;
+			}
+		});
+		
 	  }
+      
+      
       
       
       function sendTest(){
@@ -209,6 +222,7 @@
     					
     					console.log("$('#testcontent').height()="+$('#testcontent').get(0).scrollHeight);
     					$('#testcontent').animate({scrollTop: $('#testcontent').get(0).scrollHeight}, 300); 
+    					$("#testtxt").val('');
     				},error: function(e) {
     					s_tip(JSON.stringify(e),'fail');
     				}
