@@ -21,6 +21,16 @@ namespace Leopard.Core.Account
             return Ok(user);
         }
 
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("Exist")]
+        public async Task<IActionResult> UserExist([FromQuery] String userName)
+        {
+            var user = dc.Users.Any(x => x.UserName == userName);
+
+            return Ok(user);
+        }
+
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetUser([FromRoute] String id)
@@ -53,9 +63,7 @@ namespace Leopard.Core.Account
         public async Task<IActionResult> CreateUser(UserEntity accountModel)
         {
             if (dc.Users.Count(x => x.UserName == accountModel.UserName) > 0) {
-                var error = new ApiError("User already exists.");
-                error.isError = true;
-                return BadRequest(error);
+                return BadRequest("User already exists.");
             }
 
             accountModel.Id = Guid.NewGuid().ToString();
