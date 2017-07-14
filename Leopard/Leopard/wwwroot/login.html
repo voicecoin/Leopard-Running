@@ -9,55 +9,100 @@
   <title>登录</title>
   <link rel="stylesheet" href="css/bootstrap.min.css" >
   <link rel="stylesheet" type="text/css" href="css/robot.css">
-  <script src="js/jquery-3.2.0.min.js"></script>
+  <link rel="stylesheet" href="css/bootstrapValidator.css" />
+  <script src="js/jquery.min.js"></script>
   <script src="js/jquery.cookie.js"></script>
   <script src="js/bootstrap.min.js"></script>
+  <script src="js/bootstrapValidator.js"></script>
   <script src="js/main.js"></script>
+
 <script>
 $(document).ready(function(){
-  $("#input1").focus(function(){
+  $("#userName").focus(function(){
     $("#Image1").attr("src","images/zhuce_01_b.png");
     $("#zc_box").css("border-color","#1698F3");
   });
-  $("#input1").blur(function(){
+  $("#userName").blur(function(){
     $("#Image1").attr("src","images/zhuce_01.png");
     $("#zc_box").css("border-color","");
   });
-  $("#input2").focus(function(){
+  $("#pw").focus(function(){
     $("#Image2").attr("src","images/zhuce_03_b.png");
     $("#zc_box1").css("border-color","#1698F3");
   });
-  $("#input2").blur(function(){
+  $("#pw").blur(function(){
     $("#Image2").attr("src","images/zhuce_03.png");
     $("#zc_box1").css("border-color","");
   });
   
   
+  enrollValidate('#formReg');
 
-  $(".btn-primary,#gologin").click(function(){
+  $("#loginbtn").click(function(){
+	  	var bootstrapValidator = $("#formReg").data('bootstrapValidator');
+	  	bootstrapValidator.validate();
+	  	if (bootstrapValidator.isValid()) {
+	  		 var data={};
+	  	   data.userName=$("#userName").val();
+	  	   data.password=$("#pw").val();
+	  	   //data.grant_type='password';
+	  	   $.post('http://www.yaya.ai/token', data,function(json) {
+	  	    	if(json.msg=='success'){
+	  	    		var s = new Date();
+	  	    		var d=new Date(s.getTime()+(json.expires_in*1000));
+	  	    		$.cookie("access_token", json.access_token, { "expires": d });
+	  	    		$.cookie("userId",json.user_id,{"expires":d});
+	  	    		window.location.href='revise.html';
+	  	    	}else{
+	  	    		s_tip("用户名或密码错误",'fail');
+	  	    	}
+	  	    });
+	  	}
 	  
-	   var data={};
-	   data.userName=$("#userName").val();
-	   data.password=$("#pw").val();
-	   //data.grant_type='password';
-	   $.post('http://www.yaya.ai/token', data,function(json) {
-	    	if(json.msg=='success'){
-	    		var s = new Date();
-	    		var d=new Date(s.getTime()+(json.expires_in*1000));
-	    		$.cookie("access_token", json.access_token, { "expires": d });
-	    		$.cookie("userId",json.user_id,{"expires":d});
-	    		window.location.href='revise.html';
-	    	}else{
-	    		s_tip("用户名或密码错误",'fail');
-	    	}
-	    });
-	   
-	   
   });
   $("#goenroll").click(function(){
 	   window.location.href='enroll.html';
  });
 });
+
+
+function enrollValidate(id){
+	  $(id).bootstrapValidator({
+		  	message: 'This value is not valid',
+		  	feedbackIcons: {
+		  		valid: 'glyphicon glyphicon-ok',
+		  		invalid: 'glyphicon glyphicon-remove',
+		  		validating: 'glyphicon glyphicon-refresh'
+		  	},
+		  	fields: {
+		  		userName: {
+		  			validators: {
+		  				notEmpty: {
+		  					message: '请输入用户名'
+		  				},
+		  				stringLength: {
+	                         min: 6,
+	                         max: 30,
+	                         message: '用户名长度在6到30之间'
+	                    }
+		  			}
+		  		},
+		  		
+		  		pw: {
+		  			validators: {
+		  				notEmpty: {
+		  					message: '请输入密码'
+		  				},
+		  				stringLength: {
+	                         min: 6,
+	                         max: 30,
+	                         message: '密码长度在6到30之间'
+	                    }
+		  			}
+		  		}
+		  	}
+		  });
+}
 </script>
 
 
@@ -71,24 +116,26 @@ $(document).ready(function(){
 		<div class="logiin_btn">
 		        	<div class="logiin_btn_top"><a href="index.html"><img class="img_lg"  src="images/login.png"></a></div>
 		        	<div class="logiin_btn_btm">
-			        	<button type="button" class="btn btn-primary btn-lg focusbutton" id="gologin">登&nbsp录</button>
-			        	<button type="button" class="btn btn-default btn-lg buttondefault" id="goenroll">注&nbsp册</button>
-			 </div>
+			        	<button type="button" class="btn btn-lg focusbutton" id="gologin">登&nbsp录</button>
+			        	<button type="button" class="btn btn-lg buttondefault" id="goenroll">注&nbsp册</button>
+			 		</div>
 		</div>
+				<form id="formReg" method="post" class="form-horizontal">
 		<div class="zc_box">
-			<div class="zc_box_1" id="zc_box">
+			<div class="form-group zc_box_1" id="zc_box">
 				<div class="zc_box_logo">
 					<img id="Image1"  src="images/zhuce_01.png" />
 				</div>
-				<input id="userName" class='input-lg form-input name' name="" value="" placeholder='用户名'>
+				<input id="userName" class='input-lg form-input name form-control' name="userName" value="" placeholder='用户名'>
 			</div>
-			<div class="zc_box_1"  id="zc_box1">
+			<div class="form-group zc_box_1"  id="zc_box1">
 				<div class="zc_box_logo">
 					<img id="Image2"  src="images/zhuce_03.png" />
 				</div>
-				<input id="pw" class='input-lg form-input name' name="" type="password" value="" placeholder='密码'>
+				<input id="pw" class='input-lg form-input name form-control' name="pw" type="password" value="" placeholder='密码'>
 			</div>
 	</div>
+			</form>
 	<button id="loginbtn" type="button" class="btn btn-primary btn-lg btn-block">登 录</button>
 	<div class="fgt">
 		<span class="fgt_password"><a href="forget.html">忘记密码？</a></span><br>

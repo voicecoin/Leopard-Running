@@ -78,7 +78,7 @@ $("#gologin").click(function(){
 
 
 enrollValidate('#formReg');
-$("#regButton,#goenroll").on('click',function(){
+$("#regButton").on('click',function(){
 	
 	var bootstrapValidator = $("#formReg").data('bootstrapValidator');
 	bootstrapValidator.validate();
@@ -95,16 +95,18 @@ function submitEnroll(){
 	data.userName=$("#userName").val();
 	data.Password=$('#Password').val();
 	data.confirmPassword=$('#confirmPassword').val();
-	
-	$.post('http://www.yaya.ai/api/account/EmailRegister', data,function (json) {
-		//window.location.href='revise.html';
-		if(json!=null){
-			//window.location.href='login.html';
-		}else{
-			//s_tip(json.Message,'fail');
-		}
-		
-		
+	$.ajax({
+		url: 'http://www.yaya.ai/api/account',
+		type: "POST",
+		datType: "JSON",
+		contentType: "application/json",
+		data: JSON.stringify(data),
+		success: function (data) {
+			s_tip("创建成功",'ok');
+			window.location.href="login.html";
+		},error: function(e) {
+			s_tip(e.responseJSON.message,'fail');
+  	  	}
 	});
 }
 
@@ -206,7 +208,7 @@ function enrollValidate(id){
 			        	<button type="button" class="btn btn-default btn-lg focusbutton" id="goenroll">注&nbsp册</button>
 			        </div>
 		</div>
-		<form id="formReg" method="post" class="class="form-horizontal">
+		<form id="formReg" method="post" class="form-horizontal">
 		<div class="zc_box">
 			<div class="form-group zc_box_1" id="zc_box1">
 				<div class="zc_box_logo" >

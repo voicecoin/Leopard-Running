@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html mip>
 
 <head>
@@ -163,16 +163,23 @@ function submitEnroll(){
 	data.Password=$('#Password').val();
 	data.confirmPassword=$('#confirmPassword').val();
 	
-	$.post('http://www.yaya.ai/api/account/EmailRegister', data,function (json) {
-		//window.location.href='revise.html';
-		if(json!=null){
-			window.location.href='login.html';
-		}else{
-			//s_tip(json.Message,'fail');
-		}
-		
-		
+	
+	$.ajax({
+		url: 'http://www.yaya.ai/api/account',
+		type: "POST",
+		datType: "JSON",
+		contentType: "application/json",
+		data: JSON.stringify(data),
+		success: function (data) {
+			s_tip("创建成功",'ok');
+			window.location.href="login.html";
+		},error: function(e) {
+			console.log(e);
+			s_tip(e.responseJSON.message,'fail');
+  	  	}
 	});
+	
+
 }
 
 function enrollValidate(id){
@@ -440,30 +447,30 @@ function enrollValidate(id){
 				<div class="zc_box_logo" >
 					<img id="Image1" src="images/zhuce_01.png" />
 				</div>
-				<input id="userName" class='input-lg form-input name form-control' name="userName" placeholder='用户名'>
+				<input id="userName" class='input-lg form-input name form-control' name="userName" placeholder='用户名' value="">
 			</div>
 		<div class="form-group zc_box_1"  id="zc_box2">
 			<div class="zc_box_logo">
 				<img id="Image2" src="images/mail_02.png" />
 			</div>
-			<input id="email" class='input-lg form-input name form-control' name="email" placeholder='邮箱'>
+			<input id="email" class='input-lg form-input name form-control' name="email" placeholder='邮箱' value="">
 		</div>
 		<div class="form-group zc_box_1"  id="zc_box3">
 			<div class="zc_box_logo">
 				<img id="Image3" src="images/zhuce_03.png" />
 			</div>
-			<input id="Password" class='input-lg form-input name form-control' name="Password" type="password" placeholder='密码'>
+			<input id="Password" class='input-lg form-input name form-control' name="Password" type="password" value="" placeholder='密码'>
 		</div>
 		
 		<div class="form-group zc_box_1"  id="zc_box4">
 			<div class="zc_box_logo">
 				<img id="Image4" src="images/zhuce_03.png" />
 			</div>
-			<input id="confirmPassword" class='input-lg form-input name form-control' name="confirmPassword" type="password" placeholder='确认密码'>
+			<input id="confirmPassword" class='input-lg form-input name form-control' name="confirmPassword" value="" type="password" placeholder='确认密码'>
 		</div>
 		</div>
 		</form>
-	<button type="button" id="login" class="btn btn-primary btn-lg btn-block">立即体验</button>
+	<button type="button" id="regButton" class="btn btn-primary btn-lg btn-block">立即体验</button>
 	<span class="btn_comt">点”注册“按钮，视为您接受<a href="javascript:void(0);" onclick="showagree();">使用协议</a><span>
 				
 </div>
@@ -544,7 +551,7 @@ function enrollValidate(id){
       <div class="caption">
         <h3>联系方式</h3>
         
-        <p>邮箱：info@yaya.ai</p>
+        <p>邮箱：support@yaya.ai</p>
       </div>
     </div>
   </div>
