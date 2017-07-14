@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html mip>
 
 <head>
@@ -53,16 +53,6 @@
   </style>
 <script>
 $(function(){
-	
-	
-	$("#userName").focus(function(){
-	    $("#Image1").attr("src","images/zhuce_01_b.png");
-	    $("#zc_box1").css("border-color","#1698F3");
-	  });
-	  $("#userName").blur(function(){
-	    $("#Image1").attr("src","images/zhuce_01.png");
-	    $("#zc_box1").css("border-color","");
-	  });
 	  $("#email").focus(function(){
 	    $("#Image2").attr("src","images/mail_02_b.png");
 	    $("#zc_box2").css("border-color","#1698F3");
@@ -159,27 +149,16 @@ $(function(){
 function submitEnroll(){
 	var data={};
 	data.email=$("#email").val();
-	data.userName=$("#userName").val();
+    data.userName = $("#email").val();
 	data.Password=$('#Password').val();
 	data.confirmPassword=$('#confirmPassword').val();
 	
-	
-	$.ajax({
-		url: 'http://www.yaya.ai/api/account',
-		type: "POST",
-		datType: "JSON",
-		contentType: "application/json",
-		data: JSON.stringify(data),
-		success: function (data) {
-			s_tip("创建成功",'ok');
-			window.location.href="login.html";
-		},error: function(e) {
-			console.log(e);
-			s_tip(e.responseJSON.message,'fail');
-  	  	}
-	});
-	
-
+    $.post('/api/account', data).done(function (msg) {
+        s_tip("创建成功", 'ok');
+        window.location.href = 'login.html';
+    }).fail(function (xhr, status, error) {
+        s_tip(xhr.responseText, 'fail');
+    });
 }
 
 function enrollValidate(id){
@@ -191,18 +170,6 @@ function enrollValidate(id){
 		  		validating: 'glyphicon glyphicon-refresh'
 		  	},
 		  	fields: {
-		  		userName: {
-		  			validators: {
-		  				notEmpty: {
-		  					message: '请输入用户名'
-		  				},
-		  				stringLength: {
-	                         min: 6,
-	                         max: 30,
-	                         message: '用户名长度必须在6到30之间'
-	                    }
-		  			}
-		  		},
 		  		email: {
 		  			validators: {
 		  				notEmpty: {
@@ -224,10 +191,6 @@ function enrollValidate(id){
 	                         max: 30,
 	                         message: '密码长度必须在6到30之间'
 	                    },
-	                    different: {//不能和用户名相同
-	                         field: 'userName',
-	                         message: '不能和用户名相同'
-	                    },
 	                    regexp: {
 	                         regexp: /^(?=.*[A-Z].*$)(?=.*[a-z].*$)(?=.*[0-9].*$)(?=.*[\x21-\x7e].*$)/,
 	                         message: '至少一位大写字母，小写字母以及特殊字符'
@@ -247,10 +210,6 @@ function enrollValidate(id){
 	                    identical: {//相同
 	                         field: 'Password',
 	                         message: '两次密码不一致'
-	                    },
-	                    different: {//不能和用户名相同
-	                         field: 'userName',
-	                         message: '不能和用户名相同'
 	                    },
 	                    regexp: {
 	                         regexp: /^(?=.*[A-Z].*$)(?=.*[a-z].*$)(?=.*[0-9].*$)(?=.*[\x21-\x7e].*$)/,
@@ -443,12 +402,6 @@ function enrollValidate(id){
 	</div>
 	<form id="formReg" method="post" class="class="form-horizontal">
 		<div class="zc_box">
-			<div class="form-group zc_box_1" id="zc_box1">
-				<div class="zc_box_logo" >
-					<img id="Image1" src="images/zhuce_01.png" />
-				</div>
-				<input id="userName" class='input-lg form-input name form-control' name="userName" placeholder='用户名' value="">
-			</div>
 		<div class="form-group zc_box_1"  id="zc_box2">
 			<div class="zc_box_logo">
 				<img id="Image2" src="images/mail_02.png" />

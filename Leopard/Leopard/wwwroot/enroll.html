@@ -86,20 +86,14 @@ function submitEnroll(){
     data.email = $("#email").val();
     data.userName = $("#email").val();
 	data.Password=$('#Password').val();
-	data.confirmPassword=$('#confirmPassword').val();
-	$.ajax({
-		url: 'http://www.yaya.ai/api/account',
-		type: "POST",
-		datType: "JSON",
-		contentType: "application/json",
-		data: JSON.stringify(data),
-		success: function (data) {
-			s_tip("创建成功",'ok');
-			window.location.href="login.html";
-		},error: function(e) {
-			s_tip(e.responseJSON.message,'fail');
-  	  	}
-	});
+    data.confirmPassword = $('#confirmPassword').val();
+
+    $.post('/api/account', data).done(function (msg) {
+        s_tip("创建成功", 'ok');
+        window.location.href = 'login.html';
+    }).fail(function (xhr, status, error) {
+        s_tip(xhr.responseText, 'fail');
+    });
 }
 
 function enrollValidate(id){
