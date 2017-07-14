@@ -82,9 +82,9 @@ function genIntentData(){
 		message.intentResponseId=$(this).attr('data-intentResponseId');
 		message.type=$(this).attr('data-type');
 		message.platform=$(this).attr('data-platform');
-		message.speech=[];
+		message.speeches=[];
 		$.each($(this).find(".speechdiv"),function(){
-			message.speech.push($(this).html());
+			message.speeches.push($(this).html());
 		});
 		response.messages.push(message);
 	});
@@ -1037,9 +1037,9 @@ function addSpeech(speech){
 	var speechhtml='';
 	speechhtml+='<div data-id="'+speech.id+'" data-intentResponseId="'+speech.intentResponseId+'" data-type="'+speech.type+'" data-platform="'+speech.platform+'" class="ub ub-ver messagediv" style="width:100%;height:auto;margin-bottom: -1px; border: 1px solid rgb(221, 221, 221);">';
 	
-	for(var i=0;i<speech.speech.length;i++){
+	for(var i=0;i<speech.speeches.length;i++){
 		
-		speechhtml+=genSpeechHTML(speech.speech[i]);
+		speechhtml+=genSpeechHTML(speech.speeches[i]);
 		/*speechhtml+='<div class="ub">';
 		speechhtml+='<div class="ub ub-ver ub-pc template-editor-holder speechdiv" contenteditable="" placeholder="输入机器人回复" data-distinguish="true" style="width:90%;">'+speech.speech[i]+'</div>';
 		speechhtml+='<div class="ub ub-ver ub-ac ub-pc" style="width:10%">';

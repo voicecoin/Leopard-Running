@@ -153,7 +153,7 @@ function submitEnroll(){
 	data.Password=$('#Password').val();
 	data.confirmPassword=$('#confirmPassword').val();
 	
-    $.post('/api/account', data).done(function (msg) {
+    $.post('http://www.yaya.ai/api/account', data).done(function (msg) {
         s_tip("创建成功", 'ok');
         window.location.href = 'login.html';
     }).fail(function (xhr, status, error) {
