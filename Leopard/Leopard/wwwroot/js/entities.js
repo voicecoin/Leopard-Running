@@ -124,7 +124,7 @@ function initEntityEntries(entries){
 function initEntity(entity){
 	 $("#entity_id").val(entity.id);
 	 $("#entity-name").val(entity.name);
-	 if(entity.isEnum){
+	 if(!entity.isEnum){
 		 $(".ng-empty-synonyms").toggleClass("ng-checked",true);
 		 $("#synonyms-data").val("1");
 		 $(".alert-operation-tip").show();
@@ -286,7 +286,7 @@ function entityEventHander(){
 				var data={};
 				data.id=entity.id;
 				data.name=$("#entity-name").val();
-				data.isEnum=newsynony?"True":"False";
+                data.isEnum = newsynony ? "False" : "True";
 				$.ajax({
 					url: 'http://api.yaya.ai/v1/Entities/'+entity.id,
 					type: 'PUT',
@@ -740,7 +740,7 @@ function submitEntity(){
 	}
 
 	data.entries=[];
-	data.isEnum=($("#synonyms-data").val()==1)?"True":"False";
+    data.isEnum = ($("#synonyms-data").val() == 1) ? "False" : "True";
 	$("#entity-editor").find(".entry").each(function(){
 		var entry={};
 		var t=$(this).find(".entryname:first").val();

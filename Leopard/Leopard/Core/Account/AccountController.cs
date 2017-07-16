@@ -72,6 +72,7 @@ namespace Leopard.Core.Account
             accountModel.CreatedDate = DateTime.UtcNow;
             accountModel.ModifiedUserId = accountModel.Id;
             accountModel.ModifiedDate = DateTime.UtcNow;
+            accountModel.FirstName = accountModel.UserName.Split('@').First();
 
             dc.Users.Add(accountModel);
             await dc.SaveChangesAsync();

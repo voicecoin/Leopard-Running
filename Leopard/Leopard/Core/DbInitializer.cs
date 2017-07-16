@@ -35,7 +35,7 @@ namespace Leopard.Core
             if (rootUser == null)//means app need create an root user
             {
                 UserEntity accountModel = new UserEntity();
-                accountModel.Id = Guid.NewGuid().ToString();
+                accountModel.Id = "8a9fd693-9038-4083-87f7-08e45eff61d2";
                 accountModel.BundleId = bundle.Id;
                 accountModel.CreatedUserId = accountModel.Id;
                 accountModel.CreatedDate = DateTime.UtcNow;
@@ -43,6 +43,7 @@ namespace Leopard.Core
                 accountModel.ModifiedDate = DateTime.UtcNow;
                 accountModel.UserName = "info@yaya.ai";
                 accountModel.FirstName = "Yaya";
+                accountModel.LastName = "Bot";
                 accountModel.Email = "info@yaya.ai";
                 accountModel.Password = "Yayabot123";
                 accountModel.Description = "丫丫人工智能聊天机器人";
@@ -53,7 +54,7 @@ namespace Leopard.Core
             if (rootUser == null)
             {
                 UserEntity accountModel = new UserEntity();
-                accountModel.Id = Guid.NewGuid().ToString();
+                accountModel.Id = "265d804d-0073-4a50-bd07-98a28e10f9fb";
                 accountModel.BundleId = bundle.Id;
                 accountModel.CreatedUserId = accountModel.Id;
                 accountModel.CreatedDate = DateTime.UtcNow;
