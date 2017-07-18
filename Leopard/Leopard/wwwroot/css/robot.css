@@ -921,4 +921,10 @@ img {
 
 }
 
+.botIcon{
+  width: 116px;
+  height: 116px;
+  border-radius: 58px;
+ -moz-border-radius:58px;	
+}
 

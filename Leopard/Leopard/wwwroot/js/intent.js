@@ -177,6 +177,10 @@ function loadIntents(){
 function initIntentsPage(){
 	var key=$("#search").val();
 	if(agentId!=null){
+		$("#createIntent").off('click').on('click',function(){
+			//showEntity('');
+			showIntent('');
+		});
 		var url= 'http://api.yaya.ai/v1/Intents/'+agentId+"/Query";
 		if(key!=null && key.length>0){
 			url+='?name='+key
@@ -222,10 +226,7 @@ function initIntents(){
          event.stopPropagation();
      });
 	
-	$("#createIntent").off('click').on('click',function(){
-		//showEntity('');
-		showIntent('');
-	});
+	
 	
 	
 }
