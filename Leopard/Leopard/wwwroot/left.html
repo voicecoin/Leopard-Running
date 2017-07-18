@@ -73,6 +73,9 @@ function loadBots(){
 	         var robt = bots[i];
 	         //robt.id='f3123461-cdeb-4f0f-bdea-8b2c984115e8';
 	         robts += '<li><a href="javascript:void(0);" onclick="resetAgent(\''+robt.id+'\')">' + robt.name + '</a></li>';
+	         if(robt.id==agentId){
+	        	 $("#nowbot").html(robt.name);
+	         }
 	       }
 	       $("#botlistmenu").html(robts);
 		
@@ -121,7 +124,8 @@ function logoutLeft(){
 				<div class="ui_side_list_li_right">
 					 <div class="dropdown">
 					  <button class="ui_btn" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-					    我的机器人
+					    
+					    <span id="nowbot">我的机器人</span>
 					    <span class="caret"></span>
 					  </button>
 					  <ul id="botlistmenu" class="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -141,7 +145,7 @@ function logoutLeft(){
 					<img id="Img2"  src="images/icon_02_a.png" />
 				</div>
 				<div class="ui_side_list_li_right" >
-					<a href="javascript:void(0);" onclick="goIntent();"><span class="ui_side_list_li_right_span">使用场景<span>&nbsp; &nbsp;  +</span></span></a>
+					<a href="javascript:void(0);" onclick="goIntent();"><span class="ui_side_list_li_right_span">使用场景</span></a><span>&nbsp; &nbsp;  +</span>
 				</div>
 			</div>
 		</div>
@@ -151,7 +155,7 @@ function logoutLeft(){
 					<img id="Img3"  src="images/icon_03_a.png" />
 				</div>
 				<div class="ui_side_list_li_right">
-					<a href="javascript:void(0);"  onclick="goEntity();"><span class="ui_side_list_li_right_span">用户词库<span>&nbsp; &nbsp; +</span></span></a>
+					<a href="javascript:void(0);"  onclick="goEntity();"><span class="ui_side_list_li_right_span">用户词库</span></a><span>&nbsp; &nbsp; +</span>
 				</div>
 			</div>
 		</div>
@@ -192,7 +196,7 @@ function logoutLeft(){
 					<img id="Img7" src="images/icon_07_a.png" />
 				</div>
 				<div class="ui_side_list_li_right">
-					<a href="http://www.bots123.com/"><span class="ui_side_list_li_right_span">开发论坛</span></a>
+					<a href="http://forum.yaya.ai"><span class="ui_side_list_li_right_span">开发论坛</span></a>
 				</div>
 			</div>
 		</div>

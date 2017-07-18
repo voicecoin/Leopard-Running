@@ -52,6 +52,13 @@
 
   </style>
 <script>
+
+
+function validateEmailRemote(){
+	var email=$("#email").val();
+	
+}
+
 $(function(){
 	  $("#email").focus(function(){
 	    $("#Image2").attr("src","images/mail_02_b.png");
@@ -60,6 +67,7 @@ $(function(){
 	  $("#email").blur(function(){
 	    $("#zc_box2").css("border-color","");
 	    $("#Image2").attr("src","images/mail_02.png");
+	    validateEmailRemote();
 	  });
 	  $("#Password").focus(function(){
 	    $("#Image3").attr("src","images/zhuce_03_b.png");
@@ -106,9 +114,15 @@ $(function(){
 		verticalCentered: false,
 		anchors: ['page1', 'page2','page3','page4'],
 		navigation: true,
-		navigationTooltips: ['', '', '','']
+		navigationTooltips: ['', '', '',''],
+		lockAnchors:false,
+		recordHistory:false
 	});
-
+	$.fn.fullpage.setLockAnchors(true);
+	$.fn.fullpage.setRecordHistory(true);
+	
+	
+	
 	$("#login").on('click',function(){
 		window.location.href="login.html";
 	})
@@ -184,6 +198,25 @@ function enrollValidate(id){
 	                    regexp: {
 	                         regexp: /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/,
 	                         message: '请输入正确的邮箱'
+	                    },callback: {
+	                        message: '注册邮箱已存在',
+	                        callback: function (value, validator, $field) {
+	                            var bol = true;
+	                            $.ajax({
+	                                url: 'http://www.yaya.ai/api/account/Exist?userName='+value,
+	                                type: 'GET',
+	                                async: false,
+	                                data: {},
+	                            }).done(function (data) {
+	                                //刷新
+	                                bol = !data;
+
+	                            }).fail(function (data) {
+	                                bol = true;
+	                            });
+	                            return bol;
+	                        }
+	 
 	                    }
 		  			}
 		  		},
@@ -227,13 +260,7 @@ function enrollValidate(id){
 		  });
 }
 
-    var _hmt = _hmt || [];
-    (function () {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?a0ffd8247abd4a38f87f03db9e6c79a7";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-    })();
+
 
 </script>
 
@@ -266,8 +293,8 @@ function enrollValidate(id){
   <div id="nav_list" class="collapse navbar-collapse navbar-responsive-collapse" >
     	<ul class="nav navbar-nav">
 
-      		<li><a href="index.html#page1">首页</a></li>
-      		<li><a href="index.html#page2">团队</a></li>
+      		<li><a href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(1);">首页</a></li>
+      		<li><a  href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(2);">团队</a></li>
       		<li><a href="http://forum.yaya.ai/">讨论区</a></li>
       		<li><a href="login.html">登陆</a></li>
       		<!--<li  class="active"><a href="enroll.html">免费注册</a></li>-->
@@ -319,8 +346,8 @@ function enrollValidate(id){
   <!-- 屏幕宽度小于768px时，div.navbar-responsive-collapse容器里的内容都会隐藏，显示icon-bar图标，当点击icon-bar图标时，再展开。屏幕大于768px时，默认显示。 -->
   <div class="collapse navbar-collapse navbar-responsive-collapse" id="nav_list">
     	<ul class="nav navbar-nav">
-      		<li><a href="index.html#page1">首页</a></li>
-      		<li><a href="index.html#page2">团队</a></li>
+      		<li><a href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(1);">首页</a></li>
+      		<li><a  href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(2);">团队</a></li>
       		<li><a href="http://forum.yaya.ai/">讨论区</a></li>
       		<li><a href="login.html">登陆</a></li>
       		<!--<li  class="active"><a href="##">免费注册</a></li>-->
@@ -398,8 +425,8 @@ function enrollValidate(id){
   <!-- 屏幕宽度小于768px时，div.navbar-responsive-collapse容器里的内容都会隐藏，显示icon-bar图标，当点击icon-bar图标时，再展开。屏幕大于768px时，默认显示。 -->
   <div class="collapse navbar-collapse navbar-responsive-collapse" id="nav_list">
     	<ul class="nav navbar-nav">
-      		<li><a href="index.html#page1">首页</a></li>
-      		<li><a href="index.html#page2">团队</a></li>
+      		<li><a href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(1);">首页</a></li>
+      		<li><a  href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(2);">团队</a></li>
       		<li><a href="http://forum.yaya.ai/">讨论区</a></li>
       		<li><a href="login.html">登陆</a></li>
       		<!--<li  class="active"><a href="##">免费注册</a></li>-->
@@ -471,8 +498,8 @@ function enrollValidate(id){
   <!-- 屏幕宽度小于768px时，div.navbar-responsive-collapse容器里的内容都会隐藏，显示icon-bar图标，当点击icon-bar图标时，再展开。屏幕大于768px时，默认显示。 -->
   <div class="collapse navbar-collapse navbar-responsive-collapse" id="nav_list">
     	<ul class="nav navbar-nav">
-      		<li><a href="index.html#page1">首页</a></li>
-      		<li><a href="index.html#page2">团队</a></li>
+      		<li><a href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(1);">首页</a></li>
+      		<li><a  href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(2);">团队</a></li>
       		<li><a href="http://forum.yaya.ai/">讨论区</a></li>
       		<li><a href="login.html">登陆</a></li>
       		<!--<li  class="active"><a href="##">免费注册</a></li>-->

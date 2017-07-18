@@ -615,7 +615,7 @@ function addEntry(entry,idIndex){
 	
 	$("#entity-editor").append(html);
 	
-	$('#tags_'+idIndex).tagsInput({width:'100%',defaultText:'添加同义词',height:'auto',hide:false,autosize:true});
+	$('#tags_'+idIndex).tagsInput({width:'100%',defaultText:'按回车(Enter)添加同义词',height:'auto',hide:false,autosize:true});
 	$('#tags_'+idIndex).setEditModel(false);
 	//$('tags_'+i+'_tagsinput').show();
 	//$('tags_'+i+'_tagsinput').hide();
