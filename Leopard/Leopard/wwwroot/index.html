@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-  <meta name="description" content="最简易的聊天机器人设计及协作平台，十分钟轻松制作我的聊天机器人！集成深度神经网络、知识图谱、和自然语言处理的超强技术" />
+  <meta name="description" content="最简易的聊天机器人设计及协作平台，十分钟轻松制作我的聊天机器人！集成深度神经网络、知识图谱和自然语言处理的超强技术!" />
   
   <title>丫丫机器人</title>
   <link rel="stylesheet" href="css/bootstrap.min.css" >
@@ -52,6 +52,13 @@
 
   </style>
 <script>
+
+
+function validateEmailRemote(){
+	var email=$("#email").val();
+	
+}
+
 $(function(){
 	  $("#email").focus(function(){
 	    $("#Image2").attr("src","images/mail_02_b.png");
@@ -60,6 +67,7 @@ $(function(){
 	  $("#email").blur(function(){
 	    $("#zc_box2").css("border-color","");
 	    $("#Image2").attr("src","images/mail_02.png");
+	    validateEmailRemote();
 	  });
 	  $("#Password").focus(function(){
 	    $("#Image3").attr("src","images/zhuce_03_b.png");
@@ -106,9 +114,15 @@ $(function(){
 		verticalCentered: false,
 		anchors: ['page1', 'page2','page3','page4'],
 		navigation: true,
-		navigationTooltips: ['', '', '','']
+		navigationTooltips: ['', '', '',''],
+		lockAnchors:false,
+		recordHistory:false
 	});
-
+	$.fn.fullpage.setLockAnchors(true);
+	$.fn.fullpage.setRecordHistory(true);
+	
+	
+	
 	$("#login").on('click',function(){
 		window.location.href="login.html";
 	})
@@ -155,10 +169,16 @@ function submitEnroll(){
 	
     $.post('http://www.yaya.ai/api/account', data).done(function (msg) {
         s_tip("创建成功", 'ok');
-        window.location.href = 'login.html';
+        setTimeout('goLogin();', 2000);
+        
+        
     }).fail(function (xhr, status, error) {
         s_tip(xhr.responseText, 'fail');
     });
+}
+
+function goLogin(){
+	window.location.href = 'login.html';
 }
 
 function enrollValidate(id){
@@ -178,6 +198,25 @@ function enrollValidate(id){
 	                    regexp: {
 	                         regexp: /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/,
 	                         message: '请输入正确的邮箱'
+	                    },callback: {
+	                        message: '注册邮箱已存在',
+	                        callback: function (value, validator, $field) {
+	                            var bol = true;
+	                            $.ajax({
+	                                url: 'http://www.yaya.ai/api/account/Exist?userName='+value,
+	                                type: 'GET',
+	                                async: false,
+	                                data: {},
+	                            }).done(function (data) {
+	                                //刷新
+	                                bol = !data;
+
+	                            }).fail(function (data) {
+	                                bol = true;
+	                            });
+	                            return bol;
+	                        }
+	 
 	                    }
 		  			}
 		  		},
@@ -254,10 +293,10 @@ function enrollValidate(id){
   <div id="nav_list" class="collapse navbar-collapse navbar-responsive-collapse" >
     	<ul class="nav navbar-nav">
 
-      		<li><a href="index.html#page1">首页</a></li>
-      		<li><a href="index.html#page2">团队</a></li>
+      		<li><a href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(1);">首页</a></li>
+      		<li><a  href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(2);">团队</a></li>
       		<li><a href="http://forum.yaya.ai/">讨论区</a></li>
-      		<li><a href="login.html">登入</a></li>
+      		<li><a href="login.html">登陆</a></li>
       		<!--<li  class="active"><a href="enroll.html">免费注册</a></li>-->
 	 </ul>
   </div>
@@ -307,10 +346,10 @@ function enrollValidate(id){
   <!-- 屏幕宽度小于768px时，div.navbar-responsive-collapse容器里的内容都会隐藏，显示icon-bar图标，当点击icon-bar图标时，再展开。屏幕大于768px时，默认显示。 -->
   <div class="collapse navbar-collapse navbar-responsive-collapse" id="nav_list">
     	<ul class="nav navbar-nav">
-      		<li><a href="index.html#page1">首页</a></li>
-      		<li><a href="index.html#page2">团队</a></li>
+      		<li><a href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(1);">首页</a></li>
+      		<li><a  href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(2);">团队</a></li>
       		<li><a href="http://forum.yaya.ai/">讨论区</a></li>
-      		<li><a href="login.html">登入</a></li>
+      		<li><a href="login.html">登陆</a></li>
       		<!--<li  class="active"><a href="##">免费注册</a></li>-->
 	 </ul>
   </div>
@@ -386,10 +425,10 @@ function enrollValidate(id){
   <!-- 屏幕宽度小于768px时，div.navbar-responsive-collapse容器里的内容都会隐藏，显示icon-bar图标，当点击icon-bar图标时，再展开。屏幕大于768px时，默认显示。 -->
   <div class="collapse navbar-collapse navbar-responsive-collapse" id="nav_list">
     	<ul class="nav navbar-nav">
-      		<li><a href="index.html#page1">首页</a></li>
-      		<li><a href="index.html#page2">团队</a></li>
+      		<li><a href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(1);">首页</a></li>
+      		<li><a  href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(2);">团队</a></li>
       		<li><a href="http://forum.yaya.ai/">讨论区</a></li>
-      		<li><a href="login.html">登入</a></li>
+      		<li><a href="login.html">登陆</a></li>
       		<!--<li  class="active"><a href="##">免费注册</a></li>-->
 	 </ul>
   </div>
@@ -397,8 +436,8 @@ function enrollValidate(id){
 <section id="sectiong2" style="height:430px;">
 <div class="content">
 	<div class="fonts">
-		<h2>现在就立即使用，进入交互新时代</h2>
-		<h4>一只最聪明的小鸭机器人，正等待破壳而出！！</h4>
+		<h2>立即使用 开启交互新时代</h2>
+		<h4>一只最聪明的小鸭机器人，正等待破壳而出！！！</h4>
 	</div>
 	<form id="formReg" method="post" class="class="form-horizontal">
 		<div class="zc_box">
@@ -406,7 +445,7 @@ function enrollValidate(id){
 			<div class="zc_box_logo">
 				<img id="Image2" src="images/mail_02.png" />
 			</div>
-			<input id="email" class='input-lg form-input name form-control' name="email" placeholder='邮箱' value="">
+			<input id="email" class='input-lg form-input name form-control' name="email" placeholder='密保邮箱' value="">
 		</div>
 		<div class="form-group zc_box_1"  id="zc_box3">
 			<div class="zc_box_logo">
@@ -459,10 +498,10 @@ function enrollValidate(id){
   <!-- 屏幕宽度小于768px时，div.navbar-responsive-collapse容器里的内容都会隐藏，显示icon-bar图标，当点击icon-bar图标时，再展开。屏幕大于768px时，默认显示。 -->
   <div class="collapse navbar-collapse navbar-responsive-collapse" id="nav_list">
     	<ul class="nav navbar-nav">
-      		<li><a href="index.html#page1">首页</a></li>
-      		<li><a href="index.html#page2">团队</a></li>
+      		<li><a href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(1);">首页</a></li>
+      		<li><a  href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(2);">团队</a></li>
       		<li><a href="http://forum.yaya.ai/">讨论区</a></li>
-      		<li><a href="login.html">登入</a></li>
+      		<li><a href="login.html">登陆</a></li>
       		<!--<li  class="active"><a href="##">免费注册</a></li>-->
 	 </ul>
   </div>

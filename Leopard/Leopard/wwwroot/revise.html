@@ -55,7 +55,7 @@
 	    	});
 
 	  }
-	  
+	  //avatar
 	  function editBot(id){
 	      $.ajax({
 	    	  url: 'http://api.yaya.ai/v1/Agents/'+id,
@@ -73,13 +73,34 @@
 	    	});
 	  }
 	  
+	  
+	  var image = '';
+	  function selectImage(file){
+	  	if(!file.files || !file.files[0]){
+	 		return;
+	    }
+	  	image = '';
+		var reader = new FileReader();
+		reader.onload = function(evt){
+			document.getElementById('avatar').src = evt.target.result;
+			image = evt.target.result;
+			updateBot();
+			
+	    }
+		reader.readAsDataURL(file.files[0]);
+	  }
+	  
+	  function openfile(){
+		  document.getElementById('file_image').click();
+	  }
+	  
       function createBot(){
     		var data={};
     		data.name=$("#name").val();
     		data.description=$("#description").val();
     		data.isPublic=$('#isPublic').is(':checked')?1:0;
     		data.userId=$.cookie("userId");
-    		
+    		data.avatar=image;
     		$.ajax({
     			url: 'http://api.yaya.ai/v1/Agents',
     			type: "POST",
@@ -103,6 +124,7 @@
    	        data.name=$("#name").val();
        		data.description=$("#description").val();
        		data.isPublic=$('#isPublic').is(':checked')?1:0;
+       		data.avatar=image;
        		$.ajax({
     			url: 'http://api.yaya.ai/v1/Agents/'+currentBot.id,
     			type: "PUT",
@@ -111,7 +133,7 @@
     			data: JSON.stringify(data),
     			success: function () {
     			   s_tip("已更新",'ok');
-    			   $("#clo_img").click();
+    			   //$("#clo_img").click();
     			},error: function(e) {
   	    		   s_tip(e,'fail');
   	    	    }
@@ -140,7 +162,8 @@
         $("#name").val(currentBot.name);
         $("#description").val(currentBot.description);
         $('#isPublic:first').attr("checked", currentBot.isPublic);
-        
+        if(currentBot.avatar!=null)
+        	$('#avatar').attr("src", currentBot.avatar);
       }
 
       function getBot(id){
@@ -253,7 +276,12 @@
                 robts += '<div id="bot'+robt.id+'" class="col-md-3 col-sm-6">';
                 robts += '<div class="cont_2" id="conts' + robt.id + '" style="">';
                 robts += '	    <div class="cont_2_top">';
-                robts += '<img src="images/int_02.jpg" data-bd-imgshare-binded="1">';
+                if(robt.avatar!=null){
+                	robts += '<img class="botIcon" src="'+robt.avatar+'" data-bd-imgshare-binded="1">';
+                }else{
+                	robts += '<img class="botIcon" src="images/int_02.jpg" data-bd-imgshare-binded="1">';
+                }
+                
                 robts += '</div>';
                 robts += '<div class="cont_2_btm">';
                 robts += '<span>' + robt.name + '</span>';
@@ -371,7 +399,7 @@
     <div id="header"></div>
     <div class="content">
       <!-- 机器人列表 -->
-       <div id="nobotmsg" style="display:none;margin-top: 20%;">
+       <div id="nobotmsg" style="display:none;margin-top: 100px;">
        <img class="img_lg" src="images/int_01.png">
 	   <div class="headline">
 			<h2>你还没有创建聊天机器人</h2>
@@ -414,11 +442,12 @@
 			<span class="chk_span">是否公开</span>
 		</div>
 		<div class="setdata">
-			<div class="setdata_left">
-				<img src="images/int_02.jpg" />
+			<div class="setdata_left botIcon">
+				<img id="avatar" class="botIcon" src="images/int_02.jpg" />
 			</div>
 			<div class="setdata_right">
-				<div class="setdata_right_top"><a href="">上传新图标</a></div>
+			    <div style="display:none"><input type="file" onchange="selectImage(this);" accept="image/*" id="file_image" name="file_image"/></div>
+				<div class="setdata_right_top"><a href="javascript:void(0);" onclick="openfile();">上传新图标</a></div>
 				<div class="setdata_right_btm">图标 （尺寸 120 x 120）</div>
 			</div>
 			

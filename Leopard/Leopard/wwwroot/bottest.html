@@ -3,11 +3,9 @@
 
 
 function enterHander(obj, event, type){
-	var v=obj.val();
-	if(event.keyCode == 13 ){
-		if(v.length>0){
-			sendTest();
-		}
+	var v=$("#testtxt").val();
+	if(v.length>0 && event.keyCode == 13 ){
+		sendTest();
 		return false;
 	}
 }
@@ -35,7 +33,6 @@ function sendTest(){
 			data: {},
 			success: function (json) {
 				var html='<div class="ui_right_mid">';
-				
 				html+='<img  src="images/ui_06.jpg" />';
 				html+='<span>'+json+'</span>';
 				html+='</div>';

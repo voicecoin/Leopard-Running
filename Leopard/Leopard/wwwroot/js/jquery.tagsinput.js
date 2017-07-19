@@ -70,7 +70,7 @@
     input.data('minwidth', minWidth);
     input.data('maxwidth', maxWidth);
     input.data('tester_id', testerId);
-    input.css('width', minWidth);
+    input.css('width', minWidth<176?176:minWidth);
   };
 
 	$.fn.addTag = function(value,options) {
@@ -323,7 +323,7 @@
 					if ($(event.data.fake_input).val()==$(event.data.fake_input).attr('data-default')) {
 						$(event.data.fake_input).val('');
 					}
-					$("#intent-state-img").attr("src","images/ui_09_b.jpg");
+					//$("#intent-state-img").attr("src","images/ui_09_b.jpg");
 					$(event.data.fake_input).css('color','#000000');
 				});
 
