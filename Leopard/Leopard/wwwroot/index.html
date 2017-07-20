@@ -167,7 +167,7 @@ function submitEnroll(){
 	data.Password=$('#Password').val();
 	data.confirmPassword=$('#confirmPassword').val();
 	
-    $.post('http://www.yaya.ai/api/account', data).done(function (msg) {
+    $.post(host + '/v1/account', data).done(function (msg) {
         s_tip("创建成功", 'ok');
         setTimeout('goLogin();', 2000);
         
@@ -203,7 +203,7 @@ function enrollValidate(id){
 	                        callback: function (value, validator, $field) {
 	                            var bol = true;
 	                            $.ajax({
-	                                url: 'http://www.yaya.ai/api/account/Exist?userName='+value,
+	                                url: host + '/v1/account/Exist?userName='+value,
 	                                type: 'GET',
 	                                async: false,
 	                                data: {},

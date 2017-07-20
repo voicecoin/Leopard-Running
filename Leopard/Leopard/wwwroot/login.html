@@ -46,7 +46,7 @@ $(document).ready(function(){
 	  	   data.userName=$("#userName").val();
 	  	   data.password=$("#pw").val();
 	  	   //data.grant_type='password';
-	  	   $.post('http://www.yaya.ai/token', data,function(json) {
+	  	   $.post(host + '/token', data,function(json) {
 	  	    	if(json.msg=='success'){
 	  	    		var s = new Date();
 	  	    		var d=new Date(s.getTime()+(json.expires_in*1000));

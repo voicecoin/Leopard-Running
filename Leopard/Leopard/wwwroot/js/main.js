@@ -1,4 +1,5 @@
-
+var host = 'http://api.yaya.ai';
+//var host = 'http://localhost:9000';
 
 
 function getDateDiff(dateTimeStamp){

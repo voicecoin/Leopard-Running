@@ -2,7 +2,7 @@
 <script>
 
 function logout(){
-	$.get('http://www.yaya.ai/api/Account/Logout', null,function(json) {
+	$.get(host + '/v1/Account/Logout', null,function(json) {
     	window.location.href="login.html";
     	
     });
@@ -10,7 +10,7 @@ function logout(){
 
 $(document).ready(function(){
 	$.ajax({
-		url: 'http://www.yaya.ai/api/Account',
+		url: host + '/v1/Account',
 		type: "GET",
 		datType: "JSON",
 		contentType: "application/json",

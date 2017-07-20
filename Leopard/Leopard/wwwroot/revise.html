@@ -43,7 +43,7 @@
 	  
 	  function delBot(id){
 	      $.ajax({
-	    	  url: 'http://api.yaya.ai/v1/Agents/'+id,
+	    	  url: host + '/v1/Agents/'+id,
 	    	  type: 'DELETE',
 	    	  data: {},
 	    	  success: function(json) {
@@ -58,7 +58,7 @@
 	  //avatar
 	  function editBot(id){
 	      $.ajax({
-	    	  url: 'http://api.yaya.ai/v1/Agents/'+id,
+	    	  url: host + '/v1/Agents/'+id,
 	    	  type: 'GET',
 	    	  data: {},
 	    	  success: function(json) {
@@ -102,7 +102,7 @@
     		data.userId=$.cookie("userId");
     		data.avatar=image;
     		$.ajax({
-    			url: 'http://api.yaya.ai/v1/Agents',
+    			url: host + '/v1/Agents',
     			type: "POST",
     			datType: "JSON",
     			contentType: "application/json",
@@ -126,7 +126,7 @@
        		data.isPublic=$('#isPublic').is(':checked')?1:0;
        		data.avatar=image;
        		$.ajax({
-    			url: 'http://api.yaya.ai/v1/Agents/'+currentBot.id,
+    			url: host + '/v1/Agents/'+currentBot.id,
     			type: "PUT",
     			datType: "JSON",
     			contentType: "application/json",
@@ -266,7 +266,7 @@
         	$("#nobotmsg").show();
         	return;
         }
-        $.get('http://api.yaya.ai/v1/Agents/'+userId+'/Query', null,function(json) {
+        $.get(host + '/v1/Agents/'+userId+'/Query', null,function(json) {
           //console.log(json);
           $("#createDiv").show();
           
