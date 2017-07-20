@@ -64,15 +64,29 @@ function menuEvent(){
 }
 menuEvent();
 
+var menuBots=[];
+
+function menuChangeBot(id,nowbotname){
+    $("#nowbot").html(nowbotname);
+    for(var i=0;i<menuBots.length;i++){
+    	if(menuBots[i].id==id){
+    		menuBots[i].avatar='';
+    		$.cookie("currentBot",JSON.stringify(menuBots[i]),{"expires":1});
+    		break;
+    	}
+    }
+	resetAgent(id);
+}
+
 
 function loadBots(){
 	$.get('http://api.yaya.ai/v1/Agents/'+$.cookie("userId")+'/Query', null,function(json) {
-		bots = json.items;
+		   menuBots = json.items;
 	       var robts = '';
-	       for (var i = 0; i < bots.length; i++) {
-	         var robt = bots[i];
+	       for (var i = 0; i < menuBots.length; i++) {
+	         var robt = menuBots[i];
 	         //robt.id='f3123461-cdeb-4f0f-bdea-8b2c984115e8';
-	         robts += '<li><a href="javascript:void(0);" onclick="resetAgent(\''+robt.id+'\')">' + robt.name + '</a></li>';
+	         robts += '<li><a href="javascript:void(0);" onclick="menuChangeBot(\''+robt.id+'\',\''+robt.name+'\')">' + robt.name + '</a></li>';
 	         if(robt.id==agentId){
 	        	 $("#nowbot").html(robt.name);
 	         }

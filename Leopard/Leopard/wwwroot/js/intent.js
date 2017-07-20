@@ -166,6 +166,7 @@ function resetAgent(id){
 		showIntent();
 		break;
 	}
+	loadRight();
 }
 
 
@@ -259,7 +260,14 @@ function intentEventHandle(){
 	$("#replyname").off("blur").on('blur',function(){
 	    $("#replyname-img").attr("src","images/ui_19.jpg");
 	});
+	$(".usersaytext").off("focus").on('focus',function(){
+		console.log(".usersaytext");
+	    $("#ui_Image1").attr("src","images/ui_09_b.jpg");
+	});
 	
+	$(".usersaytext").off("blur").on('blur',function(){
+		$("#ui_Image1").attr("src","images/ui_09.jpg")
+	});
 	
 	$("#replyname").off("keyup").on('keyup',function(e){
 		e.stopPropagation();
@@ -420,27 +428,32 @@ function parameterEventHandler(){
 	});
 	
 	$(".parameter-prompts").off("focus").on('focus',function(e){
-		
-		var parametername=$(this).parent().parent().find(".parameter-name:first").val();
-		var parameterdataType=$(this).parent().parent().find(".parameter-dataType:first").val();
-		var parametervalue=$(this).parent().parent().find(".parameter-value:first").val();
-		var parameterprompts=$(this).parent().parent().find(".parameter-prompts:first").val();
+		var parent=$(this).parent().parent().parent();
+		var parametername=parent.find(".parameter-name:first").val();
+		var parameterdataType=parent.find(".parameter-dataType:first").val();
+		var parametervalue=parent.find(".parameter-value:first").val();
+		var parameterprompts=parent.find(".parameter-prompts:first").val();
 		if(parameterprompts.length==0){
 			parameterprompts=[];
 		}
-		var parameterid=$(this).parent().parent().attr("id");
+		var parameterid=parent.attr("id");
 		nowParameterPrompts.id=parameterid;
 		nowParameterPrompts.parametername=parametername;
 		nowParameterPrompts.parameterdataType=parameterdataType;
 		nowParameterPrompts.parametervalue=parametervalue;
 		nowParameterPrompts.parameterprompts=JSON.parse(parameterprompts);
 		initParameterPrompts();
-		
-		
-		
-		
 	});
 	
+	$(".ppdiv").off("mouseenter").on('mouseenter',function(){
+		 $(this).find('.delparameter-prompts').show();
+	});
+	$(".ppdiv").off("mouseleave").on('mouseleave',function(){
+		 $(this).find('.delparameter-prompts').hide();
+	});
+	$(".delparameter-prompts").off("click").on('click',function(){
+		 $(this).parent().parent().find('.parameter-prompts:first').val('[]');
+	});
 	
 }
 
@@ -883,8 +896,15 @@ function genParameter(parameter){
 	 
 	 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc ppdiv" style="width:16%">';
 	 
+	 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc" style="width:80%">';
 	 var showprompts=JSON.stringify(parameter.prompts==null?"[]":parameter.prompts);
 	 parametersHtml+="<input type='text' class='parameter-prompts' value='"+showprompts+"' placeholder='添加提示...'>";
+	 parametersHtml+='</div>';
+	 
+	 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc" style="width:20%">';
+	 parametersHtml+='<a href="javascript:void(0)" class="ico-item no-result delparameter-prompts" style="display: none;"><span class="glyphicon glyphicon-trash del_icon"></span></a>';
+	 parametersHtml+='</div>';
+	 
 	 parametersHtml+='</div>';
 	 
 	 
@@ -1059,17 +1079,22 @@ $(document).ready(function(){
 	if(agentId!=null){
 		showList();
 	}
+	loadRight();
 	loadLeft();
 });
+
+function loadRight(){
+	$.get("bottest.html", function(data) {
+        $('.ui_right').html(data);
+    });
+}
 
 function loadLeft(){
 	$.get("left.html", function(data) {
         $('#leftmenu').html(data);
         loadBots();
     }); 
-	$.get("bottest.html", function(data) {
-        $('.ui_right').html(data);
-    });
+	
 	
 	//ui_right_main
 	

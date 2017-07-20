@@ -169,6 +169,7 @@
       function getBot(id){
     	  for (var i = 0; i < bots.length; i++) {
     		  if(bots[i].id==id){
+    			  bots[i].avatar='';
     			  return bots[i];
     		  }
     	  }
@@ -186,6 +187,8 @@
       
       function editEntity(id){
     	  var currentBot=getBot(id);
+    	  var s=JSON.stringify(currentBot);
+    	  console.log(s);
     	  $.cookie("currentBot",JSON.stringify(currentBot),{"expires":1});
     	  window.location.href='entities.html?agentId='+id;
       }

@@ -791,9 +791,7 @@ input[type=checkbox]:not(:disabled) ~ .lever:active:after {
     -o-border-radius: 2px;
     border-radius: 2px;
 }
-.z-depth-1, .jumbotron, .author-box, .card, .list-group, .popover, .navbar, .dropdown-menu, .badge, .chip, .pagination .active .page-link, .btn, .pager li a, .navbar.navbar-dark .breadcrumb .dropdown-menu a:hover, .navbar.navbar-dark .breadcrumb .dropdown-menu a:focus, .navbar.navbar-dark .breadcrumb .dropdown-menu a:active, .navbar.navbar-dark .navbar-nav .nav-item .dropdown-menu a:hover, .navbar.navbar-dark .navbar-nav .nav-item .dropdown-menu a:focus, .navbar.navbar-dark .navbar-nav .nav-item .dropdown-menu a:active, .btn-floating, .social-list, .card-wrapper .front, .card-wrapper .back, .card-cascade.wider .card-block, .card-cascade-2 .card-block, .cascading-media .view, .dropdown-content, .side-nav, #toast-container > div, .section-blog-fw .view, .pricing-card .price .version {
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-}
+
 .card {
     position: relative;
     display: -webkit-box;
@@ -927,4 +925,9 @@ img {
   border-radius: 58px;
  -moz-border-radius:58px;	
 }
-
+ .tmptestcontent{
+ 	height:350px;overflow-y: auto;
+ }
+ .tmpui_right_btm{
+ 	position: relative;bottom:0px
+ }

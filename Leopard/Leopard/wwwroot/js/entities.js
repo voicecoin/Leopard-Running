@@ -790,11 +790,14 @@ $(document).ready(function(){
 	agentId=getQuery('agentId');
 	showList();
 	loadLeft();
-	$.get("bottest.html", function(data) {
-        $('.ui_right').html(data);
-    }); 
+	loadRight();
 });
 
+function loadRight(){
+	$.get("bottest.html", function(data) {
+        $('.ui_right').html(data);
+    });
+}
 function loadLeft(){
 	$.get("left.html", function(data) {
         $('#leftmenu').html(data);
@@ -812,4 +815,5 @@ function resetAgent(id){
 		loadEntity(entityId);;
 		break;
 	}
+	loadRight();
 }
