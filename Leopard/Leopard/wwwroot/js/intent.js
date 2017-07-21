@@ -116,7 +116,7 @@ function genIntentData(){
 
 	if(intentNow.id.length>0){
 		$.ajax({
-			url: host + '/v1/Intents/'+intentNow.id,
+			url: 'http://api.yaya.ai/v1/Intents/'+intentNow.id,
 			type: 'PUT',
 			datType: "JSON",
 			contentType: "application/json",
@@ -131,7 +131,7 @@ function genIntentData(){
 		});
 	}else{
 		$.ajax({
-			url: host + '/v1/Intents/'+agentId,
+			url: 'http://api.yaya.ai/v1/Intents/'+agentId,
 			type: 'POST',
 			datType: "JSON",
 			contentType: "application/json",
@@ -182,7 +182,7 @@ function initIntentsPage(){
 			//showEntity('');
 			showIntent('');
 		});
-		var url= host + '/v1/Intents/'+agentId+"/Query";
+		var url= 'http://api.yaya.ai/v1/Intents/'+agentId+"/Query";
 		if(key!=null && key.length>0){
 			url+='?name='+key
 		}
@@ -288,6 +288,7 @@ function intentEventHandle(){
 				var html=addSpeech(speech);
 				$("#replytable").append(html);*/
 				$(this).val('');
+				messageEventHandler();
 			}
 		}
 	});
@@ -362,7 +363,7 @@ function intentEventHandle(){
 				$(this).val("");
 			}else{
 				$.ajax({
-					url: host + '/v1/Intents/Markup?text='+v,
+					url: 'http://api.yaya.ai/v1/Intents/Markup?text='+v,
 					type: "GET",
 					datType: "JSON",
 					contentType: "application/json",
@@ -393,9 +394,16 @@ function intentEventHandle(){
 
 function messageEventHandler(){
 	
-	$("#messagediv .del_icon").off("click").on('click',function(e){
+	$(".delspeech").off("click").on('click',function(e){
+		console.log(".delspeech");
 		$(this).parent().parent().remove();
 	});
+	
+	/*$(".delspeech").off("click").on('click',function(){
+		console.log(".delspeech");
+		$(this).parent().parent().remove();
+	});*/
+	
 }
 
 function parameterEventHandler(){
@@ -617,9 +625,6 @@ function usersayEventHandler(){
 		$(this).parent().parent().parent().remove();
 	});
 	
-	$(".delspeech").off("click").on('click',function(){
-		$(this).parent().parent().remove();
-	});
 	
 	
 	$(".usersayentity .entityselect").off("click").on('click',function(e){
@@ -638,7 +643,7 @@ function usersayEventHandler(){
 
 function autoCompleteEntity(id,key){
     $.ajax({
-  	  url: host + '/v1/Entities/'+agentId+'/Query?name='+key,
+  	  url: 'http://api.yaya.ai/v1/Entities/'+agentId+'/Query?name='+key,
   	  type: 'GET',
   	  data: {},
   	  success: function(json) {
@@ -753,7 +758,7 @@ function loadIntent(id){
 		 var self=this;
 
 		$.ajax({
-			url: host + '/v1/Intents/'+id,
+			url: 'http://api.yaya.ai/v1/Intents/'+id,
 			type: 'GET',
 			data: {},
 			success: function(json) {
@@ -1027,13 +1032,34 @@ function initIntent(intent){
 	 $("#parameters").html(parametersHtml);
 	 
 	 var speechhtml='';
-	 
-	 if(intent.responses.length>0){	
+	 var tmpmessage=null;
+	 if(intent.responses.length>0){
 		 var speech=intent.responses[0].messages;
-		 for(var i=0;i<speech.length;i++){
-			 speechhtml+=addSpeech(speech[i]);
+		 if(speech.length>0){
+			 for(var i=0;i<speech.length;i++){
+				 speechhtml+=addSpeech(speech[i]);
+			 } 
+		 }else{
+			 tmpmessage={};
+			 tmpmessage.id='';
+			 tmpmessage.intentResponseId='';
+			 tmpmessage.type='text';
+			 tmpmessage.platform='';
+			 tmpmessage.speeches=[];			 
 		 }
+	 }else{
+		 tmpmessage={};
+		 tmpmessage.id='';
+		 tmpmessage.intentResponseId='';
+		 tmpmessage.type='text';
+		 tmpmessage.platform='';
+		 tmpmessage.speeches=[];			
 	 }
+	 
+	 if(tmpmessage!=null){
+		 speechhtml+=addSpeech(tmpmessage);
+	 }
+	 
 	 $("#replytable").html(speechhtml);	 
 		 
 	 /*$("#entity_id").val(entity.id);
@@ -1045,8 +1071,8 @@ function initIntent(intent){
 }
 
 function genSpeechHTML(speech){
-	var speechhtml='<div class="ub">';
-	speechhtml+='<div class="ub ub-ver ub-pc template-editor-holder speechdiv" contenteditable="" placeholder="输入机器人回复" data-distinguish="true" style="width:90%;">'+speech+'</div>';
+	var speechhtml='<div class="ub" style="margin-bottom: -1px;border: 1px solid rgb(221, 221, 221);">';
+	speechhtml+='<div class="ub ub-ver ub-pc template-editor-holder speechdiv"  contenteditable="" placeholder="输入机器人回复" data-distinguish="true" style="width:90%;">'+speech+'</div>';
 	speechhtml+='<div class="ub ub-ver ub-ac ub-pc" style="width:10%">';
 	speechhtml+='<a href="javascript:void(0)" class="ico-item no-result delspeech" style="display: inline;"><span class="glyphicon glyphicon-trash del_icon"></span></a>';
 	speechhtml+='</div>';
@@ -1056,7 +1082,7 @@ function genSpeechHTML(speech){
 
 function addSpeech(speech){
 	var speechhtml='';
-	speechhtml+='<div data-id="'+speech.id+'" data-intentResponseId="'+speech.intentResponseId+'" data-type="'+speech.type+'" data-platform="'+speech.platform+'" class="ub ub-ver messagediv" style="width:100%;height:auto;margin-bottom: -1px; border: 1px solid rgb(221, 221, 221);">';
+	speechhtml+='<div data-id="'+speech.id+'" data-intentResponseId="'+speech.intentResponseId+'" data-type="'+speech.type+'" data-platform="'+speech.platform+'" class="ub ub-ver messagediv" style="width:100%;height:auto;margin-bottom: -1px;">';
 	
 	for(var i=0;i<speech.speeches.length;i++){
 		
