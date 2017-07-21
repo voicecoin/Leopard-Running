@@ -45,18 +45,16 @@ $(document).ready(function(){
 	  		 var data={};
 	  	   data.userName=$("#userName").val();
 	  	   data.password=$("#pw").val();
-	  	   //data.grant_type='password';
-	  	   $.post(host + '/token', data,function(json) {
-	  	    	if(json.msg=='success'){
-	  	    		var s = new Date();
-	  	    		var d=new Date(s.getTime()+(json.expires_in*1000));
-	  	    		$.cookie("access_token", json.access_token, { "expires": d });
-	  	    		$.cookie("userId",json.user_id,{"expires":d});
-	  	    		window.location.href='revise.html';
-	  	    	}else{
-	  	    		s_tip("邮箱或密码错误",'fail');
-	  	    	}
-	  	    });
+           //data.grant_type='password';
+           $.post(host + '/token', data).done(function (json) {
+               var s = new Date();
+               var d = new Date(s.getTime() + (json.expires_in * 1000));
+               $.cookie("access_token", json.access_token, { "expires": d });
+               $.cookie("userId", json.user_id, { "expires": d });
+               window.location.href = 'revise.html';
+           }).fail(function (xhr, status, error) {
+               s_tip("邮箱或密码错误", 'fail');
+           });
 	  	}
 	  
   });
