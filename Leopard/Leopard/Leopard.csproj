@@ -15,6 +15,7 @@
   <ItemGroup>
     <Content Include="wwwroot\docs\basics.html" />
     <Content Include="wwwroot\favicon.ico" />
+    <Content Include="wwwroot\images\plus.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.1.1" />
