@@ -114,37 +114,19 @@ function genIntentData(){
 	intentNow.responses.push(response);
 	console.dir(intentNow);
 
-	if(intentNow.id.length>0){
-		$.ajax({
-			url: host + '/v1/Intents/'+intentNow.id,
-			type: 'PUT',
-			datType: "JSON",
-			contentType: "application/json",
-			data: JSON.stringify(intentNow),
-			success: function(json) {
-				//$("#pageContainer1").zPager('pageData',$("#pageContainer1"),$("#pageContainer1").find(".current").attr("page-id"));
-				s_tip("场景已保存","ok");
-			},error: function(e) {
-				//self.entity=null;
-				s_tip(e,"fail");
-			}
-		});
-	}else{
-		$.ajax({
-			url: host + '/v1/Intents/'+agentId,
-			type: 'POST',
-			datType: "JSON",
-			contentType: "application/json",
-			data: JSON.stringify(intentNow),
-			success: function(json) {
-				//$("#pageContainer1").zPager('pageData',$("#pageContainer1"),$("#pageContainer1").find(".current").attr("page-id"));
-				s_tip("场景已保存","ok");
-			},error: function(e) {
-				//self.entity=null;
-				s_tip(e,"fail");
-			}
-		});
-	}
+    if (intentNow.id.length > 0) {
+        $.put(host + '/v1/Intents/' + intentNow.id, intentNow).done(function (json) {
+            s_tip("场景已保存", "ok");
+        }).fail(function (xhr, status, error) {
+            s_tip(e, "fail");
+        });
+    } else {
+        $.post(host + '/v1/Intents/' + agentId, intentNow).done(function (json) {
+            s_tip("场景已保存", "ok");
+        }).fail(function (xhr, status, error) {
+            s_tip(e, "fail");
+        });
+    }
 }
 
 
