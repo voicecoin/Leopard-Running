@@ -89,3 +89,16 @@ function showagree(){
 	});
   
 }
+
+$(document).ready(function () {
+
+    $.ajaxSetup({
+        beforeSend: function (request) {
+            request.setRequestHeader("Authorization", "bearer " + $.cookie("access_token"));
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            s_tip(JSON.stringify(jqXHR), 'fail');
+        }
+    });
+
+});

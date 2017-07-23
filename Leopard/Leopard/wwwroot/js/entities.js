@@ -63,7 +63,7 @@ function delEntityEntriesFromCache(id){
 function initEntititesPage(id){
 	if(id!=null && id.length>0){
 		$("#pageContainer1").show();
-		var url="http://api.yaya.ai/v1/EntityEntries/"+id+"/Query";
+		var url=host + "/v1/EntityEntries/"+id+"/Query";
 		$("#pageContainer1").zPager({
 			url:url,
 			htmlBox: $('#entity-editor'),
@@ -639,7 +639,7 @@ function showList(){
 function initPage(){
 	var key=$("#search").val();
 	if(agentId!=null){
-		var url="http://api.yaya.ai/v1/Entities/"+agentId+"/Query";
+		var url=host + "/v1/Entities/"+agentId+"/Query";
 		if(key!=null && key.length>0){
 			url+='?name='+key
 		}
@@ -665,7 +665,7 @@ function initPage(){
  }
 function loadEntities(key,pno){
 	if(agentId!=null){
-		var url="http://api.yaya.ai/v1/Entities/"+agentId+"/Query";
+		var url=host + "/v1/Entities/"+agentId+"/Query";
 		if(key!=null && key.length>0){
 			url+='?name='+key+"&page="+pno;
 		}else{
