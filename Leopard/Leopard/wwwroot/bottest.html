@@ -28,24 +28,15 @@ function sendTest(){
 		$("#testcontent").append(html);
 		
 		var currentBot=JSON.parse($.cookie("currentBot"));
-		var url=host + "/v1/Conversation/Text?ClientAccessToken="+currentBot.clientAccessToken+"&SessionId="+currentBot.userId+"&Text="+testtxt;
-		$.ajax({
-			url: url,
-			type: "GET",
-			datType: "JSON",
-			contentType: "application/json",
-			data: {},
-			success: function (json) {
-				var html='<div class="ui_right_mid">';
-				html+='<img  src="images/ui_06.jpg" />';
-				html+='<span>'+json+'</span>';
-				html+='</div>';
-				$("#testcontent").append(html);
-				$("#testtxt").val('');
-			},error: function(e) {
-				s_tip(JSON.stringify(e),'fail');
-			}
-		});
+        var url = host + "/v1/Conversation/Text?ClientAccessToken=" + currentBot.clientAccessToken + "&SessionId=" + currentBot.userId + "&Text=" + testtxt;
+        $.get(url, null, function (json) {
+            var html = '<div class="ui_right_mid">';
+            html += '<img  src="images/ui_06.jpg" />';
+            html += '<span>' + json + '</span>';
+            html += '</div>';
+            $("#testcontent").append(html);
+            $("#testtxt").val('');
+        }, 'text');
 	}
 }
 

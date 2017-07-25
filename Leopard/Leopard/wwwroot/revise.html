@@ -232,27 +232,19 @@
     			
     			var currentBot=JSON.parse($.cookie("currentBot"));
     			var url=host + "/v1/Conversation/Text?ClientAccessToken="+currentBot.clientAccessToken+"&SessionId="+currentBot.userId+"&Text="+testtxt;
-    			$.ajax({
-    				url: url,
-    				type: "GET",
-    				datType: "JSON",
-    				contentType: "application/json",
-    				data: {},
-    				success: function (json) {
-    					var html='<div class="ui_right_mid">';
-    					
-    					html+='<img  src="images/ui_06.jpg" />';
-    					html+='<span>'+json+'</span>';
-    					html+='</div>';
-    					$("#testcontent").append(html);
-    					
-    					console.log("$('#testcontent').height()="+$('#testcontent').get(0).scrollHeight);
-    					$('#testcontent').animate({scrollTop: $('#testcontent').get(0).scrollHeight}, 300); 
-    					$("#testtxt").val('');
-    				},error: function(e) {
-    					s_tip(JSON.stringify(e),'fail');
-    				}
-    			});
+
+                $.get(url, null, function (json) {
+                    var html = '<div class="ui_right_mid">';
+
+                    html += '<img  src="images/ui_06.jpg" />';
+                    html += '<span>' + json + '</span>';
+                    html += '</div>';
+                    $("#testcontent").append(html);
+
+                    console.log("$('#testcontent').height()=" + $('#testcontent').get(0).scrollHeight);
+                    $('#testcontent').animate({ scrollTop: $('#testcontent').get(0).scrollHeight }, 300);
+                    $("#testtxt").val('');
+                }, 'text');
     		}
     	}
       
