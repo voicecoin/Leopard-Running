@@ -1,4 +1,5 @@
-
+var host = 'http://api.yaya.ai';
+//1var host = 'http://localhost:9000';
 
 
 function getDateDiff(dateTimeStamp){
@@ -88,3 +89,39 @@ function showagree(){
 	});
   
 }
+
+function _ajax_request(url, data, callback, type, method) {
+    if (jQuery.isFunction(data)) {
+        callback = data;
+        data = {};
+    }
+    return jQuery.ajax({
+        type: method,
+        url: url,
+        data: data,
+        success: callback,
+        dataType: type
+    });
+}
+
+jQuery.extend({
+    put: function (url, data, callback, type) {
+        return _ajax_request(url, data, callback, type, 'PUT');
+    },
+    delete_: function (url, data, callback, type) {
+        return _ajax_request(url, data, callback, type, 'DELETE');
+    }
+});
+
+$(document).ready(function () {
+
+    $.ajaxSetup({
+        beforeSend: function (request) {
+            request.setRequestHeader("Authorization", "bearer " + $.cookie("access_token"));
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            s_tip(JSON.stringify(jqXHR), 'fail');
+        }
+    });
+
+});
