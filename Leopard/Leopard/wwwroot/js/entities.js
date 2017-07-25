@@ -6,7 +6,7 @@ var showModel=1;
 var totalIndex=0;
 function delEntity(id){
      $.ajax({
-   			url: 'http://api.yaya.ai/v1/Entities/'+id,
+   			url: host + '/v1/Entities/'+id,
    			type: "DELETE",
    			datType: "JSON",
    			contentType: "application/json",
@@ -63,7 +63,7 @@ function delEntityEntriesFromCache(id){
 function initEntititesPage(id){
 	if(id!=null && id.length>0){
 		$("#pageContainer1").show();
-		var url="http://api.yaya.ai/v1/EntityEntries/"+id+"/Query";
+		var url=host + "/v1/EntityEntries/"+id+"/Query";
 		$("#pageContainer1").zPager({
 			url:url,
 			htmlBox: $('#entity-editor'),
@@ -92,7 +92,7 @@ function loadEntity(id){
          $("#save_btn").hide();   
 		 var self=this;
 	      $.ajax({
-	    	  url: 'http://api.yaya.ai/v1/Entities/'+id,
+	    	  url: host + '/v1/Entities/'+id,
 	    	  type: 'GET',
 	    	  data: {},
 	    	  success: function(json) {
@@ -166,7 +166,7 @@ function updateEntryEntities(entryDom){
 		}
 		if(id.length==0){
 			$.ajax({
-		    	  url: 'http://api.yaya.ai/v1/EntityEntries/'+entity.id,
+		    	  url: host + '/v1/EntityEntries/'+entity.id,
 		    	  type: 'POST',
 		    	  data: JSON.stringify(data),
 		    	  datType: "JSON",
@@ -186,7 +186,7 @@ function updateEntryEntities(entryDom){
 			data.id=id;
 			//更新条目
 			$.ajax({
-		    	  url: 'http://api.yaya.ai/v1/EntityEntries/'+id,
+		    	  url: host + '/v1/EntityEntries/'+id,
 		    	  type: 'PUT',
 		    	  data: JSON.stringify(data),
 		    	  datType: "JSON",
@@ -222,7 +222,7 @@ function entityEventHander(){
 				  data.name=$(this).val();
 				  
 			      $.ajax({
-			    	  url: 'http://api.yaya.ai/v1/Entities/'+entity.id,
+			    	  url: host + '/v1/Entities/'+entity.id,
 			    	  type: 'PUT',
 			    	  data: JSON.stringify(data),
 			    	  datType: "JSON",
@@ -288,7 +288,7 @@ function entityEventHander(){
 				data.name=$("#entity-name").val();
                 data.isEnum = newsynony ? "False" : "True";
 				$.ajax({
-					url: 'http://api.yaya.ai/v1/Entities/'+entity.id,
+					url: host + '/v1/Entities/'+entity.id,
 					type: 'PUT',
 					data: JSON.stringify(data),
 					datType: "JSON",
@@ -405,7 +405,7 @@ function entityEventHander(){
 			if(entry.id.length==0){
 				//新增条目
 				$.ajax({
-					url: 'http://api.yaya.ai/v1/EntityEntries/'+entity.id,
+					url: host + '/v1/EntityEntries/'+entity.id,
 					type: 'POST',
 					datType: "JSON",
 					contentType: "application/json",
@@ -421,7 +421,7 @@ function entityEventHander(){
 			}else{
 				//修改条目
 				$.ajax({
-					url: 'http://api.yaya.ai/v1/EntityEntries/'+entry.id,
+					url: host + '/v1/EntityEntries/'+entry.id,
 					type: 'PUT',
 					datType: "JSON",
 					contentType: "application/json",
@@ -452,7 +452,7 @@ function entityEventHander(){
 function delEntryEntities(id){
 	delEntityEntriesFromCache(id);
 	$.ajax({
-		url: 'http://api.yaya.ai/v1/EntityEntries/'+id,
+		url: host + '/v1/EntityEntries/'+id,
 		type: "DELETE",
 		datType: "JSON",
 		contentType: "application/json",
@@ -471,7 +471,7 @@ function delEntryEntities(id){
  * */
 function autoCompleteEntity(id,key){
     $.ajax({
-  	  url: 'http://api.yaya.ai/v1/Entities/'+agentId+'/Query?name='+key,
+  	  url: host + '/v1/Entities/'+agentId+'/Query?name='+key,
   	  type: 'GET',
   	  data: {},
   	  success: function(json) {
@@ -639,7 +639,7 @@ function showList(){
 function initPage(){
 	var key=$("#search").val();
 	if(agentId!=null){
-		var url="http://api.yaya.ai/v1/Entities/"+agentId+"/Query";
+		var url=host + "/v1/Entities/"+agentId+"/Query";
 		if(key!=null && key.length>0){
 			url+='?name='+key
 		}
@@ -665,7 +665,7 @@ function initPage(){
  }
 function loadEntities(key,pno){
 	if(agentId!=null){
-		var url="http://api.yaya.ai/v1/Entities/"+agentId+"/Query";
+		var url=host + "/v1/Entities/"+agentId+"/Query";
 		if(key!=null && key.length>0){
 			url+='?name='+key+"&page="+pno;
 		}else{
@@ -728,7 +728,7 @@ function submitEntity(){
 	var apiurl="";
 	data.id=$("#entity_id").val();
 	if($("#entity_id").val().length==0){
-		apiurl='http://api.yaya.ai/v1/Entities/'+agentId;
+		apiurl=host + '/v1/Entities/'+agentId;
 		//data.id=$("#entity_id").val();
 		data.name=$("#entity-name").val();
 		if(data.name.length==0){
