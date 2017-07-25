@@ -80,7 +80,7 @@ function menuChangeBot(id,nowbotname){
 
 
 function loadBots(){
-	$.get(host + '/v1/Agents/'+$.cookie("userId")+'/Query', null,function(json) {
+	$.get('http://api.yaya.ai/v1/Agents/'+$.cookie("userId")+'/Query', null,function(json) {
 		   menuBots = json.items;
 	       var robts = '';
 	       for (var i = 0; i < menuBots.length; i++) {
@@ -116,7 +116,7 @@ function goIntegrations(){
 }
 
 function logoutLeft(){
-	$.get(host + '/v1/Account/Logout', null,function(json) {
+	$.get('http://www.yaya.ai/api/Account/Logout', null,function(json) {
     	window.location.href="login.html";
     	
     });

@@ -15,7 +15,6 @@
   <script src="js/jquery-ui.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/bootstrapValidator.js"></script>
-  <script src="js/jquery.cookie.js"></script>
   <script src="js/main.js"></script>
 <script>
 $(document).ready(function(){
@@ -79,6 +78,18 @@ $("#regButton").on('click',function(){
 		submitEnroll();
 	}
   });
+  
+$("body").off("keyup").on('keyup',function(e){
+	e.stopPropagation();
+	if(e.keyCode == 13){
+		var bootstrapValidator = $("#formReg").data('bootstrapValidator');
+		bootstrapValidator.validate();
+		if (bootstrapValidator.isValid()) {
+			submitEnroll();
+		}
+	}
+});
+  
 });
 
 
@@ -89,7 +100,7 @@ function submitEnroll(){
 	data.Password=$('#Password').val();
     data.confirmPassword = $('#confirmPassword').val();
 
-    $.post(host + '/v1/account', data).done(function (msg) {
+    $.post('http://www.yaya.ai/api/account', data).done(function (msg) {
         s_tip("创建成功", 'ok');
         window.location.href = 'login.html';
     }).fail(function (xhr, status, error) {
@@ -114,6 +125,25 @@ function enrollValidate(id){
 	                    regexp: {
 	                         regexp: /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/,
 	                         message: '请输入正确的邮箱'
+	                    },callback: {
+	                        message: '注册邮箱已存在',
+	                        callback: function (value, validator, $field) {
+	                            var bol = true;
+	                            $.ajax({
+	                                url: 'http://www.yaya.ai/api/account/Exist?userName='+value,
+	                                type: 'GET',
+	                                async: false,
+	                                data: {},
+	                            }).done(function (data) {
+	                                //刷新
+	                                bol = !data;
+
+	                            }).fail(function (data) {
+	                                bol = true;
+	                            });
+	                            return bol;
+	                        }
+	 
 	                    }
 		  			}
 		  		},
@@ -155,15 +185,7 @@ function enrollValidate(id){
 		  		}
 		  	}
 		  });
-    }
-
-    var _hmt = _hmt || [];
-    (function () {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?a0ffd8247abd4a38f87f03db9e6c79a7";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-    })();
+}
 
 
 </script>
