@@ -158,6 +158,20 @@ $(function(){
   // H1元素
    $('h2').fontFlex(20, 36, 70);
    $('h3').fontFlex(18, 30, 60); 
+
+	$("body").off("keyup").on('keyup',function(e){
+		e.stopPropagation();
+		if(e.keyCode == 13){
+			var bootstrapValidator = $("#formReg").data('bootstrapValidator');
+			bootstrapValidator.validate();
+			if (bootstrapValidator.isValid()) {
+				submitEnroll();
+			}
+		}
+	});
+	
+   
+   
 });
 
 function submitEnroll(){
@@ -167,7 +181,7 @@ function submitEnroll(){
 	data.Password=$('#Password').val();
 	data.confirmPassword=$('#confirmPassword').val();
 	
-    $.post(host + '/v1/account', data).done(function (msg) {
+    $.post('http://www.yaya.ai/api/account', data).done(function (msg) {
         s_tip("创建成功", 'ok');
         setTimeout('goLogin();', 2000);
         
@@ -203,7 +217,7 @@ function enrollValidate(id){
 	                        callback: function (value, validator, $field) {
 	                            var bol = true;
 	                            $.ajax({
-	                                url: host + '/v1/account/Exist?userName='+value,
+	                                url: 'http://www.yaya.ai/api/account/Exist?userName='+value,
 	                                type: 'GET',
 	                                async: false,
 	                                data: {},
@@ -229,10 +243,6 @@ function enrollValidate(id){
 	                         min: 6,
 	                         max: 30,
 	                         message: '密码长度必须在6到30之间'
-	                    },
-	                    regexp: {
-	                         regexp: /^(?=.*[A-Z].*$)(?=.*[a-z].*$)(?=.*[0-9].*$)(?=.*[\x21-\x7e].*$)/,
-	                         message: '至少一位大写字母，小写字母以及特殊字符'
 	                    }
 		  			}
 		  		},
@@ -249,10 +259,6 @@ function enrollValidate(id){
 	                    identical: {//相同
 	                         field: 'Password',
 	                         message: '两次密码不一致'
-	                    },
-	                    regexp: {
-	                         regexp: /^(?=.*[A-Z].*$)(?=.*[a-z].*$)(?=.*[0-9].*$)(?=.*[\x21-\x7e].*$)/,
-	                         message: '至少一位大写字母，小写字母以及特殊字符'
 	                    }
 		  			}
 		  		}
@@ -294,10 +300,10 @@ function enrollValidate(id){
     	<ul class="nav navbar-nav">
 
       		<li><a href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(1);">首页</a></li>
-      		<li><a href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(2);">团队</a></li>
+      		<li><a  href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(2);">团队</a></li>
       		<li><a href="http://forum.yaya.ai/">讨论区</a></li>
       		<li><a href="login.html">登陆</a></li>
-      		<li><a href="enroll.html">免费注册</a></li>
+      		<!--<li  class="active"><a href="enroll.html">免费注册</a></li>-->
 	 </ul>
   </div>
 </div>
@@ -347,10 +353,10 @@ function enrollValidate(id){
   <div class="collapse navbar-collapse navbar-responsive-collapse" id="nav_list">
     	<ul class="nav navbar-nav">
       		<li><a href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(1);">首页</a></li>
-      		<li><a href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(2);">团队</a></li>
+      		<li><a  href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(2);">团队</a></li>
       		<li><a href="http://forum.yaya.ai/">讨论区</a></li>
       		<li><a href="login.html">登陆</a></li>
-      		<li><a class="ch" href="enroll.html">免费注册</a></li>
+      		<!--<li  class="active"><a href="##">免费注册</a></li>-->
 	 </ul>
   </div>
 </div>
@@ -388,8 +394,8 @@ function enrollValidate(id){
 
       <div class="caption" id="colfont">
             <img class="col_img" src="images/bingliu_360.png" alt="..." />
-        <h3>刘兵教授</h3>
-        <p>自然语言处理顾问。刘兵教授，英国爱丁堡大学人工智能专业博士，目前担任伊利诺伊大学计算机科学系教授，在情感识别、观点挖掘、Lifelong机器学习、Machine Learning和NLP领域著述颇丰，同时担任ACM, IEEE and SIAM大数据研讨会主席。</p>
+        <h3>刘冰教授</h3>
+        <p>自然语言处理顾问。刘冰教授，英国爱丁堡大学人工智能专业博士，目前担任伊利诺伊大学计算机科学系教授，在情感识别、观点挖掘、Lifelong机器学习、Machine Learning和NLP领域著述颇丰，同时担任ACM, IEEE and SIAM大数据研讨会主席。</p>
       </div>
     </div>
   </div>
@@ -426,10 +432,10 @@ function enrollValidate(id){
   <div class="collapse navbar-collapse navbar-responsive-collapse" id="nav_list">
     	<ul class="nav navbar-nav">
       		<li><a href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(1);">首页</a></li>
-      		<li><a href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(2);">团队</a></li>
+      		<li><a  href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(2);">团队</a></li>
       		<li><a href="http://forum.yaya.ai/">讨论区</a></li>
       		<li><a href="login.html">登陆</a></li>
-      		<li><a class="ch" href="enroll.html">免费注册</a></li>
+      		<!--<li  class="active"><a href="##">免费注册</a></li>-->
 	 </ul>
   </div>
 </div>
@@ -499,10 +505,10 @@ function enrollValidate(id){
   <div class="collapse navbar-collapse navbar-responsive-collapse" id="nav_list">
     	<ul class="nav navbar-nav">
       		<li><a href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(1);">首页</a></li>
-      		<li><a href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(2);">团队</a></li>
+      		<li><a  href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(2);">团队</a></li>
       		<li><a href="http://forum.yaya.ai/">讨论区</a></li>
       		<li><a href="login.html">登陆</a></li>
-      		<li><a class="ch" href="enroll.html">免费注册</a></li>
+      		<!--<li  class="active"><a href="##">免费注册</a></li>-->
 	 </ul>
   </div>
 </div>
@@ -543,7 +549,7 @@ function enrollValidate(id){
       <div class="caption">
         <h3>联系方式</h3>
         
-        <p>邮箱：info@yaya.ai</p>
+        <p>邮箱：support@yaya.ai</p>
       </div>
     </div>
   </div>
@@ -571,12 +577,3 @@ function enrollValidate(id){
 
 </body>
 </html>
-<script>
-    var _hmt = _hmt || [];
-    (function () {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?a0ffd8247abd4a38f87f03db9e6c79a7";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-    })();
-</script>
