@@ -15,6 +15,8 @@
   <link rel="stylesheet" href="css/bootstrapValidator.css" />
   <link rel="stylesheet" href="css/jquery-ui.css" >
   <script src="js/jquery-3.2.0.min.js"></script>
+  <script src="js/jquery.cookie.js"></script>
+  
   <script src="js/jQuery.fontFlex.js"></script>
   <script src="js/jquery-ui.min.js"></script>
   <script src="js/jquery.fullPage.min.js"></script>
@@ -158,6 +160,18 @@ $(function(){
   // H1元素
    $('h2').fontFlex(20, 36, 70);
    $('h3').fontFlex(18, 30, 60); 
+
+
+   	$("body").off("keyup").on('keyup',function(e){
+		e.stopPropagation();
+		if(e.keyCode == 13){
+			var bootstrapValidator = $("#formReg").data('bootstrapValidator');
+			bootstrapValidator.validate();
+			if (bootstrapValidator.isValid()) {
+				submitEnroll();
+			}
+		}
+	});
 });
 
 function submitEnroll(){
@@ -229,10 +243,6 @@ function enrollValidate(id){
 	                         min: 6,
 	                         max: 30,
 	                         message: '密码长度必须在6到30之间'
-	                    },
-	                    regexp: {
-	                         regexp: /^(?=.*[A-Z].*$)(?=.*[a-z].*$)(?=.*[0-9].*$)(?=.*[\x21-\x7e].*$)/,
-	                         message: '至少一位大写字母，小写字母以及特殊字符'
 	                    }
 		  			}
 		  		},
@@ -249,10 +259,6 @@ function enrollValidate(id){
 	                    identical: {//相同
 	                         field: 'Password',
 	                         message: '两次密码不一致'
-	                    },
-	                    regexp: {
-	                         regexp: /^(?=.*[A-Z].*$)(?=.*[a-z].*$)(?=.*[0-9].*$)(?=.*[\x21-\x7e].*$)/,
-	                         message: '至少一位大写字母，小写字母以及特殊字符'
 	                    }
 		  			}
 		  		}

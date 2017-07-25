@@ -42,6 +42,27 @@ $(document).ready(function(){
 	  	var bootstrapValidator = $("#formReg").data('bootstrapValidator');
 	  	bootstrapValidator.validate();
 	  	if (bootstrapValidator.isValid()) {
+			login();
+	  	}
+	  
+  });
+  $("#goenroll").click(function(){
+	   window.location.href='enroll.html';
+ });
+
+   $("body").off("keyup").on('keyup',function(e){
+		e.stopPropagation();
+		if(e.keyCode == 13){
+			var bootstrapValidator = $("#formReg").data('bootstrapValidator');
+		  	bootstrapValidator.validate();
+		  	if (bootstrapValidator.isValid()) {
+		  		login();
+			}
+		}
+	});
+});
+
+function login(){
 	  		 var data={};
 	  	   data.userName=$("#userName").val();
 	  	   data.password=$("#pw").val();
@@ -55,14 +76,7 @@ $(document).ready(function(){
            }).fail(function (xhr, status, error) {
                s_tip("邮箱或密码错误", 'fail');
            });
-	  	}
-	  
-  });
-  $("#goenroll").click(function(){
-	   window.location.href='enroll.html';
- });
-});
-
+}
 
 function enrollValidate(id){
 	  $(id).bootstrapValidator({
@@ -145,7 +159,7 @@ function enrollValidate(id){
 			</form>
 	<button id="loginbtn" type="button" class="btn btn-primary btn-lg btn-block">登 录</button>
 	<div class="fgt">
-		<span class="fgt_password"><a href="forget.html">忘记密码？</a></span><br>
+		<span class="fgt_zhuce"><a href="forget.html">忘记密码？</a></span><br>
 		<span class="fgt_zhuce">还没有丫丫账号？<a href="enroll.html">点我注册</a><span>
 	</div>			
 	</div>

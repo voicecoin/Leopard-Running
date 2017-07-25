@@ -79,6 +79,18 @@ $("#regButton").on('click',function(){
 		submitEnroll();
 	}
   });
+
+
+  $("body").off("keyup").on('keyup',function(e){
+	e.stopPropagation();
+	if(e.keyCode == 13){
+		var bootstrapValidator = $("#formReg").data('bootstrapValidator');
+		bootstrapValidator.validate();
+		if (bootstrapValidator.isValid()) {
+			submitEnroll();
+		}
+	}
+});
 });
 
 
@@ -91,7 +103,11 @@ function submitEnroll(){
 
     $.post(host + '/v1/account', data).done(function (msg) {
         s_tip("创建成功", 'ok');
-        window.location.href = 'login.html';
+         setTimeout(function() {
+        	window.location.href = 'login.html';
+		},
+		2000);
+        
     }).fail(function (xhr, status, error) {
         s_tip(xhr.responseText, 'fail');
     });
@@ -114,6 +130,25 @@ function enrollValidate(id){
 	                    regexp: {
 	                         regexp: /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/,
 	                         message: '请输入正确的邮箱'
+	                    },callback: {
+	                        message: '注册邮箱已存在',
+	                        callback: function (value, validator, $field) {
+	                            var bol = true;
+	                            $.ajax({
+	                                url: host + '/v1/account/Exist?userName='+value,
+	                                type: 'GET',
+	                                async: false,
+	                                data: {},
+	                            }).done(function (data) {
+	                                //刷新
+	                                bol = !data;
+
+	                            }).fail(function (data) {
+	                                bol = true;
+	                            });
+	                            return bol;
+	                        }
+	 
 	                    }
 		  			}
 		  		},
@@ -126,10 +161,6 @@ function enrollValidate(id){
 	                         min: 6,
 	                         max: 30,
 	                         message: '密码长度必须在6到30之间'
-	                    },
-	                    regexp: {
-	                         regexp: /^(?=.*[A-Z].*$)(?=.*[a-z].*$)(?=.*[0-9].*$)(?=.*[\x21-\x7e].*$)/,
-	                         message: '至少一位大写字母，小写字母以及特殊字符'
 	                    }
 		  			}
 		  		},
@@ -146,10 +177,6 @@ function enrollValidate(id){
 	                    identical: {//相同
 	                         field: 'Password',
 	                         message: '两次密码不一致'
-	                    },
-	                    regexp: {
-	                         regexp: /^(?=.*[A-Z].*$)(?=.*[a-z].*$)(?=.*[0-9].*$)(?=.*[\x21-\x7e].*$)/,
-	                         message: '至少一位大写字母，小写字母以及特殊字符'
 	                    }
 		  			}
 		  		}
