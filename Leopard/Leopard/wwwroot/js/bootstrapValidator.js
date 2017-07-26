@@ -3257,13 +3257,14 @@
 
             var dfd = new $.Deferred();
             var xhr = $.ajax({
-                type: 'POST',
+                type: 'GET',
                 url: options.url,
                 dataType: 'json',
                 data: data
             });
             xhr.then(function(response) {
-                dfd.resolve($field, 'remote', response.valid === true || response.valid === 'true');
+
+                dfd.resolve($field, 'remote', !response);
             });
 
             dfd.fail(function() {
