@@ -39,6 +39,10 @@ function genIntentData(){
         		dataitem.alias=metatexts[0].innerHTML;
         		dataitem.meta=metatexts[1].firstChild.innerHTML;
         		dataitem.text=metatexts[2].innerHTML;
+        		dataitem.color=metatexts[2].css('background-color');
+        		if(dataitem.color==null){
+        			dataitem.color='#FFCDF6';
+        		}
         	}else{
         		dataitem.text=$(this).html();
         	}
