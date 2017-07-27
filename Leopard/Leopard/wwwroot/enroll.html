@@ -19,11 +19,11 @@
   <script src="js/main.js"></script>
 <script>
 $(document).ready(function(){
-  $("#email").focus(function(){
+  $("#userName").focus(function(){
     $("#Image2").attr("src","images/mail_02_b.png");
     $("#zc_box2").css("border-color","#1698F3");
   });
-  $("#email").blur(function(){
+  $("#userName").blur(function(){
     $("#zc_box2").css("border-color","");
     $("#Image2").attr("src","images/mail_02.png");
   });
@@ -96,8 +96,8 @@ $("#regButton").on('click',function(){
 
 function submitEnroll(){
 	var data={};
-    data.email = $("#email").val();
-    data.userName = $("#email").val();
+    data.email = $("#userName").val();
+    data.userName = $("#userName").val();
 	data.Password=$('#Password').val();
     data.confirmPassword = $('#confirmPassword').val();
 
@@ -122,7 +122,7 @@ function enrollValidate(id){
 		  		validating: 'glyphicon glyphicon-refresh'
 		  	},
 		  	fields: {
-		  		email: {
+		  		userName: {
 		  			validators: {
 		  				notEmpty: {
 		  					message: '请输入邮箱'
@@ -130,25 +130,11 @@ function enrollValidate(id){
 	                    regexp: {
 	                         regexp: /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/,
 	                         message: '请输入正确的邮箱'
-	                    },callback: {
-	                        message: '注册邮箱已存在',
-	                        callback: function (value, validator, $field) {
-	                            var bol = true;
-	                            $.ajax({
-	                                url: host + '/v1/account/Exist?userName='+value,
-	                                type: 'GET',
-	                                async: false,
-	                                data: {},
-	                            }).done(function (data) {
-	                                //刷新
-	                                bol = !data;
-
-	                            }).fail(function (data) {
-	                                bol = true;
-	                            });
-	                            return bol;
-	                        }
-	 
+	                    },remote:{
+	                    	url:host + '/v1/account/Exist',
+	                    	type: "GET",
+	                    	dataType: "json",
+	                    	message: '注册邮箱已存在'
 	                    }
 		  			}
 		  		},
@@ -216,7 +202,7 @@ function enrollValidate(id){
 			<div class="zc_box_logo">
 				<img id="Image2" src="images/mail_02.png" />
 			</div>
-			<input id="email" class='input-lg form-input name form-control' name="email" placeholder='密保邮箱'>
+			<input id="userName" class='input-lg form-input name form-control' name="userName" placeholder='密保邮箱'>
 		</div>
 		<div class="form-group zc_box_1"  id="zc_box3">
 			<div class="zc_box_logo">

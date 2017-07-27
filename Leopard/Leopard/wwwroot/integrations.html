@@ -9,8 +9,7 @@
   <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
   <link rel="stylesheet" type="text/css" href="css/robot.css">
   <link rel="stylesheet" type="text/css" href="css/ui-box.css" />
-  <link rel="stylesheet" type="text/css" href="css/jquery.tagsinput.css" />
-
+  <link rel="stylesheet" href="css/jquery-ui.css" >
   <style>
     .input-lg{padding:0;font-size:14px;height: auto;}
     @media screen and (max-width: 750px) {
@@ -50,27 +49,34 @@ h6, .h6 {
 }
   </style>
   <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
     <script src="js/jquery.cookie.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/check.js"></script>
   <script src="js/jquery.tagsinput.js"></script>
   <script src="js/main.js"></script>
 <script>
-var agentId=null;
-$(document).ready(function(){ 
-	agentId=getQuery('agentId');
-	//showList();
-	loadLeft();
-	//showEntity(''); 
+var agentId = null;
+$(document).ready(function () {
+    agentId = getQuery('agentId');
+    //showList();
+    loadLeft();
+    loadRight();
 });
 
+function loadRight(){
+	$.get("bottest.html", function(data) {
+        $('.ui_right').html(data);
+    });
+}
 
-function loadLeft(){
-	$.get("left.html", function(data) {
+function loadLeft() {
+    $.get("left.html", function (data) {
         $('#leftmenu').html(data);
         loadBots();
-    }); 
+    });
 }
+
 
 
     var _hmt = _hmt || [];

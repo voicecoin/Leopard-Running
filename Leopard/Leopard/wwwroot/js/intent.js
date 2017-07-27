@@ -39,6 +39,10 @@ function genIntentData(){
         		dataitem.alias=metatexts[0].innerHTML;
         		dataitem.meta=metatexts[1].firstChild.innerHTML;
         		dataitem.text=metatexts[2].innerHTML;
+        		dataitem.color=metatexts[2].css('background-color');
+        		if(dataitem.color==null){
+        			dataitem.color='#FFCDF6';
+        		}
         	}else{
         		dataitem.text=$(this).html();
         	}
@@ -435,16 +439,39 @@ function parameterEventHandler(){
 		initParameterPrompts();
 	});
 	
-	$(".ppdiv").off("mouseenter").on('mouseenter',function(){
-		 $(this).find('.delparameter-prompts').show();
+	$(".ppdiv").off("mouseover").on('mouseover',function(){
+		 $(this).find('.iconcontainer').removeClass("uhide");
 	});
-	$(".ppdiv").off("mouseleave").on('mouseleave',function(){
-		 $(this).find('.delparameter-prompts').hide();
+	$(".ppdiv").off("mouseout").on('mouseout',function(){
+		console.log(".ppdiv mouseout");
+		 $(this).find('.iconcontainer').addClass("uhide");
 	});
 	$(".delparameter-prompts").off("click").on('click',function(){
 		 $(this).parent().parent().find('.parameter-prompts:first').val('[]');
 	});
 	
+	
+	var $list=$("#parameters");
+	$list.sortable({
+		opacity: 0.6,
+		revert: true,
+		cursor: 'pointer',
+		handle: '.m_drag'
+	});
+	
+	
+	var $list1 = $("#intent-param-prompts-editor");
+	$list1.sortable({
+		opacity: 0.6,
+		revert: true,
+		cursor: 'pointer',
+		handle: '.m_drag',
+		update: function(){
+			
+				resetNumber($("#intent-param-prompts-editor"));
+			
+		}
+	});
 }
 
 
@@ -465,7 +492,7 @@ function initParameterPrompts(){
 		html+='<div class="borderless" contenteditable="true" onkeydown="enter_parameter_prompt(this,event)" onkeyup="create_parameter_prompt(this,event)" placeholder="输入提示语句…">'+nowParameterPrompts.parameterprompts[i]+'</div>';
 		html+='</div>';
 		html+='<div class="prompt-cell prompt-cell-actions">';
-		html+='<a href="javascript:void(0)" class="ico-item" style="display: none;"><span class="flaticon glyphicon glyphicon-resize-vertical m_title ui-sortable-handle"></span></a>';
+		html+='<a href="javascript:void(0)" class="ico-item" style="display: none;"><span class="flaticon glyphicon glyphicon-resize-vertical m_drag ui-sortable-handle"></span></a>';
 		html+='<a class="visible-on-hover prompt-remove" href="javascript:void(0)" onclick="prompt_remove_rows(this)" style="display: none;"><span class="glyphicon glyphicon-trash"></span></a>';
 		html+='</div>';
 		html+='</div>';
@@ -531,7 +558,7 @@ function create_empty_prompt(){
 	content += "<div class=\"prompt-cell prompt-cell-second\">";
 	content += "<div class=\"borderless\" contenteditable=\"true\" onkeydown=\"enter_parameter_prompt(this,event)\" onkeyup=\"create_parameter_prompt(this,event)\" placeholder=\"输入提示语句...\"></div></div>";
 	content += "<div class=\"prompt-cell prompt-cell-actions\">";
-	content += "<a href=\"javascript:void(0)\" class=\"ico-item\"><span class=\"flaticon glyphicon glyphicon-resize-vertical m_title\"></span></a>";
+	content += "<a href=\"javascript:void(0)\" class=\"ico-item\"><span class=\"flaticon glyphicon glyphicon-resize-vertical m_drag\"></span></a>";
 	content += "<a class=\"visible-on-hover prompt-remove\" href=\"javascript:void(0)\" onclick=\"prompt_remove_rows(this)\">";
 	content += "<span class=\"glyphicon glyphicon-trash\"></span></a></div></div>";
 	$("#intent-param-prompts-editor").append(content);
@@ -607,6 +634,14 @@ function usersayEventHandler(){
 		$(this).parent().parent().parent().remove();
 	});
 	
+	$(".usersay").off("mouseover").on('mouseover',function(){
+		 $(this).find('.iconcontainer').removeClass("uhide");
+	});
+	$(".usersay").off("mouseout").on('mouseout',function(){
+		
+		 $(this).find('.iconcontainer').addClass("uhide");
+	});
+	
 	
 	
 	$(".usersayentity .entityselect").off("click").on('click',function(e){
@@ -619,6 +654,14 @@ function usersayEventHandler(){
 			setTimeout("autoCompleteEntity('"+id+"','"+key+"')",200);
 		}
 		
+	});
+	
+	var $list=$(".usersaystable");
+	$list.sortable({
+		opacity: 0.6,
+		revert: true,
+		cursor: 'pointer',
+		handle: '.m_drag'
 	});
 
 }
@@ -787,8 +830,9 @@ function addUserSay(userSay){
 		 userSaysHtml+='<i class="fa ng-scope fa-quote-right" style="color: #b7bbc4;"></i>';
 		 userSaysHtml+='</div>';
 		 userSaysHtml+='<div class="ub ub-ver ub-pc template-editor-holder usersaytext" contenteditable="" placeholder="Add User expression" style="width:80%;word-wrap: break-word;word-break: break-all;">'+datahtml+'</div>';
-		 userSaysHtml+='<div class="ub ub-ver ub-ac ub-pc" style="width:10%">';
-		 userSaysHtml+='<a href="javascript:void(0)" class="ico-item no-result delusersayicon" style="display: inline;"><span class="glyphicon glyphicon-trash del_icon"></span></a>';
+		 userSaysHtml+='<div class="ub ub-ver ub-ac ub-pc uhide iconcontainer" style="width:10%">';
+		 userSaysHtml+='<a href="javascript:void(0)" class="ico-item"><span class="flaticon glyphicon glyphicon-resize-vertical m_drag"></span></a>';
+		 userSaysHtml+='<a href="javascript:void(0)" class="ico-item delusersayicon"><span class="glyphicon glyphicon-trash del_icon"></span></a>';
 		 userSaysHtml+='</div>';
 	 userSaysHtml+='</div>';
 	 
@@ -832,8 +876,8 @@ function addUserSay(userSay){
 function addParameter(){
 	var parametersHtml=genParameter(null);
 	$("#parameters").append(parametersHtml);
-	intentEventHandle();
-	
+	//intentEventHandle();
+	parameterEventHandler();
 }
 
 function genParameter(parameter){
@@ -888,8 +932,9 @@ function genParameter(parameter){
 	 parametersHtml+="<input type='text' class='parameter-prompts' value='"+showprompts+"' placeholder='添加提示...'>";
 	 parametersHtml+='</div>';
 	 
-	 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc" style="width:20%">';
-	 parametersHtml+='<a href="javascript:void(0)" class="ico-item no-result delparameter-prompts" style="display: none;"><span class="glyphicon glyphicon-trash del_icon"></span></a>';
+	 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc iconcontainer uhide" style="width:20%;">';
+	 parametersHtml+='<a href="javascript:void(0)" class="ico-item"><span class="flaticon glyphicon glyphicon-resize-vertical m_drag"></span></a>';
+	 parametersHtml+='<a href="javascript:void(0)" class="ico-item delparameter-prompts"><span class="glyphicon glyphicon-trash del_icon"></span></a>';
 	 parametersHtml+='</div>';
 	 
 	 parametersHtml+='</div>';
@@ -961,7 +1006,7 @@ function initIntent(intent){
 	 }
 	 $(".usersaystable").html(userSaysHtml);
 	 
-	
+	 
 		
 	 if(intent.responses.length>0){	
 	 	 $("#action").val(intent.responses[0].action);
@@ -970,45 +1015,13 @@ function initIntent(intent){
 	 }
 	 var parametersHtml='';
 	 if(intent.responses.length>0){	
-	 var parameters=intent.responses[0].parameters;
-	
-	 for(var i=0;i<parameters.length;i++){
-		 
-		 parametersHtml+=genParameter(parameters[i]);
-		 
-		 /*
-		 parametersHtml+='<div class="ub" style="width:100%;background: #f8f8f8;min-height:40px;height:auto;color: #9399a6;">';
-		 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc" style="width:10%;word-wrap: break-word;word-break: break-all;">';
-		 parametersHtml+='<div class="checkbox checkbox-primary checkbox-single">';
-		 
-		 if(parameters[i].isList){
-			 parametersHtml+='<input type="checkbox" checked="checked" aria-label="Single checkbox Two">';
-		 }else{
-			 parametersHtml+='<input type="checkbox" aria-label="Single checkbox Two">';
+		 var parameters=intent.responses[0].parameters;
+		
+		 for(var i=0;i<parameters.length;i++){
+			 
+			 parametersHtml+=genParameter(parameters[i]);
+			 
 		 }
-		 
-		 
-		 parametersHtml+='<label></label>';
-		 parametersHtml+='</div>';
-		 parametersHtml+='</div>';
-		 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc"  contenteditable="" style="width:16%">';
-		 parametersHtml+=parameters[i].name;
-		 parametersHtml+='</div>';
-		 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc entityselect"  style="width:16%">';
-		 parametersHtml+=parameters[i].dataType;
-		 parametersHtml+='</div>';
-		 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc"  style="width:16%">';
-		 parametersHtml+=parameters[i].value;
-		 parametersHtml+='</div>';
-		 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc" contenteditable=""  style="width:16%">';
-		 parametersHtml+=parameters[i].defaultValue==null?'':parameters[i].defaultValue;
-		 parametersHtml+='</div>';
-		 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc" contenteditable=""  style="width:16%">';
-		 parametersHtml+=parameters[i].prompts==null?'':parameters[i].prompts;
-		 parametersHtml+='</div>';
-		 parametersHtml+='</div>';
-		 */
-	 }
 	 }
 	 
 	 $("#parameters").html(parametersHtml);

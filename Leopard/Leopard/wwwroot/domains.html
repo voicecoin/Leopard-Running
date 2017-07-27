@@ -9,7 +9,8 @@
   <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
   <link rel="stylesheet" type="text/css" href="css/robot.css">
   <link rel="stylesheet" type="text/css" href="css/ui-box.css" />
-  <link rel="stylesheet" type="text/css" href="css/jquery.tagsinput.css" />
+
+  <link rel="stylesheet" href="css/jquery-ui.css" >
 
   <style>
     .input-lg{padding:0;font-size:14px;height: auto;}
@@ -50,7 +51,8 @@ h4, .h4 {
 }
   </style>
   <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script src="js/jquery.cookie.js"></script>
+  <script src="js/jquery-ui.min.js"></script>
+  <script src="js/jquery.cookie.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/check.js"></script>
   <script src="js/jquery.tagsinput.js"></script>
@@ -61,9 +63,15 @@ h4, .h4 {
         agentId = getQuery('agentId');
         //showList();
         loadLeft();
-        //showEntity('');
+        loadRight();
     });
 
+    function loadRight(){
+    	$.get("bottest.html", function(data) {
+            $('.ui_right').html(data);
+        });
+    }
+    
     function loadLeft() {
         $.get("left.html", function (data) {
             $('#leftmenu').html(data);
@@ -138,37 +146,7 @@ h4, .h4 {
 
 <div class="ui_right">
 
-	<div class="ui_right_main">
-
-		<div class="ui_right_top">
-
-			<img id="dialog_img" class="ui_launch" src="images/u98.jpg" /><span>会话测试</span><img id="ui_11"  src="images/ui_11_b.jpg" />
-
-		</div>
-
-		<div class="ui_right_mid">
-
-			<img  src="images/ui_06.jpg" /><span>你好！我是小白</span>
-
-		</div>
-
-		<div class="ui_right_right">
-
-			<img  src="images/ui_10.jpg" />
-
-		</div>
-
-		<div class="ui_right_btm">
-
-			<input class="" type="text" pattern="" placeholder="   输入对话">
-
-			<button type="button">发  送</button>
-
-		</div>
-
-	</div>
-
-
+	
 
 </div>
 
