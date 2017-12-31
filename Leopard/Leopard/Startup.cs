@@ -7,17 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileProviders;
-using System.IO;
 using Microsoft.AspNetCore.Http;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using AutoMapper;
-using Microsoft.Extensions.Options;
-using Leopard.Core;
-using Leopard.DataContexts;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Net.Http.Headers;
 
 namespace Leopard
@@ -32,8 +22,6 @@ namespace Leopard
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
-
-            CoreController.Configuration = Configuration;
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -41,12 +29,8 @@ namespace Leopard
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<ApiExceptionFilter>();
-
             // https://docs.microsoft.com/en-us/aspnet/core/security/cors
             services.AddCors();
-
-            CoreDbContext.ConnectionString = Configuration.GetConnectionString("DefaultConnection");
 
             services.AddAuthentication();
 
@@ -71,8 +55,6 @@ namespace Leopard
 
             app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials());
 
-            ConfigureAuth(app);
-
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -94,11 +76,6 @@ namespace Leopard
                     ctx.Context.Response.Headers.Append("Cache-Control", "public,max-age=600");
                 }
             });
-
-
-            // Initialize AutoMapper
-            MapperInitializer.Initialize();
-            DbInitializer.Initialize(env);
         }
     }
 }

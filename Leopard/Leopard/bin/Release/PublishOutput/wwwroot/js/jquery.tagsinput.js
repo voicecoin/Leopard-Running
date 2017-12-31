@@ -70,7 +70,7 @@
     input.data('minwidth', minWidth);
     input.data('maxwidth', maxWidth);
     input.data('tester_id', testerId);
-    input.css('width', minWidth);
+    input.css('width', minWidth<176?176:minWidth);
   };
 
 	$.fn.addTag = function(value,options) {
@@ -94,11 +94,7 @@
 				var values=realValue.split('|');
 				
 				value = values[0];
-				
-				
-				
-				
-				
+
 				if(values.length>1)
 					leftNum=values[1];
 				
@@ -119,12 +115,15 @@
 	                    $('<span>').addClass('tag ub').append(
 	                            $('<span>',{class:'ub-f1 ub ub-ver ub-ac ub-pc'}).text(value).append('&nbsp;&nbsp;'),
 	                            $('<a>', {
-	                            	class:'ub-f1 ub ub-ver ub-ac ub-pc',
+	                            	class:'ub-f1 ub ub-ver ub-ac ub-pc removingtag',
 	                                href  : '#',
 	                                title : 'Removing tag',
 	                                text  : 'x'
 	                            }).click(function () {
+	                            	console.log("jquery.tagsinput.js click")
 	                            	//$('#'+id+'_tag').focus();
+	                            	//return $('#' + id).removeTag(escape(value));
+	                            	removeTagCallBack($('#' + id));
 	                                return $('#' + id).removeTag(escape(value));
 	                            })
 	                        ).insertBefore('#' + id + '_addTag');
@@ -324,7 +323,7 @@
 					if ($(event.data.fake_input).val()==$(event.data.fake_input).attr('data-default')) {
 						$(event.data.fake_input).val('');
 					}
-					$("#intent-state-img").attr("src","images/ui_09_b.jpg");
+					//$("#intent-state-img").attr("src","images/ui_09_b.jpg");
 					$(event.data.fake_input).css('color','#000000');
 				});
 

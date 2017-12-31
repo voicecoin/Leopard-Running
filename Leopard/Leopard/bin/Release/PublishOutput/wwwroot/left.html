@@ -64,20 +64,37 @@ function menuEvent(){
 }
 menuEvent();
 
+var menuBots=[];
+
+function menuChangeBot(id,nowbotname){
+    $("#nowbot").html(nowbotname);
+    for(var i=0;i<menuBots.length;i++){
+    	if(menuBots[i].id==id){
+    		menuBots[i].avatar='';
+    		$.cookie("currentBot",JSON.stringify(menuBots[i]),{"expires":1});
+    		break;
+    	}
+    }
+	resetAgent(id);
+}
+
 
 function loadBots(){
-     $.post('https://api.yaya.ai/api/Agent/List', null,
-     function(json) {
-       //console.log(json);
-       bots = json;
-       var robts = '';
-       for (var i = 0; i < json.length; i++) {
-         var robt = json[i];
-         //robt.id='f3123461-cdeb-4f0f-bdea-8b2c984115e8';
-         robts += '<li><a href="javascript:void(0);" onclick="resetAgent(\''+robt.id+'\')">' + robt.name + '</a></li>';
-       }
-       $("#botlistmenu").html(robts);
-     });
+	$.get(host + '/v1/Agents/'+$.cookie("userId")+'/Query', null,function(json) {
+		   menuBots = json.items;
+	       var robts = '';
+	       for (var i = 0; i < menuBots.length; i++) {
+	         var robt = menuBots[i];
+	         //robt.id='f3123461-cdeb-4f0f-bdea-8b2c984115e8';
+	         robts += '<li><a href="javascript:void(0);" onclick="menuChangeBot(\''+robt.id+'\',\''+robt.name+'\')">' + robt.name + '</a></li>';
+	         if(robt.id==agentId){
+	        	 $("#nowbot").html(robt.name);
+	         }
+	       }
+	       $("#botlistmenu").html(robts);
+		
+	});
+
 }
 
 function goIntent(){
@@ -98,6 +115,13 @@ function goIntegrations(){
 	window.location.href='integrations.html?agentId='+agentId;
 }
 
+function logoutLeft(){
+	$.get(host + '/v1/Account/Logout', null,function(json) {
+    	window.location.href="login.html";
+    	
+    });
+}
+
 </script>
 
 	<div class="ui_side_top">
@@ -114,17 +138,16 @@ function goIntegrations(){
 				<div class="ui_side_list_li_right">
 					 <div class="dropdown">
 					  <button class="ui_btn" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-					    我的机器人
+					    
+					    <span id="nowbot">我的机器人</span>
 					    <span class="caret"></span>
 					  </button>
 					  <ul id="botlistmenu" class="dropdown-menu" aria-labelledby="dropdownMenu1">
-					    <li><a href="#">我的机器人1</a></li>
-					    <li><a href="#">我的机器人2</a></li>
-					    <li><a href="#">我的机器人3</a></li>
+					   
 					  </ul>
 					</div>
-					<!--<a href=""><span class="ui_side_list_li_right_span">我的机器人<span class="caret"></span></span></a>-->
-					 <div class="ui_icon_right"><a href="setname.html"><img id="Img1" src="images/icon_08_a.png" /></a></div>
+					<!--<a href=""><span class="ui_side_list_li_right_span">我的机器人<span class="caret"></span></span></a>
+					 <div class="ui_icon_right"><a href="setname.html"><img id="Img1" src="images/icon_08_a.png" /></a></div>-->
 				</div>
 			</div>
 		</div>
@@ -134,7 +157,7 @@ function goIntegrations(){
 					<img id="Img2"  src="images/icon_02_a.png" />
 				</div>
 				<div class="ui_side_list_li_right" >
-					<a href="javascript:void(0);" onclick="goIntent();"><span class="ui_side_list_li_right_span">使用场景<span>&nbsp; &nbsp;  +</span></span></a>
+					<a href="javascript:void(0);" onclick="goIntent();"><span class="ui_side_list_li_right_span">会话意图</span></a>&nbsp;&nbsp;<span><img src="images/plus.png"></span>
 				</div>
 			</div>
 		</div>
@@ -144,7 +167,7 @@ function goIntegrations(){
 					<img id="Img3"  src="images/icon_03_a.png" />
 				</div>
 				<div class="ui_side_list_li_right">
-					<a href="javascript:void(0);"  onclick="goEntity();"><span class="ui_side_list_li_right_span">用户词库<span>&nbsp; &nbsp; +</span></span></a>
+					<a href="javascript:void(0);"  onclick="goEntity();"><span class="ui_side_list_li_right_span">用户词库</span></a>&nbsp;&nbsp;<span><img src="images/plus.png"></span>
 				</div>
 			</div>
 		</div>
@@ -185,7 +208,7 @@ function goIntegrations(){
 					<img id="Img7" src="images/icon_07_a.png" />
 				</div>
 				<div class="ui_side_list_li_right">
-					<a href="http://www.bots123.com/"><span class="ui_side_list_li_right_span">开发论坛</span></a>
+					<a href="http://forum.yaya.ai"><span class="ui_side_list_li_right_span">开发论坛</span></a>
 				</div>
 			</div>
 		</div>
@@ -207,7 +230,7 @@ function goIntegrations(){
 					<img id="Img9" src="images/icon_09_a.png" />
 				</div>
 				<div class="ui_side_list_li_right">
-					<a href="https://api.yaya.ai/api/Account/Logout"><span class="ui_side_list_li_right_span">退出</span></a>
+					<a href="javascript:void(0);" onclick="logoutLeft();"><span class="ui_side_list_li_right_span">退出</span></a>
 				</div>
 			</div>
 		</div>

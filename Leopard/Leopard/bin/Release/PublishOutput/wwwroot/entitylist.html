@@ -29,10 +29,15 @@
 					<div class="search-form ng-pristine ng-valid" style="display: block;">
 						<div class="input-group wide">
 							<input type="text" autocomplete="off" id="search" class="form-control ng-pristine ng-untouched ng-valid ng-empty" name="search" placeholder="搜索">
-							<span class="mic-ico" onclick="getList('search')">
+							<span class="mic-ico" onclick="startSearch();">
 		                        <span class="glyphicon glyphicon-search"></span>
 							</span>
 						</div>
 					</div>
-					<ul class="list-group" style="height:500px;overflow-y:scroll;"></ul>
+					<div id="wrapper" class="style-1" style="height:360px;overflow-y:scroll;">
+					<ul class="list-group"></ul>
+					</div>
+					<div style="text-align: center;">
+					<div id="pageContainer" class="pager clearfix"></div>
+					</div>
 			</div>

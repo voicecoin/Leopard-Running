@@ -5,7 +5,8 @@
   <meta name="renderer" content="webkit|ie-comp|ie-stand">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
-  <title>场景</title>
+    <meta name="description" content="最简易的聊天机器人设计及协作平台，十分钟轻松制作我的聊天机器人！集成深度神经网络、知识图谱和自然语言处理的超强技术!" />
+  <title>会话意图设计</title>
   <link rel="stylesheet" href="css/bootstrap.min.css" >
   <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
   <link rel="stylesheet" type="text/css" href="css/robot.css">
@@ -15,14 +16,15 @@
   <link rel="stylesheet" type="text/css" href="css/awesome-bootstrap-checkbox.css" />
   <link rel="stylesheet" type="text/css" href="css/page.css" />
   <link rel="stylesheet" href="css/jquery-ui.css" >
+  <link rel="stylesheet" href="css/scrollstyle.css" >
   <style>
     .input-lg{padding:0;font-size:14px;height: auto;}
     @media screen and (max-width: 750px) {
-  	.ui_side{width:16%;height: 100%;overflow: hidden;}
+  	.ui_side{width:13%;height: 100%;overflow: hidden;}
   	.ui_side_list_li{margin-bottom: 7px;}
     .input-lg{padding:0;font-size:14px;height: auto;}
 	.ui_mid_main{padding-top:15px;}
-  	.ui_mid{width:84%;height:100%;}
+  	.ui_mid{width:87%;height:100%;}
   	.ui_right{display: none;}
   	.ui_mid_01_left{width:70%;}
   	.ui_mid_03{width:70%;}
@@ -124,6 +126,7 @@
 	background-color:rgb(255, 205, 246)
 }
   </style>
+  <link rel="stylesheet" type="text/css" href="css/intent.css" />
   <script type="text/javascript" src="js/jquery.min.js"></script>
   <script src="js/jquery.cookie.js"></script>
   <script src="js/jquery-ui.min.js"></script>
@@ -132,848 +135,7 @@
   <script src="js/bootstrap.min.js"></script>
   <script src="js/check.js"></script>
   <script src="js/main.js"></script>
-<script>
-
-var intents=[];
-var intent=null;
-var agentId=null;
-var intentId=null;
-//1 list 2 editor
-var showModel=1;
-
-
-function saveIntent(){
-	genIntentData();
-}
-
-function genIntentData(){
-	var intentNow={};
-	intentNow.id=$("#intent-id").val();
-	intentNow.name=$("#intent-name").val();
-	intentNow.contexts=$("#tags_in").val().split(",");
-	intentNow.userSays=[];
-	
-	$.each($(".usersay"), function() {
-        //console.log($(this).attr('id'));
-        var usersay={};
-        usersay.id=$(this).attr('id');
-        usersay.data=[];
-        var texts=$(this).find(".usersaytext:first span");
-        $.each(texts,function(){
-        	var dataitem={};
-        	if($(this).hasClass("isMeta")){
-        		var metatexts=$(this).parent().parent().parent().find(".usersaymeta").children('div');
-        		dataitem.alias=metatexts[0].innerHTML;
-        		dataitem.meta=metatexts[1].firstChild.innerHTML;
-        		dataitem.text=metatexts[2].innerHTML;
-        	}else{
-        		dataitem.text=$(this).html();
-        	}
-        	usersay.data.push(dataitem);
-        	
-        });
-        intentNow.userSays.push(usersay);
-        
-    });  
-	
-	
-	intentNow.responses=[];
-	var response={};
-	response.id='';
-	response.intentId=intentId;
-	response.affectedContexts=[];
-	if($("#tags_out").val().length>0){
-		//console.log('$("#tags_out").val()='+$("#tags_out").val());
-		var tarray=$("#tags_out").val().split(',');
-		for(var i=0;i<tarray.length;i++){
-			var t={};
-			t.name=tarray[i].split('|')[0];
-			t.lifespan=tarray[i].split('|')[1];
-			response.affectedContexts.push(t);
-		}
-		
-	}
-	
-	response.messages=[];
-	
-	$.each($("#replytable").find(".template-editor-holder"),function(){
-		var message={};
-		message.id=$(this).attr('data-id');
-		message.intentResponseId=$(this).attr('data-intentResponseId');
-		message.type=$(this).attr('data-type');
-		message.platform=$(this).attr('data-platform');
-		message.speech=$(this).html();
-		response.messages.push(message);
-	});
-	
-	response.parameters=[];
-	
-	intentNow.responses.push(response);
-	console.dir(intentNow);
-}
-
-
-function showList(){
-	showModel=1;
-	$.get("intentlist.html", function(data) {
-        $('.ui_mid').html(data);
-        loadIntents();
-    }); 
-}
-
-function resetAgent(id){
-	agentId=id;
-	switch(showModel){
-	case 1:
-		loadIntents();
-		break;
-	case 2:
-		showIntent();
-		break;
-	}
-}
-
-
-
-function loadIntents(){
-	initIntentsPage();
-}
-
-function initIntentsPage(){
-	var key=$("#search").val();
-	if(agentId!=null){
-		var url= 'http://api.yaya.ai/v1/Intents/'+agentId+"/Query";
-		if(key!=null && key.length>0){
-			url+='?name='+key
-		}
-		$("#pageContainer").zPager({
-			url:url,
-			htmlBox: $('.list-group'),
-			btnShow: false,
-			dataRender: function(data){
-				intents=data;
-				initIntents();
-			}
-		});
-	}
-}
-
-function initIntents(){
-	var html='';
-	for(var i=0;i<intents.length;i++){
-		html+='<li class="list-group-item ng-scope intent" id="'+intents[i].id+'"><a href="javascript:void(0)" class="name ng-binding">'+intents[i].name+'</a>';
-		html+='<div class="ico-group right">';
-		html+='<a class="ico-item del-icon" style="display:none"  href="javascript:void(0)"><span class="glyphicon glyphicon-trash" intent_id="'+intents[i].id+'"></span></a>';
-		html+='</div></li>';
-	}
-	$(".list-group").html(html);
-	$(".intent").off('click').on('click', function() {
-		//alert("intent"); 
-		showIntent($(this).attr('id'));
-    });
-	
-	$(".intent").off('mouseenter').on('mouseenter', function() {
-		$(this).find(".del-icon").show();
-    });
-	
-	$(".intent").off('mouseleave').on('mouseleave', function() {
-		$(this).find(".del-icon").hide();
-    });
-	
-	$(".intent .glyphicon-trash").off('click').on('click', function(event) {
-		//alert("glyphicon-trash"); 
-		var id = $(this).attr("intent_id");
-         //delEntity(id);
-         event.stopPropagation();
-     });
-	
-	$("#createIntent").off('click').on('click',function(){
-		//showEntity('');
-		showIntent('');
-	});
-	
-	
-}
-
-function intentEventHandle(){
-	$("#intent-name").off("focus").on('focus',function(){
-	    $("#intent-name-img").attr("src","images/ui_03_b.jpg");
-	});
-	
-	$("#intent-name").off("blur").on('blur',function(){
-	    $("#intent-name-img").attr("src","images/ui_03.jpg");
-	});
-	
-	$("#action").off("focus").on('focus',function(){
-	    $("#action-img").attr("src","images/ui_17_b.jpg");
-	});
-	
-	$("#action").off("blur").on('blur',function(){
-	    $("#action-img").attr("src","images/ui_17.jpg");
-	});
-	$("#replyname").off("focus").on('focus',function(){
-	    $("#replyname-img").attr("src","images/ui_19_b.jpg");
-	});
-	
-	
-	$("#replyname").off("blur").on('blur',function(){
-	    $("#replyname-img").attr("src","images/ui_19.jpg");
-	});
-	
-	
-	$("#replyname").off("keyup").on('keyup',function(e){
-		e.stopPropagation();
-		if(e.keyCode == 13){
-			if($(this).val().length>0){
-				var speech={
-                    "id":"",
-                    "intentResponseId":"=",
-                    "speech":$(this).val(),
-                    "type":"Text",
-                    "platform":0
-                };
-				var html=addSpeech(speech);
-				$("#replytable").append(html);	 
-				$(this).val('');
-			}
-		}
-	});
-	
-	
-	$(".template-editor-holder").off("blur").on('blur',function(){
-		var v=$(this).html().replace('&nbsp;','').replace(/\r\n/g,'').replace(/\n/g,'');
-		if(v.length==0){
-			$(this).html('');
-		}else{
-			
-		}
-	});
-	
-
-	
-	
-	$(".template-editor-holder").off("click").on('click',function(){
-		
-		
-		//$(this).css('border-left','3px solid #37a0e1');
-		
-		console.log('$(this).attr("contenteditable")='+$(this).attr("contenteditable"));
-		var v=$(this).html().replace('&nbsp;','').replace(/\r\n/g,'').replace(/\n/g,'');
-		console.log("v="+v);
-		console.log("v.length="+v.length);
-		//console.log("sizeof(v="+sizeof(v,'utf-8'));
-		if(v.length==0){
-			$(this).html('&nbsp;');
-			var p =$(this).get()[0];//document.getElementById($(this).attr('id')) ,
-		    s = window.getSelection(),
-		    r = document.createRange();
-			r.setStart(p, 0);
-			r.setEnd(p, 0);
-			s.removeAllRanges();
-			s.addRange(r);
-		}else{
-			
-		}
-		
-		
-		
-		//var div = document.getElementById('addUserSay');
-		//setTimeout(function() {
-		//	div.focus();
-		//}, 0);
-		
-		//$(this).trigger('focusin');
-		
-		//#37a0e1
-		//border: 3px solid #37a0e1;
-	});
-	
-	$("#addUserSay").off("blur").on('blur',function(){
-		//$(this).html("&nbsp;");
-		$(this).html("");
-		$(this).css('border-left','0px solid #37a0e1');
-		//#37a0e1
-		//border: 3px solid #37a0e1;
-	});
-	
-
-	$("#addUserSay").off("keyup").on('keyup',function(e){
-		e.stopPropagation();
-		var v=$(this).html().replace('&nbsp;','').replace(/\r\n/g,'').replace(/\n/g,'');
-		if(e.keyCode == 13){
-			if(v.length==0){
-				s_tip("请输入用户提问",'fail');
-				$(this).html('&nbsp;');
-			}else{
-				
-				
-				$.ajax({
-					url: 'http://api.yaya.ai/v1/Intents/Markup?text='+v,
-					type: "GET",
-					datType: "JSON",
-					contentType: "application/json",
-					data: {},
-					success: function (json) {
-						//s_tip("保存成功",'ok');
-						$(this).html('&nbsp;');
-						var userSay={};
-						userSay.data=json;
-						
-						var userSaysHtml=addUserSay(userSay);
-						$(".usersaystable").append(userSaysHtml);
-						usersayEventHandler();
-					},error: function(e) {
-						//s_tip(e,'fail');
-					}
-				});
-				/*
-				console.log(v);
-				var userSay={};
-				userSay.data=[];
-				var t=
-				 {
-	                    "text":v,
-	                    "alias":null,
-	                    "meta":null,
-	                    "userDefined":false
-	             };
-				userSay.data.push(t);
-				var userSaysHtml=addUserSay(userSay);
-				$(".usersaystable").append(userSaysHtml);
-				$(this).html('&nbsp;');
-				$(".usersay").off('click').on('click',function(){
-					
-					$(".usersayentity").addClass('uhide');
-					 $(this).find('.usersayentity').removeClass('uhide');
-				});
-				
-				
-				$(".delusersayicon").off('click').on('click',function(){
-					$(this).parent().parent().parent().remove();
-				});
-				
-				
-				$(".delusersaymetaicon").off('click').on('click',function(){
-					$(this).parent().parent().parent().remove();
-				});*/
-			}
-		}
-	});
-	
-	usersayEventHandler();
-	parameterEventHandler();
-	
-}
-
-function parameterEventHandler(){
-	$(".parameter-name").off("input propertychange").on('input propertychange',function(e){
-		$(this).parent().parent().find(".parameter-value:first").val("$"+$(this).val());
-	});
-	
-	$(".parameter-required").off("change").on('change',function(e){
-		console.log($(this).is(':checked'));
-		if($(this).is(':checked')){
-			//$(this).parent().parent().parent().find(".parameter-prompts:first").removeAttr("disabled"); 
-			$(this).parent().parent().parent().find(".parameter-prompts:first").show();
-		}else{
-			$(this).parent().parent().parent().find(".parameter-prompts:first").hide();
-			//var jparameterprompts=$(this).parent().parent().parent().find(".parameter-prompts:first").parent().hide();
-			//jparameterprompts.attr("disabled",true); 
-		}
-		hideOrShowPrompts();
-	});
-}
-
-function hideOrShowPrompts(){
-	var showOrHide=null;
-	$(".parameter-required").each(function(){
-		if(showOrHide==null){
-			showOrHide=$(this).is(':checked');
-		}else{
-			showOrHide=(showOrHide || $(this).is(':checked'));
-		}
-		
-		
-	});
-	console.log("showOrHide="+showOrHide);
-	if(showOrHide){
-		$(".ppdiv").removeClass('uhide');
-	}else{
-		$(".ppdiv").addClass('uhide');
-	}
-	
-}
-
-
-function usersayEventHandler(){
-	$(".usersay").off("click").on('click',function(){
-		$(".usersayentity").addClass('uhide');
-		 $(this).find('.usersayentity').removeClass('uhide');
-	});
-	
-	
-	$(".delusersayicon").off("click").on('click',function(){
-		$(this).parent().parent().parent().remove();
-	});
-	
-	
-	$(".delusersaymetaicon").off("click").on('click',function(){
-		$(this).parent().parent().parent().remove();
-	});
-	
-	$(".delspeech").off("click").on('click',function(){
-		$(this).parent().parent().remove();
-	});
-	
-	
-	$(".usersayentity .entityselect").off("click").on('click',function(e){
-		
-		var key=$(this).children('span').get(0).innerHTML;
-		console.log("key="+key);
-		key=key.replace('@','');
-		if(key.length>1){
-			var id=$(this).parent().parent().parent().attr('id');
-			setTimeout("autoCompleteEntity('"+id+"','"+key+"')",200);
-		}
-		
-	});
-
-}
-
-function autoCompleteEntity(id,key){
-    $.ajax({
-  	  url: 'http://api.yaya.ai/v1/Entities/'+agentId+'/Query?name='+key,
-  	  type: 'GET',
-  	  data: {},
-  	  success: function(json) {
-  		initAutoCompleteDiv(id,json.items);
-  	  },error: function(e) {
-  		  
-  	  }
-  	});
-}
-
-
-function setValueToInput(id,value){
-	var t=$("#"+id).find('.entityselect:first').children('span').get(0);
-	t.innerHTML="@"+value;
-	$(".select-entity-menu").remove();
-}
-	
-	
-function initAutoCompleteDiv(id,data){
-	if(data.length==0){
-		return;
-	}
-	var _left=$("#"+id).offset().left+300;
-	var _top=$("#"+id).offset().top+120;
-	var html='<div class="select-entity-menu" style="left: '+_left+'px; top:'+_top+'px;">';
-	html+='<ul class="select-menu">';
-	html+='<div class="select-head">';
-	html+='<input id="filterParam" type="text" placeholder="Filter..." class="filterParam" value="" name=""></div>';
-	html+='<ul class="menu-list">';
-	for(var i=0;i<data.length;i++){
-		html+='<li><a href="javascript:void(0)" class="filterItem" onclick="setValueToInput(\''+id+'\',\''+data[i].name+'\');">'+data[i].name+'</a></li>';
-	}
-	html+='</ul>';
-	
-	html+='</ul>';
-	html+='</div>';
-	//$(".ui_mid").append(html);
-	$(".select-entity-menu").remove();
-	$("body").append(html);
-	$(".select-entity-menu").off('click').on('click',function(e){
-		var e = e || window.event;
-		e.stopPropagation();
-	});
-	
-	$("#filterParam").off("input propertychange").on('input propertychange', function () {
-		$(".filterItem").each(function(){
-			if($(this).html().indexOf($("#filterParam").val())>-1){
-				$(this).show();
-			}else{
-				$(this).hide();
-			}
-		});
-	});
-	$("body").off("click").on('click',function(e){
-		$(".select-entity-menu").remove();
-	});
-}
-
-
-
-function createIntent(){
-	var intent={};
-	intent.id='';
-	intent.name='';
-	intent.agentId=agentId;
-	
-	intent.contexts=[];
-	intent.responses=[];
-	intent.userSays=[];
-	initIntent(intent);
-	intentEventHandle();
-}
-
-function showIntent(id){
-	console.log("showIntent");
-	showModel=2;
-	$.get("intentditor.html", function(data) {
-        $('.ui_mid').html(data);
-        loadIntent(id);
-    }); 
-}
-
-function loadIntent(id){
-	//alert(id);
-	if(id==null || id.length==0){
-		createIntent();
-	}else{
-		 var data={};
-		 data.agentId = agentId;
-		 data.intentId =id;// '059a2116-6b02-47b7-9b74-1f40fd4d68cf';//id;
-		 var self=this;
-
-		$.ajax({
-			url: 'http://api.yaya.ai/v1/Intents/'+id,
-			type: 'GET',
-			data: {},
-			success: function(json) {
-				self.intent=json;
-				initIntent(self.intent);
-				intentEventHandle();
-			},error: function(e) {
-				self.entity=null;
-				s_tip("错误",e);
-			}
-		});
-
-/*
-		 $.post('https://api.yaya.ai/api/Intents/GetIntent', data,function(json) {
-			 //console.log(json)
-			 self.intent=json;
-			 initIntent(self.intent);
-			 intentEventHandle();
-		 });*/
-	}
-	
-}
-
-function addUserSay(userSay){
-	 var userSaysHtml='';
-	 var data=userSay.data;
-	 var datahtml='';
-	 var metaarray=[];
-	 for(var j=0;j<data.length;j++){
-		 
-		 datahtml+='<span';
-		 if(data[j].meta!=null){
-			 datahtml+=' class="isMeta"';
-			 metaarray.push(data[j]);
-		 }
-		 datahtml+='>';
-		 datahtml+=data[j].text;
-		 datahtml+='</span>';
-	 }
-	 
-	 userSaysHtml+='<div class="ub ub-ver usersay" id="'+userSay.id+'">';
-	 userSaysHtml+='<div  class="ub" style="width:100%;min-height:40px;height:auto;margin-bottom: -1px; border: 1px solid rgb(221, 221, 221);">';
-		 userSaysHtml+='<div class="ub ub-ver ub-ac ub-pc" style="width:10%">';
-		 userSaysHtml+='<i class="fa ng-scope fa-quote-right" style="color: #b7bbc4;"></i>';
-		 userSaysHtml+='</div>';
-		 userSaysHtml+='<div class="ub ub-ver ub-pc template-editor-holder usersaytext" contenteditable="" placeholder="Add User expression" style="width:80%;word-wrap: break-word;word-break: break-all;">'+datahtml+'</div>';
-		 userSaysHtml+='<div class="ub ub-ver ub-ac ub-pc" style="width:10%">';
-		 userSaysHtml+='<a href="javascript:void(0)" class="ico-item no-result delusersayicon" style="display: inline;"><span class="glyphicon glyphicon-trash del_icon"></span></a>';
-		 userSaysHtml+='</div>';
-	 userSaysHtml+='</div>';
-	 
-	 if(metaarray.length>0){
-		 userSaysHtml+='<div class="ub usersayentity ub-ver uhide">';
-		 userSaysHtml+='<div class="ub" style="background: #f4f5f5;height:40px;color: #9399a6;">';
-		 userSaysHtml+='<div class="ub ub-f1 ub-ac ub-pc" style="width:30%">';
-		 userSaysHtml+='名称';
-		 userSaysHtml+='</div>';
-		 userSaysHtml+='<div class="ub ub-f1 ub-ac ub-pc" style="width:30%">';
-		 userSaysHtml+='类型';
-		 userSaysHtml+='</div>';
-		 userSaysHtml+='<div class="ub ub-f1 ub-ac ub-pc" style="width:30%">';
-		 userSaysHtml+='取值';
-		 userSaysHtml+='</div>';
-		 userSaysHtml+='<div class="ub ub-f1 ub-ac ub-pc" style="width:10%">';
-		 userSaysHtml+='</div>';
-		 userSaysHtml+='</div>';
-		 for(var n=0;n<metaarray.length;n++){
-			 userSaysHtml+='<div class="ub usersaymeta" style="background: #f8f8f8;min-height:40px;height:auto;color: #9399a6;">';
-			 userSaysHtml+='<div class="ub ub-f1 ub-ac ub-pc template-editor-holder " contenteditable="" style="width:30%;word-wrap: break-word;word-break: break-all;">';
-			 userSaysHtml+=metaarray[n].alias;
-			 userSaysHtml+='</div>';
-			 userSaysHtml+='<div class="ub ub-f1 ub-ac ub-pc entityselect"  style="width:30%"><span style="background-color:rgb(255, 205, 246)">';
-			 userSaysHtml+=metaarray[n].meta;
-			 userSaysHtml+='</span></div>';
-			 userSaysHtml+='<div class="ub ub-f1 ub-ac ub-pc"  style="width:30%">';
-			 userSaysHtml+=metaarray[n].text;
-			 userSaysHtml+='</div>';
-			 userSaysHtml+='<div class="ub ub-f1 ub-ac ub-pc"  style="width:10%">';
-			 userSaysHtml+='<a href="javascript:void(0)" class="ico-item no-result delusersaymetaicon" style="display: inline;"><span class="glyphicon glyphicon-remove"></span></a>';
-			 userSaysHtml+='</div>';
-			 userSaysHtml+='</div>';
-		 }
-		 userSaysHtml+='</div>';
-	 }
-	 userSaysHtml+='</div>';
-	 return userSaysHtml;
-}
-
-function addParameter(){
-	var parametersHtml=genParameter(null);
-	$("#parameters").append(parametersHtml);
-	intentEventHandle();
-	
-}
-
-function genParameter(parameter){
-	 if(parameter==null){
-		 parameter={};
-		 parameter.isList=false;
-		 parameter.name='';
-		 parameter.dataType='';
-		 parameter.value='';
-		 parameter.defaultValue='';
-		 parameter.required=true;
-		 parameter.prompts='';
-		 
-	 }
-	 var parametersHtml='';
-	 parametersHtml+='<div class="ub" style="width:100%;background: #f8f8f8;min-height:40px;height:auto;color: #9399a6;">';
-	 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc" style="width:10%;word-wrap: break-word;word-break: break-all;">';
-	 parametersHtml+='<div class="checkbox checkbox-primary checkbox-single">';
-	 
-	 if(parameter.required){
-		 parametersHtml+='<input type="checkbox" class="parameter-required" checked="checked" aria-label="Single checkbox Two">';
-	 }else{
-		 parametersHtml+='<input type="checkbox" class="parameter-required" aria-label="Single checkbox Two">';
-	 }
-	 
-	 
-	 parametersHtml+='<label></label>';
-	 parametersHtml+='</div>';
-	 parametersHtml+='</div>';
-	 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc" style="width:16%">';
-	 parametersHtml+='<input type="text" class="parameter-name" value="'+parameter.name+'" placeholder="添加参数名称...">';
-	 parametersHtml+='</div>';
-	 
-	 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc" style="width:16%">';
-	 parametersHtml+='<input type="text" class="entityselect parameter-dataType" value="'+parameter.dataType+'" placeholder="选择类型...">';
-	 parametersHtml+='</div>';
-	 
-	 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc" style="width:16%">';
-	 parametersHtml+='<input type="text" class="parameter-value" value="'+parameter.value+'" placeholder="添加参取值...">';
-	 parametersHtml+='</div>';
-	 
-	 
-	 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc" style="width:16%">';
-	 parametersHtml+='<input type="text" class="parameter-defaultValue" value="'+(parameter.defaultValue==null?'':parameter.defaultValue)+'" placeholder="添加默认值...">';
-	 parametersHtml+='</div>';
-	 
-	 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc ppdiv" style="width:16%">';
-	 parametersHtml+='<input type="text" class="parameter-prompts" value="'+(parameter.prompts==null?'':parameter.prompts)+'" placeholder="添加提示...">';
-	 parametersHtml+='</div>';
-	 
-	 /*parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc entityselect parameter-dataType"  style="width:16%">';
-	 parametersHtml+=parameter.dataType;
-	 parametersHtml+='</div>';
-	 
-	 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc template-editor-holder parameter-value" contenteditable="" placeholder="请输入参取值" style="width:16%">';
-	 parametersHtml+=parameter.value;
-	 parametersHtml+='</div>';
-	 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc template-editor-holder parameter-defaultValue" contenteditable="" placeholder="请输入默认值" style="width:16%">';
-	 parametersHtml+=parameter.defaultValue==null?'':parameter.defaultValue;
-	 parametersHtml+='</div>';
-	 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc template-editor-holder parameter-prompts" contenteditable="" placeholder="编辑提示语" style="width:16%">';
-	 parametersHtml+=parameter.prompts==null?'':parameter.prompts;
-	 parametersHtml+='</div>';*/
-	 parametersHtml+='</div>';
-	 return parametersHtml;
-}
-
-function initIntent(intent){
-	
-	
-	
-	 $("#intent-id").val(intent.id);
-	 $("#intent-name").val(intent.name);
-	 
-	 var tags_in_value='';
-	 for(var i=0;i<intent.contexts.length;i++){
-		 tags_in_value+=intent.contexts[i];
-		 if(i!=(intent.contexts.length-1)){
-			 tags_in_value+=',';
-		 }
-	 }
-	 $('#tags_in').val(tags_in_value);
-	 $('#tags_in').tagsInput({width:'100%',defaultText:'添加输入状态',height:'auto',hide:false,autosize:true,leftNumHide:true});
-	 $('#tags_in').setEditModel(false);
-	 $('#tags_in').setEditModel(true);
-	 
-	 
-	 
-	 $("#tags_in_tag").off('keyup').on('keyup',function(e){
-			if(e.keyCode == 13){
-				var values=$("#tags_in").val().split(',');
-				if(values.length>0){
-					 var lastEnter=values[values.length-1];
-					 var newOutValue=lastEnter+"|5";
-					 $('#tags_out').addTag(newOutValue,{focus:true,unique:true});
-					 $('#tags_out_tag').trigger('focus');
-				 }
-			}
-     });
-
-	 	
-	 
-	 
-	 var tags_out_value='';
-	 var affectedContexts='';
-	 if(intent.responses.length>0){
-		 affectedContexts=intent.responses[0].affectedContexts;
-		 for(var i=0;i<affectedContexts.length;i++){
-			 var t=affectedContexts[i];
-			 tags_out_value+=t.name+"|"+t.lifespan;
-			 if(i!=(affectedContexts.length-1)){
-				 tags_out_value+=',';
-			 }
-		 }
-	 }
-
-	 $('#tags_out').val(tags_out_value);
-	 $('#tags_out').tagsInput({width:'100%',defaultText:'添加输出状态',height:'auto',hide:false,autosize:true,leftNumHide:false});
-	 $('#tags_out').setEditModel(false);
-	 $('#tags_out').setEditModel(true);
-	 
-	 var userSays=intent.userSays;
-	 var userSaysHtml='';
-	 for(var i=0;i<userSays.length;i++){
-		 var userSay=userSays[i];
-		 userSaysHtml+=addUserSay(userSay);
-	 }
-	 $(".usersaystable").html(userSaysHtml);
-	 
-	
-		
-	 if(intent.responses.length>0){	
-	 	 $("#action").val(intent.responses[0].action);
-	 	 $("#responseId").val(intent.responses[0].id);
-	 	
-	 }
-	 var parametersHtml='';
-	 if(intent.responses.length>0){	
-	 var parameters=intent.responses[0].parameters;
-	
-	 for(var i=0;i<parameters.length;i++){
-		 
-		 parametersHtml+=genParameter(parameters[i]);
-		 
-		 /*
-		 parametersHtml+='<div class="ub" style="width:100%;background: #f8f8f8;min-height:40px;height:auto;color: #9399a6;">';
-		 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc" style="width:10%;word-wrap: break-word;word-break: break-all;">';
-		 parametersHtml+='<div class="checkbox checkbox-primary checkbox-single">';
-		 
-		 if(parameters[i].isList){
-			 parametersHtml+='<input type="checkbox" checked="checked" aria-label="Single checkbox Two">';
-		 }else{
-			 parametersHtml+='<input type="checkbox" aria-label="Single checkbox Two">';
-		 }
-		 
-		 
-		 parametersHtml+='<label></label>';
-		 parametersHtml+='</div>';
-		 parametersHtml+='</div>';
-		 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc"  contenteditable="" style="width:16%">';
-		 parametersHtml+=parameters[i].name;
-		 parametersHtml+='</div>';
-		 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc entityselect"  style="width:16%">';
-		 parametersHtml+=parameters[i].dataType;
-		 parametersHtml+='</div>';
-		 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc"  style="width:16%">';
-		 parametersHtml+=parameters[i].value;
-		 parametersHtml+='</div>';
-		 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc" contenteditable=""  style="width:16%">';
-		 parametersHtml+=parameters[i].defaultValue==null?'':parameters[i].defaultValue;
-		 parametersHtml+='</div>';
-		 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc" contenteditable=""  style="width:16%">';
-		 parametersHtml+=parameters[i].prompts==null?'':parameters[i].prompts;
-		 parametersHtml+='</div>';
-		 parametersHtml+='</div>';
-		 */
-	 }
-	 }
-	 
-	 $("#parameters").html(parametersHtml);
-	 
-	 var speechhtml='';
-	 
-	 if(intent.responses.length>0){	
-		 var speech=intent.responses[0].messages;
-		 for(var i=0;i<speech.length;i++){
-			 speechhtml+=addSpeech(speech[i]);
-		 }
-	 }
-	 $("#replytable").html(speechhtml);	 
-		 
-	 /*$("#entity_id").val(entity.id);
-	 $("#entity-name").val(entity.name);
-	 for(var i=0;i<entity.entries.length;i++){
-		 addEntry(entity.entries[i],i);
-	 }
-	 entityEventHander();*/
-}
-
-function addSpeech(speech){
-	var speechhtml='';
-	speechhtml+='<div class="ub " style="width:100%;height:auto;margin-bottom: -1px; border: 1px solid rgb(221, 221, 221);">';
-	speechhtml+='<div data-id="'+speech.id+'" data-intentResponseId="'+speech.intentResponseId+'" data-type="'+speech.type+'" data-platform="'+speech.platform+'" class="ub ub-ver ub-pc template-editor-holder" contenteditable="" placeholder="输入机器人回复" data-distinguish="true" style="width:90%;">'+speech.speech+'</div>';
-	speechhtml+='<div class="ub ub-ver ub-ac ub-pc" style="width:10%">';
-	speechhtml+='<a href="javascript:void(0)" class="ico-item no-result delspeech" style="display: inline;"><span class="glyphicon glyphicon-trash del_icon"></span></a>';
-	speechhtml+='</div>';
-	speechhtml+='</div>';
-    return speechhtml;
-}
-
-
-
-
-
-$(document).ready(function(){ 
-	
-	agentId=getQuery('agentId');
-	//if(agentId!=null){
-	showList();
-	//}
-	loadLeft();
-	
-	//showList();
-	
-	
-	//showIntent('bc628099-bbcd-4ebb-944a-cbec06d0dfb4'); 
-	
-	
-});
-
-function loadLeft(){
-	$.get("left.html", function(data) {
-        $('#leftmenu').html(data);
-        loadBots();
-    }); 
-	$.get("bottest.html", function(data) {
-        $('.ui_right').html(data);
-    });
-	
-	//ui_right_main
-	
-}
-
-</script>
+  <script src="js/intent.js"></script>
 
 
 </head>
@@ -1011,16 +173,81 @@ function loadLeft(){
 </div>
 </div>
 
-
-
-
-
-
+<div id="default-window-box" title="会话测试"  class="default-window-box" style="opacity: 1;display:none;">
+<div class="inner-container active"> 
+   <div class="default-modal-header">
+    <button type="button" class="close right">&times;</button>
+    <h4 class="title">为&quot;aaa&quot;添加提示语</h4>
+    <input type="hidden" id="ownParameterId">
+   </div>
+   <div class="default-modal-body">
+    <div class="row params-modal-head clearfix">
+     <div class="params-attribute-cell prompt-name">
+      名称
+     </div>
+     <div class="params-attribute-cell prompt-datatype">
+      类型
+     </div>
+     <div class="params-attribute-cell prompt-value">
+      取值
+     </div>
+    </div>
+    <div class="row params-modal-attributes clearfix">
+     <div class="params-attribute-cell">
+      <input type="text" id="prompt-name" data-key="false" class="prompt-name" value="aaa" placeholder="Enter name..." />
+     </div>
+     <div class="params-attribute-cell">
+     <input type="text" id="prompt-datatype" data-key="false" class="prompt-datatype" value="aaa" placeholder="选择类型..." />
+      <!-- <label class="aly-input prompt-datatype" id="prompt-datatype" placeholder="选择类型..."></label> -->
+     </div>
+     <div class="params-attribute-cell">
+      <div class="textcomplete-wrapper">
+       <ul class="dropdown-menu-p">
+        <li class="textcomplete-item active"><a href="javascript:void(0)">${aaa}</a></li>
+       </ul>
+       <label id="prompt-value" class="prompt-value" contenteditable="true" placeholder="输入默认值">${aaa}</label>
+      </div>
+     </div>
+    </div>
+    <div class="prompt-table">
+     <div class="prompt-cell prompt-cell-first"></div>
+     <div class="prompt-cell prompt-cell-second">
+      提示语
+     </div>
+    </div>
+    <div class="prompt-table intent-param-prompts-editor ui-sortable" id="intent-param-prompts-editor">
+     <div class="prompt-row">
+      <div class="prompt-cell prompt-cell-first">
+       1
+      </div>
+      <div class="prompt-cell prompt-cell-second">
+       <div class="borderless" contenteditable="true" onkeydown="enter_prompt(this,event)" onkeyup="create_prompt(this,event)" placeholder="输入提示语句…"></div>
+      </div>
+      <div class="prompt-cell prompt-cell-actions">
+       <a href="javascript:void(0)" class="ico-item" style="display: none;"><span class="flaticon glyphicon glyphicon-resize-vertical m_title ui-sortable-handle"></span></a>
+       <a class="visible-on-hover prompt-remove" href="javascript:void(0)" onclick="prompt_remove_rows(this)" style="display: none;"><span class="glyphicon glyphicon-trash"></span></a>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="modal-footer">
+    <button type="button" id="close_default_window" class="btn btn-default">保存</button>
+   </div>
+  </div> 
+</div>
 
 
 </body>
 
 </html>
-
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?a0ffd8247abd4a38f87f03db9e6c79a7";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
 

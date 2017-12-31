@@ -5,17 +5,24 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-  <meta name="description" content="最简易的聊天机器人设计及协作平台，十分钟轻松制作专属聊天机器人！集成最新机器学习，神经网络，知识图谱和自然语言处理技术。">
-  <title>丫丫聊天机器人定制平台</title>
+  <meta name="description" content="最简易的聊天机器人设计及协作平台，十分钟轻松制作我的聊天机器人！集成深度神经网络、知识图谱和自然语言处理的超强技术!" />
+  
+  <title>丫丫机器人</title>
   <link rel="stylesheet" href="css/bootstrap.min.css" >
   <link rel="stylesheet" href="css/jquery.fullPage.css">
   <link rel="stylesheet" type="text/css" href="css/robot.css">
   <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" href="css/bootstrapValidator.css" />
+  <link rel="stylesheet" href="css/jquery-ui.css" >
   <script src="js/jquery-3.2.0.min.js"></script>
+  <script src="js/jquery.cookie.js"></script>
+  
   <script src="js/jQuery.fontFlex.js"></script>
   <script src="js/jquery-ui.min.js"></script>
   <script src="js/jquery.fullPage.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
+  <script src="js/bootstrapValidator.js"></script>
+  <script src="js/main.js"></script>
 
  <style>
 .col_img{margin-left: 30%;}
@@ -26,7 +33,7 @@
     -webkit-text-size-adjust: none;
   }
 }
-
+.input-lg{height:42px}
   @media screen and (max-width: 750px) {
   	.thumbnail{width:100%;float:left;margin-top:15px;}
     .col_img{float: left;width:40%;margin-left: 0%;}
@@ -47,41 +54,49 @@
 
   </style>
 <script>
+
+
+function validateEmailRemote(){
+	var email=$("#email").val();
+	$.ajax({
+        url: host + '/v1/account/Exist?userName='+email,
+        type: 'GET',
+        async: false,
+        data: {},
+    }).done(function (data) {
+        //刷新
+    	$("#formReg").data('bootstrapValidator').updateStatus('email', 'NOT_VALIDATED').validateField('email');;
+    }).fail(function (data) {
+    	$("#formReg").bootstrapValidator('updateStatus', 'email', 'VALIDATED');
+    });
+}
+
 $(function(){
-	
-	
-	$("#input1").focus(function(){
-	    $("#Image1").attr("src","images/zhuce_01_b.png");
-	    $("#zc_box1").css("border-color","#1698F3");
-	  });
-	  $("#input1").blur(function(){
-	    $("#Image1").attr("src","images/zhuce_01.png");
-	    $("#zc_box1").css("border-color","");
-	  });
-	  $("#input2").focus(function(){
-	    $("#Image2").attr("src","images/zhuce_02_b.png");
+	  $("#userName").focus(function(){
+	    $("#Image2").attr("src","images/mail_02_b.png");
 	    $("#zc_box2").css("border-color","#1698F3");
 	  });
-	  $("#input2").blur(function(){
+	  $("#userName").blur(function(){
 	    $("#zc_box2").css("border-color","");
-	    $("#Image2").attr("src","images/zhuce_02.png");
+	    $("#Image2").attr("src","images/mail_02.png");
+	    //validateEmailRemote();
 	  });
-	  $("#input3").focus(function(){
+	  $("#Password").focus(function(){
 	    $("#Image3").attr("src","images/zhuce_03_b.png");
 	    $("#zc_box3").css("border-color","#1698F3");
 	  });
-	  $("#input3").blur(function(){
+	  $("#Password").blur(function(){
 	    $("#Image3").attr("src","images/zhuce_03.png");
 	    $("#zc_box3").css("border-color","");
 	  });
-	  $("#code_input").focus(function(){
-	    $("#Image4").attr("src","images/zhuce_04_b.png");
-	    $("#zc_box4").css("border-color","#1698F3");
-	  });
-	  $("#code_input").blur(function(){
-	    $("#Image4").attr("src","images/zhuce_04.png");
-	    $("#zc_box4").css("border-color","");
-	  });
+	  $("#confirmPassword").focus(function(){
+		    $("#Image4").attr("src","images/zhuce_03_b.png");
+		    $("#zc_box4").css("border-color","#1698F3");
+		  });
+		  $("#confirmPassword").blur(function(){
+		    $("#Image4").attr("src","images/zhuce_03.png");
+		    $("#zc_box4").css("border-color","");
+		  });
 
 
 	var wait=60;
@@ -100,7 +115,7 @@ $(function(){
 				1000)
 			}
 		}
-	document.getElementById("btn").onclick=function(){time(this);};
+	//document.getElementById("btn").onclick=function(){time(this);};
 
 
 	 $("#nav_list").mouseleave(function(){
@@ -111,13 +126,32 @@ $(function(){
 		verticalCentered: false,
 		anchors: ['page1', 'page2','page3','page4'],
 		navigation: true,
-		navigationTooltips: ['', '', '','']
+		navigationTooltips: ['', '', '',''],
+		lockAnchors:false,
+		recordHistory:false
 	});
-
+	$.fn.fullpage.setLockAnchors(true);
+	$.fn.fullpage.setRecordHistory(true);
+	
+	
+	
 	$("#login").on('click',function(){
-        window.location.href ="enroll.html";
+		window.location.href="login.html";
 	})
 
+	enrollValidate('#formReg');
+	$("#regButton").on('click',function(){
+		
+		var bootstrapValidator = $("#formReg").data('bootstrapValidator');
+		bootstrapValidator.validate();
+		if (bootstrapValidator.isValid()) {
+			submitEnroll();
+		}
+	  });
+
+
+
+	
 
 	/*$(".usershow").on("mouseenter",function(){
 	    //console.log("mouseenter");
@@ -136,9 +170,97 @@ $(function(){
   // H1元素
    $('h2').fontFlex(20, 36, 70);
    $('h3').fontFlex(18, 30, 60); 
+
+
+   	$("body").off("keyup").on('keyup',function(e){
+		e.stopPropagation();
+		if(e.keyCode == 13){
+			var bootstrapValidator = $("#formReg").data('bootstrapValidator');
+			bootstrapValidator.validate();
+			if (bootstrapValidator.isValid()) {
+				submitEnroll();
+			}
+		}
+	});
 });
 
+function submitEnroll(){
+	var data={};
+	data.email=$("#email").val();
+    data.userName = $("#email").val();
+	data.Password=$('#Password').val();
+	data.confirmPassword=$('#confirmPassword').val();
+	
+    $.post(host + '/v1/account', data).done(function (msg) {
+        s_tip("创建成功", 'ok');
+        setTimeout('goLogin();', 2000);
+        
+        
+    }).fail(function (xhr, status, error) {
+        s_tip(xhr.responseText, 'fail');
+    });
+}
 
+function goLogin(){
+	window.location.href = 'login.html';
+}
+
+function enrollValidate(id){
+	  $(id).bootstrapValidator({
+		  	message: 'This value is not valid',
+		  	feedbackIcons: {
+		  		valid: 'glyphicon glyphicon-ok',
+		  		invalid: 'glyphicon glyphicon-remove',
+		  		validating: 'glyphicon glyphicon-refresh'
+		  	},
+		  	fields: {
+		  		userName: {
+		  			validators: {
+		  				notEmpty: {
+		  					message: '请输入邮箱'
+		  				},
+	                    regexp: {
+	                         regexp: /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/,
+	                         message: '请输入正确的邮箱'
+	                    },remote:{
+	                    	url:host + '/v1/account/Exist',
+	                    	type: "GET",
+	                    	dataType: "json",
+	                    	message: '此邮箱已注册。'
+	                    }
+		  			}
+		  		},
+		  		Password: {
+		  			validators: {
+		  				notEmpty: {
+		  					message: '请输入密码'
+		  				},
+		  				stringLength: {
+	                         min: 6,
+	                         max: 30,
+	                         message: '密码长度必须在6到30之间'
+	                    }
+		  			}
+		  		},
+		  		confirmPassword: {
+		  			validators: {
+		  				notEmpty: {
+		  					message: '请输入确认密码'
+		  				},
+		  				stringLength: {
+	                         min: 6,
+	                         max: 30,
+	                         message: '密码长度必须在6到30之间'
+	                    },
+	                    identical: {//相同
+	                         field: 'Password',
+	                         message: '两次密码不一致'
+	                    }
+		  			}
+		  		}
+		  	}
+		  });
+}
 
 
 
@@ -172,26 +294,26 @@ $(function(){
   <!-- 屏幕宽度小于768px时，div.navbar-responsive-collapse容器里的内容都会隐藏，显示icon-bar图标，当点击icon-bar图标时，再展开。屏幕大于768px时，默认显示。 -->
   <div id="nav_list" class="collapse navbar-collapse navbar-responsive-collapse" >
     	<ul class="nav navbar-nav">
-      		<li class="nav_li"><a href="##">首页</a></li>
-            <li><a href="#page2">团队</a></li>
-      		<li><a href="http://forum.yaya.ai">讨论区</a></li>
-            <li><a href="##">接口文档</a></li>
-      		<li><a href="login.html">登入</a></li>
-      		<!--<li  class="active"><a href="enroll.html">免费注册</a></li>-->
+
+      		<li><a href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(1);">首页</a></li>
+      		<li><a href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(2);">团队</a></li>
+      		<li><a href="http://forum.yaya.ai/">讨论区</a></li>
+      		<li><a href="login.html">登陆</a></li>
+      		<li><a href="enroll.html">免费注册</a></li>
 	 </ul>
   </div>
 </div>
 
 <section id="section1" style="height:500px;">
 <div class="content">
-	<img class="img_lg"  src="images/login.png" style="width:170px;height:170px;">
+	<a href="javascript:void(0);"><img class="img_lg"  src="images/login.png" style="width:170px;height:170px;"></a>
 	<div class="headline">
 		<p id="h2">最简易的聊天机器人设计及协作平台</p>
 		<p id="h3">十分钟轻松制作我的聊天机器人！</p>
-		<h4>集成深度神经网络、知识图谱、和自然语言处理的超强技术</h4>
+		<h4>集成深度神经网络、知识图谱及自然语言处理的超强技术</h4>
 	</div>
 		<div class="headactions">
-		<a class="btn btn-lg btn-primary" href="#page3" id="start">立即体验</a>
+		<a class="btn btn-lg btn-primary"  href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(3);" id="start">立即体验</a>
 		<!-- %a.btn.btn-lg.btn-default{href: '/downloads'}= t('.homepage_sec1_download') -->
 	</div>
 </div>
@@ -203,7 +325,7 @@ $(function(){
 <div class="section" style="background-color:#1698F3;">
 
 
-    <div class="warp">
+<div class="warp">
 <div class="navbar navbar-default" role="navigation">
   <div class="navbar-header">
      　<!-- .navbar-toggle样式用于toggle收缩的内容，即nav-collapse collapse样式所在元素 -->
@@ -216,7 +338,7 @@ $(function(){
        <!-- 确保无论是宽屏还是窄屏，navbar-brand都显示 -->
        <div class="navbar-brand" id="navbar">
 	       <div class="navbar-brand_left">
-	       	<img  src="images/logo.png" />
+	       	<img  src="images/logo_01.png" />
 	       </div>
 	       <div class="navbar-brand_right">
 	       	<a href="##" class="navbar-brand"><span class="ch">中文</span></a><span class="lang">/</span><a href="##" class="navbar-brand"><span>EN</span></a>
@@ -226,13 +348,11 @@ $(function(){
   <!-- 屏幕宽度小于768px时，div.navbar-responsive-collapse容器里的内容都会隐藏，显示icon-bar图标，当点击icon-bar图标时，再展开。屏幕大于768px时，默认显示。 -->
   <div class="collapse navbar-collapse navbar-responsive-collapse" id="nav_list">
     	<ul class="nav navbar-nav">
-      		<li class="nav_li"><a href="##">功能导览</a></li>
-      		<li><a href="##">接口文档</a></li>
-      		<li><a href="##">入门教程</a></li>
-      		<li><a href="##">浏览</a></li>
-      		<li><a href="##">讨论区</a></li>
-      		<li><a href="login.html">登入</a></li>
-      		<!--<li  class="active"><a href="##">免费注册</a></li>-->
+      		<li><a href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(1);">首页</a></li>
+      		<li><a href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(2);">团队</a></li>
+      		<li><a href="http://forum.yaya.ai/">讨论区</a></li>
+      		<li><a href="login.html">登陆</a></li>
+      		<li><a class="ch" href="enroll.html">免费注册</a></li>
 	 </ul>
   </div>
 </div>
@@ -270,8 +390,8 @@ $(function(){
 
       <div class="caption" id="colfont">
             <img class="col_img" src="images/bingliu_360.png" alt="..." />
-        <h3>刘冰教授</h3>
-        <p>自然语言处理顾问。刘冰教授，英国爱丁堡大学人工智能专业博士，目前担任伊利诺伊大学计算机科学系教授，在情感识别、观点挖掘、Lifelong机器学习、Machine Learning和NLP领域著述颇丰，同时担任ACM, IEEE and SIAM大数据研讨会主席。</p>
+        <h3>刘兵教授</h3>
+        <p>自然语言处理顾问。刘兵教授，英国爱丁堡大学人工智能专业博士，目前担任伊利诺伊大学计算机科学系教授，在情感识别、观点挖掘、Lifelong机器学习、Machine Learning和NLP领域著述颇丰，同时担任ACM, IEEE and SIAM大数据研讨会主席。</p>
       </div>
     </div>
   </div>
@@ -307,51 +427,45 @@ $(function(){
   <!-- 屏幕宽度小于768px时，div.navbar-responsive-collapse容器里的内容都会隐藏，显示icon-bar图标，当点击icon-bar图标时，再展开。屏幕大于768px时，默认显示。 -->
   <div class="collapse navbar-collapse navbar-responsive-collapse" id="nav_list">
     	<ul class="nav navbar-nav">
-      		<li class="nav_li"><a href="##">功能导览</a></li>
-      		<li><a href="##">接口文档</a></li>
-      		<li><a href="##">入门教程</a></li>
-      		<li><a href="##">浏览</a></li>
-      		<li><a href="##">讨论区</a></li>
-      		<li><a href="login.html">登入</a></li>
-      		<!--<li  class="active"><a href="##">免费注册</a></li>-->
+      		<li><a href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(1);">首页</a></li>
+      		<li><a href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(2);">团队</a></li>
+      		<li><a href="http://forum.yaya.ai/">讨论区</a></li>
+      		<li><a href="login.html">登陆</a></li>
+      		<li><a class="ch" href="enroll.html">免费注册</a></li>
 	 </ul>
   </div>
 </div>
 <section id="sectiong2" style="height:430px;">
 <div class="content">
 	<div class="fonts">
-		<h2>现在就立即使用，进入交互新时代</h2>
-		<h4>一只最聪明的小鸭机器人，正等待破壳而出！！</h4>
+		<h2>立即使用 开启交互新时代</h2>
+		<h4>一只最聪明的小鸭机器人，正等待破壳而出！！！</h4>
 	</div>
-	<div class="zc_box">
-		<div class="zc_box_1" id="zc_box1">
+	<form id="formReg" method="post" class="class="form-horizontal">
+		<div class="zc_box">
+		<div class="form-group zc_box_1"  id="zc_box2">
 			<div class="zc_box_logo">
-				<img id="Image1" src="images/zhuce_01.png" />
+				<img id="Image2" src="images/mail_02.png" />
 			</div>
-			<input id="input1" class='input-lg form-input name' name="" placeholder='用户名'>
+			<input id="userName" class='input-lg form-input name form-control' name="userName" placeholder='密保邮箱' value="">
 		</div>
-		<div class="zc_box_1" id="zc_box2">
-			<div class="zc_box_logo">
-				<img id="Image2" src="images/zhuce_02.png" />
-			</div>
-			<input id="input2" class='input-lg form-input name' name="" placeholder='手机号'>
-		</div>
-		<div class="zc_box_1" id="zc_box3">
+		<div class="form-group zc_box_1"  id="zc_box3">
 			<div class="zc_box_logo">
 				<img id="Image3" src="images/zhuce_03.png" />
 			</div>
-			<input id="input3" class='input-lg form-input name' name="" placeholder='密码'>
+			<input id="Password" class='input-lg form-input name form-control' name="Password" type="password" value="" placeholder='密码'>
 		</div>
-		<div class="zc_box_1" id="zc_box4">
+		
+		<div class="form-group zc_box_1"  id="zc_box4">
 			<div class="zc_box_logo">
-				<img id="Image4" src="images/zhuce_04.png" />
+				<img id="Image4" src="images/zhuce_03.png" />
 			</div>
-			<input id="code_input" class='input-lg form-input name' name="" placeholder='验证码'>
-			<div class="code"><input type="button" id="btn" value="获取验证码" /></div>
+			<input id="confirmPassword" class='input-lg form-input name form-control' name="confirmPassword" value="" type="password" placeholder='确认密码'>
 		</div>
-	</div>
-	<button type="button" id="login" class="btn btn-primary btn-lg btn-block">立即体验</button>
-	<span class="btn_comt">点”立即体验“按钮，视为您接受<a href="">使用协议</a><span>
+		</div>
+		</form>
+	<button type="button" id="regButton" class="btn btn-primary btn-lg btn-block">立即体验</button>
+	<span class="btn_comt">点”注册“按钮，视为您接受<a href="javascript:void(0);" onclick="showagree();">使用协议</a><span>
 				
 </div>
 
@@ -386,13 +500,11 @@ $(function(){
   <!-- 屏幕宽度小于768px时，div.navbar-responsive-collapse容器里的内容都会隐藏，显示icon-bar图标，当点击icon-bar图标时，再展开。屏幕大于768px时，默认显示。 -->
   <div class="collapse navbar-collapse navbar-responsive-collapse" id="nav_list">
     	<ul class="nav navbar-nav">
-      		<li class="nav_li"><a href="##">功能导览</a></li>
-      		<li><a href="##">接口文档</a></li>
-      		<li><a href="##">入门教程</a></li>
-      		<li><a href="##">浏览</a></li>
-      		<li><a href="##">讨论区</a></li>
-      		<li><a href="login.html">登入</a></li>
-      		<!--<li  class="active"><a href="##">免费注册</a></li>-->
+      		<li><a href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(1);">首页</a></li>
+      		<li><a href="javascript:void(0);" onclick="$.fn.fullpage.moveTo(2);">团队</a></li>
+      		<li><a href="http://forum.yaya.ai/">讨论区</a></li>
+      		<li><a href="login.html">登陆</a></li>
+      		<li><a class="ch" href="enroll.html">免费注册</a></li>
 	 </ul>
   </div>
 </div>
@@ -403,60 +515,70 @@ $(function(){
   <div class="col-sm-6 col-md-3">
     <div class="thumbnail">
       <div class="caption">
-        <h3><a href="">产品</a></h3>
-        <p><a href="http://forum.yaya.ai">聊天机器人开发者论坛</a></p>
-        <!--<p><a href="">接口</a></p>
-        <p><a href="">最近更新</a></p>-->
+        <h3>产品</h3>
+        <p><a href="http://forum.yaya.ai/">讨论</a></p>
+        <!-- <p><a href="">接口</a></p>
+        <p><a href="">最近更新</a></p> -->
       </div>
     </div>
   </div>
   <div class="col-sm-6 col-md-3">
     <div class="thumbnail">
       <div class="caption">
-        <h3><a href="">关于</a></h3>
-        <!--<p><a href="">使用条款</a></p>
-        <p><a href="">隐私协议</a></p>-->
+        <h3>关于</h3>
+        <p><a href="javascript:void(0);" onclick="showagree()">使用条款</a></p>
+        <!-- <p><a href="">隐私协议</a></p>-->
       </div>
     </div>
   </div>
-  <!--<div class="col-sm-6 col-md-3">
+  <div class="col-sm-6 col-md-3">
     <div class="thumbnail">
       <div class="caption">
         <h3><a href="">帮助和教程</a></h3>
-        <p><a href="">入门教程</a></p>
-        <p><a href="">常见问题</a></p>
+        <p><a href="/docs/basics.html">新手入门</a></p>
+        <!--<p><a href="">常见问题</a></p>-->
       </div>
     </div>
-  </div>-->
+  </div>
   <div class="col-sm-6 col-md-3">
     <div class="thumbnail">
       <div class="caption">
         <h3>联系方式</h3>
-        <p><!--联系电话：021-88888888--></p>
-        <p>邮箱：support@yaya.ai</p>
+        
+        <p>邮箱：info@yaya.ai</p>
       </div>
     </div>
   </div>
 </div>
+	<div class="row" style="margin-top: 20px;">
+	<div class="col-md-12">
+		© 2012-2017 YayaBot — 深圳爱用科技有限公司
+	</div>
+	
+	</div>
 </div>
 				
 </div>
 
 </section>
 
-
-<div style="text-align:center;font-size:12px;">Copyright © 2014-2017 爱用科技---最强的聊天机器人制作平台</div>
-
 </div>
 </div>
 
 
+<div id="dialog-modal" title="用户协议"  style="display:none;">
 
 </div>
-<script>
-var phoneWidth = parseInt(window.screen.width);
-var phoneHeight = parseInt(window.screen.height);
-//alert(phoneWidth+","+phoneHeight);
-</script>
+</div>
+
 </body>
 </html>
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?a0ffd8247abd4a38f87f03db9e6c79a7";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
