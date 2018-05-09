@@ -1,0 +1,121 @@
+﻿<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+ <style>
+
+ 
+</style>
+<script>
+
+
+function enterHander(obj, event, type){
+	var v=$("#testtxt").val();
+	if(v.length>0 && event.keyCode == 13 ){
+		sendTest();
+		return false;
+	}
+}
+
+function sendTest(){
+	
+	
+	var testtxt=$("#testtxt").val();
+	if(testtxt.length>0){
+		
+		var html='<div class="ui_right_right">';
+		
+		html+='<span>'+testtxt+'</span>';
+		html+='<img  src="images/ui_10.jpg" />';
+		html+='</div>';
+		$("#testcontent").append(html);
+		
+		var currentBot=JSON.parse($.cookie("currentBot"));
+        var url = host + "/v1/Conversation/Text?ClientAccessToken=" + currentBot.clientAccessToken + "&SessionId=" + currentBot.userId + "&Text=" + testtxt;
+        $.get(url, null, function (json) {
+            var html = '<div class="ui_right_mid">';
+            html += '<img  src="images/ui_06.jpg" />';
+            html += '<span>' + json + '</span>';
+            html += '</div>';
+            $("#testcontent").append(html);
+            $("#testtxt").val('');
+        }, 'text');
+	}
+}
+
+
+function bottestdiaolog(){
+	var currentBot=JSON.parse($.cookie("currentBot"));
+	var nowBotContent='';
+	$("#dialog-bot").dialog(
+  		{
+  			title:"和"+currentBot.name+"机器人聊天",
+  			modal: true,
+  			height: 500,
+  			open: function( event, ui ) {
+  				console.log(".ui_right_main open");
+  				$("#testcontent").addClass('tmptestcontent');
+  				$("#botdialogbuttom").addClass('tmpui_right_btm');
+  				$(".ui_right_top").hide();
+  			},
+  			beforeClose: function( event, ui ) {
+  				console.log(".ui_right_main beforeClose");
+  				
+  				$(".ui_right_top").show();
+  				nowBotContent=$("#dialog-bot").html();
+  				
+  			},
+  			close: function( event, ui ) {
+  				console.log(".ui_right_main close");
+  				
+  				$(".ui_right").html(nowBotContent);
+  				$("#testcontent").removeClass('tmptestcontent');
+  				$("#botdialogbuttom").removeClass('tmpui_right_btm');
+  				$("#dialog-bot").dialog( "destroy" );
+  			}
+  		}
+	 );  
+}
+
+function cleanDialog(){
+	$("#testcontent").html('');
+}
+</script>
+
+<div id="dialog-bot" title="会话测试" >
+
+
+<div class="ui_right_main">
+
+		<div class="ui_right_top">
+			<a href="javascript:void(0);" onclick="bottestdiaolog();">
+				<img id="dialog_img" class="ui_launch" style="border:none;" src="images/u98.jpg" />
+			</a>
+			<span>会话测试</span>
+			<a href="javascript:void(0);" onclick="cleanDialog();">
+				<img style="border:none;" id="ui_11"  src="images/ui_11_b.jpg" />
+			</a>
+		</div>
+		<div id="testcontent">
+		
+		
+		</div>
+		
+		<!-- <div class="ui_right_mid">
+
+			<img  src="images/ui_06.jpg" /><span>你好！我是小白</span>
+
+		</div>
+
+		<div class="ui_right_right">
+
+			<img  src="images/ui_10.jpg" />
+
+		</div> -->
+
+		<div id="botdialogbuttom" class="ui_right_btm">
+
+			<input id="testtxt" class="" type="text" placeholder="   输入对话" onkeyup="enterHander(this,event);">
+			<button type="button" id="sendTest" onclick="sendTest();">发  送</button>
+
+		</div>
+
+	</div>
+</div>
