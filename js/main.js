@@ -116,8 +116,12 @@ jQuery.extend({
 $(document).ready(function () {
 
     $.ajaxSetup({
-        beforeSend: function (request) {
-            request.setRequestHeader("Authorization", "bearer " + $.cookie("access_token"));
+        processData: false,
+        dataType: "json",
+        contentType: "application/json",
+        beforeSend: function (request, settings) {
+            settings.data = JSON.stringify(settings.data);
+            request.setRequestHeader("Authorization", "bearer " + $.cookie("token"));
         },
         error: function (jqXHR, textStatus, errorThrown) {
             s_tip(JSON.stringify(jqXHR), 'fail');

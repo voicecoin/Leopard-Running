@@ -28,7 +28,7 @@ function createBot(){
 	data.description=$("#description").val();
 	data.isPublic=$('#isPublic').is(':checked');
 	$.post('https://api.yaya.ai/api/Agent/Create', data,function (json) {
-		//window.location.href='revise.html';
+		//window.location.href='dashboard.html';
 	});
 }
 
@@ -126,7 +126,7 @@ $(document).ready(function(){
 <form id="form1" method="post" class="class="form-horizontal">
 <div class="content">
    <div class="cont_1">
-	<span class="cont_1_span"><a href="revise.html"><img id="clo_img"  src="images/clo_b.png" /></a></span>
+	<span class="cont_1_span"><a href="dashboard.html"><img id="clo_img"  src="images/clo_b.png" /></a></span>
 	<div class="cont_1_body">
 		<h3>创建聊天机器人</h3>
 		<div class="zc_box">
