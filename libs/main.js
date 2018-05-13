@@ -124,8 +124,15 @@ $(document).ready(function () {
             request.setRequestHeader("Authorization", "bearer " + $.cookie("token"));
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            s_tip(JSON.stringify(jqXHR), 'fail');
+            //s_tip(JSON.stringify(jqXHR), 'fail');
         }
     });
 
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?a0ffd8247abd4a38f87f03db9e6c79a7";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
 });

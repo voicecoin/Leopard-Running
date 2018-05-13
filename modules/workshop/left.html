@@ -2,64 +2,64 @@
 <script>
 function menuEvent(){
 	$("#ui_a1").mouseover(function(){
-        $("#Img1").attr("src","images/icon_01_b.png");
+        $("#Img1").attr("src","/images/icon_01_b.png");
          });
         $("#ui_a1").mouseout(function(){
-        $("#Img1").attr("src","images/icon_01_a.png");
+        $("#Img1").attr("src","/images/icon_01_a.png");
         }); 
         $("#ui_a2").mouseover(function(){
-        $("#Img2").attr("src","images/icon_02_b.png");
+        $("#Img2").attr("src","/images/icon_02_b.png");
          });
         $("#ui_a2").mouseout(function(){
-        $("#Img2").attr("src","images/icon_02_a.png");
+        $("#Img2").attr("src","/images/icon_02_a.png");
         }); 
         $("#ui_a3").mouseover(function(){
-        $("#Img3").attr("src","images/icon_03_b.png");
+        $("#Img3").attr("src","/images/icon_03_b.png");
          });
         $("#ui_a3").mouseout(function(){
-        $("#Img3").attr("src","images/icon_03_a.png");
+        $("#Img3").attr("src","/images/icon_03_a.png");
         }); 
         $("#ui_a4").mouseover(function(){
-        $("#Img4").attr("src","images/icon_04_b.png");
+        $("#Img4").attr("src","/images/icon_04_b.png");
          });
         $("#ui_a4").mouseout(function(){
-        $("#Img4").attr("src","images/icon_04_a.png");
+        $("#Img4").attr("src","/images/icon_04_a.png");
         }); 
         $("#ui_a5").mouseover(function(){
-        $("#Img5").attr("src","images/icon_05_b.png");
+        $("#Img5").attr("src","/images/icon_05_b.png");
          });
         $("#ui_a5").mouseout(function(){
-        $("#Img5").attr("src","images/icon_05_a.png");
+        $("#Img5").attr("src","/images/icon_05_a.png");
         }); 
         $("#ui_a6").mouseover(function(){
-        $("#Img6").attr("src","images/icon_06_b.png");
+        $("#Img6").attr("src","/images/icon_06_b.png");
          });
         $("#ui_a6").mouseout(function(){
-        $("#Img6").attr("src","images/icon_06_a.png");
+        $("#Img6").attr("src","/images/icon_06_a.png");
         }); 
         $("#ui_a7").mouseover(function(){
-        $("#Img7").attr("src","images/icon_07_b.png");
+        $("#Img7").attr("src","/images/icon_07_b.png");
          });
         $("#ui_a7").mouseout(function(){
-        $("#Img7").attr("src","images/icon_07_a.png");
+        $("#Img7").attr("src","/images/icon_07_a.png");
         }); 
         $("#ui_a8").mouseover(function(){
-        $("#Img8").attr("src","images/icon_08_b.png");
+        $("#Img8").attr("src","/images/icon_08_b.png");
          });
         $("#ui_a8").mouseout(function(){
-        $("#Img8").attr("src","images/icon_08_a.png");
+        $("#Img8").attr("src","/images/icon_08_a.png");
         }); 
          $("#ui_a9").mouseover(function(){
-        $("#Img9").attr("src","images/icon_09_b.png");
+        $("#Img9").attr("src","/images/icon_09_b.png");
          });
         $("#ui_a9").mouseout(function(){
-        $("#Img9").attr("src","images/icon_09_a.png");
+        $("#Img9").attr("src","/images/icon_09_a.png");
         }); 
         $("#ui_a").mouseover(function(){
-        $("#ui_Image5").attr("src","images/ui_09_b.jpg");
+        $("#ui_Image5").attr("src","/images/ui_09_b.jpg");
         });
         $("#ui_a").mouseout(function(){
-        $("#ui_Image5").attr("src","images/ui_09.jpg");
+        $("#ui_Image5").attr("src","/images/ui_09.jpg");
        });
 }
 menuEvent();
@@ -80,7 +80,7 @@ function menuChangeBot(id,nowbotname){
 
 
 function loadBots(){
-	$.get(host + '/v1/Agents/'+$.cookie("userId")+'/Query', null,function(json) {
+	$.get(host + '/v1/Agents/MyAgents', function(json) {
 		   menuBots = json.items;
 	       var robts = '';
 	       for (var i = 0; i < menuBots.length; i++) {
@@ -126,14 +126,14 @@ function logoutLeft(){
 
 	<div class="ui_side_top">
 
-		<a href="index.html"><img src="images/logo.png" /></a>
+	<a href="/index.html"><img src="/images/logo.png" style="width:4rem;" /></a>
 
 	</div>
 	<div class="ui_side_btm">
 		<div class="ui_side_list">
 			<div class="ui_side_list_li"  id="ui_a1">
 				<div class="ui_side_list_li_left" >
-					<img id="Img1" src="images/icon_01_a.png" />
+					<img id="Img1" src="/images/icon_01_a.png" />
 				</div>
 				<div class="ui_side_list_li_right">
 					 <div class="dropdown">
@@ -154,27 +154,27 @@ function logoutLeft(){
 		<div class="ui_side_list">
 			<div class="ui_side_list_li" id="ui_a2">
 				<div class="ui_side_list_li_left">
-					<img id="Img2"  src="images/icon_02_a.png" />
+					<img id="Img2"  src="/images/icon_02_a.png" />
 				</div>
 				<div class="ui_side_list_li_right" >
-					<a href="javascript:void(0);" onclick="goIntent();"><span class="ui_side_list_li_right_span">会话意图</span></a>&nbsp;&nbsp;<span><img src="images/plus.png"></span>
+					<a href="javascript:void(0);" onclick="goIntent();"><span class="ui_side_list_li_right_span">会话意图</span></a>&nbsp;&nbsp;<span><img src="/images/plus.png"></span>
 				</div>
 			</div>
 		</div>
 		<div class="ui_side_list">
 			<div class="ui_side_list_li"  id="ui_a3">
 				<div class="ui_side_list_li_left">
-					<img id="Img3"  src="images/icon_03_a.png" />
+					<img id="Img3"  src="/images/icon_03_a.png" />
 				</div>
 				<div class="ui_side_list_li_right">
-					<a href="javascript:void(0);"  onclick="goEntity();"><span class="ui_side_list_li_right_span">用户词库</span></a>&nbsp;&nbsp;<span><img src="images/plus.png"></span>
+					<a href="javascript:void(0);"  onclick="goEntity();"><span class="ui_side_list_li_right_span">用户词库</span></a>&nbsp;&nbsp;<span><img src="/images/plus.png"></span>
 				</div>
 			</div>
 		</div>
 		<div class="ui_side_list">
 			<div class="ui_side_list_li"  id="ui_a4">
 				<div class="ui_side_list_li_left">
-					<img  id="Img4" src="images/icon_04_a.png" />
+					<img  id="Img4" src="/images/icon_04_a.png" />
 				</div>
 				<div class="ui_side_list_li_right">
 					<a href="javascript:void(0);"  onclick="goDomains();"><span class="ui_side_list_li_right_span">扩展组件</span></a>
@@ -184,7 +184,7 @@ function logoutLeft(){
 		<div class="ui_side_list">
 			<div class="ui_side_list_li" id="ui_a5">
 				<div class="ui_side_list_li_left">
-					<img id="Img5"  src="images/icon_05_a.png" />
+					<img id="Img5"  src="/images/icon_05_a.png" />
 				</div>
 				<div class="ui_side_list_li_right">
 					<a href="javascript:void(0);"  onclick="goIntegrations();"><span class="ui_side_list_li_right_span">系统集成</span></a>
@@ -195,7 +195,7 @@ function logoutLeft(){
 		<div class="ui_side_list">
 			<div class="ui_side_list_li"  id="ui_a6">
 				<div class="ui_side_list_li_left">
-					<img  id="Img6" src="images/icon_06_a.png" />
+					<img  id="Img6" src="/images/icon_06_a.png" />
 				</div>
 				<div class="ui_side_list_li_right">
 					<a href=""><span class="ui_side_list_li_right_span">开发文档</span></a>
@@ -205,7 +205,7 @@ function logoutLeft(){
 		<div class="ui_side_list">
 			<div class="ui_side_list_li" id="ui_a7">
 				<div class="ui_side_list_li_left">
-					<img id="Img7" src="images/icon_07_a.png" />
+					<img id="Img7" src="/images/icon_07_a.png" />
 				</div>
 				<div class="ui_side_list_li_right">
 					<a href="http://forum.yaya.ai"><span class="ui_side_list_li_right_span">开发论坛</span></a>
@@ -217,7 +217,7 @@ function logoutLeft(){
 		<div class="ui_side_list">
 			<div class="ui_side_list_li" id="ui_a8">
 				<div class="ui_side_list_li_left">
-					<img id="Img8" src="images/icon_08_a.png" />
+					<img id="Img8" src="/images/icon_08_a.png" />
 				</div>
 				<div class="ui_side_list_li_right">
 					<a href=""><span class="ui_side_list_li_right_span">账号设置</span></a>
@@ -227,12 +227,12 @@ function logoutLeft(){
 		<div class="ui_side_list">
 			<div class="ui_side_list_li" id="ui_a9">
 				<div class="ui_side_list_li_left">
-					<img id="Img9" src="images/icon_09_a.png" />
+					<img id="Img9" src="/images/icon_09_a.png" />
 				</div>
 				<div class="ui_side_list_li_right">
 					<a href="javascript:void(0);" onclick="logoutLeft();"><span class="ui_side_list_li_right_span">退出</span></a>
 				</div>
 			</div>
 		</div>
-                          </div>
+  </div>
 	</div>
