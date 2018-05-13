@@ -1,5 +1,5 @@
-//var host = 'http://api.yaya.ai';
-var host = 'http://localhost:9000';
+var host = 'http://api.yaya.ai';
+//var host = 'http://localhost:9000';
 
 $(document).ready(function () {
 
