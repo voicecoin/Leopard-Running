@@ -5,11 +5,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
   <title>快速集成</title>
-  <link rel="stylesheet" href="css/bootstrap.min.css" >
-  <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
-  <link rel="stylesheet" type="text/css" href="css/robot.css">
-  <link rel="stylesheet" type="text/css" href="css/ui-box.css" />
-  <link rel="stylesheet" href="css/jquery-ui.css" >
+  <link rel="stylesheet" href="/libs/bootstrap/bootstrap.css" >
+  <link rel="stylesheet" type="text/css" href="/css/font-awesome.css">
+  <link rel="stylesheet" type="text/css" href="/css/robot.css">
+  <link rel="stylesheet" type="text/css" href="/css/ui-box.css" />
+  <link rel="stylesheet" href="/libs/jquery-ui/jquery-ui.css" >
   <style>
     .input-lg{padding:0;font-size:14px;height: auto;}
     @media screen and (max-width: 750px) {
@@ -48,13 +48,12 @@ h6, .h6 {
     font-size: 1rem;
 }
   </style>
-  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="/libs/jquery/jquery-3.3.1.js"></script>
     <script src="js/jquery-ui.min.js"></script>
-    <script src="js/jquery.cookie.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/check.js"></script>
-  <script src="js/jquery.tagsinput.js"></script>
-  <script src="js/main.js"></script>
+  <script src="/libs/bootstrap/bootstrap.js"></script>
+  <script src="/libs/check.js"></script>
+  <script src="/libs/jquery.tagsinput.js"></script>
+  <script src="/src/index.js"></script>
 <script>
 var agentId = null;
 $(document).ready(function () {
@@ -106,7 +105,7 @@ function loadLeft() {
         
         <div class="card card-cascade narrower" style="width:100%;text-align:center;padding:10px;">
             <!-- <img src="images/wechat.png" class="img-fluid" alt="" style="height:40px;margin-bottom:10px;margin-left:60px;"> -->
-            <div style="height:40px;margin-left:60px;background-image: url(images/wechat.png);background-size: auto 100%;background-repeat: repeat-y;"></div>
+            <div style="height:40px;margin-left:60px;background-image: url(/images/wechat.png);background-size: auto 100%;background-repeat: repeat-y;"></div>
             <div style="margin:10px;">
                 <!--Title-->
                 <h6 class="card-title">Wechat</h6>
@@ -125,7 +124,7 @@ function loadLeft() {
     <div class="col-md-3">
         
         <div class="card card-cascade narrower" style="width:100%;text-align:center;padding:10px;">
-            <div style="height:40px;margin-left:60px;background-image: url(images/SMS.png);background-size: auto 100%;background-repeat: repeat-y;"></div>
+            <div style="height:40px;margin-left:60px;background-image: url(/images/SMS.png);background-size: auto 100%;background-repeat: repeat-y;"></div>
             
             <div style="margin:10px;">
                 <!--Title-->
@@ -145,7 +144,7 @@ function loadLeft() {
     <div class="col-md-3">
         
         <div class="card card-cascade narrower" style="width:100%;text-align:center;padding:10px;">
-            <div style="height:40px;margin-left:60px;background-image: url(images/website.png);background-size: auto 100%;background-repeat: repeat-y;"></div>
+            <div style="height:40px;margin-left:60px;background-image: url(/images/website.png);background-size: auto 100%;background-repeat: repeat-y;"></div>
             
             <div style="margin:10px;">
                 <!--Title-->
@@ -166,7 +165,7 @@ function loadLeft() {
         
         <div class="card card-cascade narrower" style="width:100%;text-align:center;padding:10px;">
 
-            <div style="height:40px;margin-left:60px;background-image: url(images/Slack_Icon.png);background-size: auto 100%;background-repeat: repeat-y;"></div>
+            <div style="height:40px;margin-left:60px;background-image: url(/images/Slack_Icon.png);background-size: auto 100%;background-repeat: repeat-y;"></div>
             
             <div style="margin:10px;">
                 <!--Title-->
@@ -186,7 +185,7 @@ function loadLeft() {
     <div class="col-md-3">
 
         <div class="card card-cascade narrower" style="width:100%;text-align:center;padding:10px;">
-           <div style="height:40px;margin-left:60px;background-image: url(images/facebook-messenger.svg);background-size: auto 100%;background-repeat: repeat-y;"></div>
+           <div style="height:40px;margin-left:60px;background-image: url(/images/facebook-messenger.svg);background-size: auto 100%;background-repeat: repeat-y;"></div>
             
             <div style="margin:10px;">
                 <!--Title-->
@@ -207,7 +206,7 @@ function loadLeft() {
 
         <div class="card card-cascade narrower" style="width:100%;text-align:center;padding:10px;">
     
-            <div style="height:40px;margin-left:60px;background-image: url(images/Skype_t.png);background-size: auto 100%;background-repeat: repeat-y;"></div>
+            <div style="height:40px;margin-left:60px;background-image: url(/images/Skype_t.png);background-size: auto 100%;background-repeat: repeat-y;"></div>
            
             <div style="margin:10px;">
                 <!--Title-->
@@ -228,7 +227,7 @@ function loadLeft() {
 
         <div class="card card-cascade narrower" style="width:100%;text-align:center;padding:10px;">
 
-            <div style="height:40px;margin-left:60px;background-image: url(images/logo-kik.png);background-size: auto 100%;background-repeat: repeat-y;"></div>
+            <div style="height:40px;margin-left:60px;background-image: url(/images/logo-kik.png);background-size: auto 100%;background-repeat: repeat-y;"></div>
            
             <div style="margin:10px;">
                 <!--Title-->
@@ -249,7 +248,7 @@ function loadLeft() {
 
         <div class="card card-cascade narrower" style="width:100%;text-align:center;padding:10px;">
    
-            <div style="height:40px;margin-left:60px;background-image: url(images/logo-twilio.png);background-size: auto 100%;background-repeat: repeat-y;"></div>
+            <div style="height:40px;margin-left:60px;background-image: url(/images/logo-twilio.png);background-size: auto 100%;background-repeat: repeat-y;"></div>
            
             <div style="margin:10px;">
                 <!--Title-->
@@ -386,10 +385,10 @@ function loadLeft() {
   <div id="dialog-modal" title="会话测试"  style="display:none;">
   <div class="dialog_mian">
 	<div class="ui_right_mid">
-		<img  src="images/ui_06.jpg" /><span>你好！我是小白</span>
+		<img  src="/images/ui_06.jpg" /><span>你好！我是小白</span>
 	</div>
 	<div class="ui_right_right">
-		<span>你好！我是...</span><img  src="images/ui_10.jpg" />
+		<span>你好！我是...</span><img  src="/images/ui_10.jpg" />
 	</div>
 	<div class="ui_right_btm1" id="dialog_btm">
 		<input class="" type="text" pattern="" placeholder="   输入对话">

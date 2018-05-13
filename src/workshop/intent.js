@@ -136,7 +136,7 @@ function genIntentData(){
 
 function showList(){
 	showModel=1;
-	$.get("/modules/workshop/intentlist.html", function(data) {
+	$.get("/src/workshop/intentlist.html", function(data) {
         $('.ui_mid').html(data);
         loadIntents();
     }, "html"); 
@@ -765,7 +765,7 @@ function createIntent(){
 function showIntent(id){
 	console.log("showIntent");
 	showModel=2;
-	$.get("/modules/workshop/intenteditor.html", function(data) {
+	$.get("/src/workshop/intenteditor.html", function(data) {
         $('.ui_mid').html(data);
         loadIntent(id);
     }, "html"); 
@@ -1106,13 +1106,13 @@ $(document).ready(function(){
 });
 
 function loadRight(){
-	$.get("/modules/workshop/bottest.html", function(data) {
+	$.get("/src/workshop/bottest.html", function(data) {
         $('.ui_right').html(data);
     }, "html");
 }
 
 function loadLeft(){
-	$.get("/modules/workshop/left.html", function(data) {
+	$.get("/src/workshop/left.html", function(data) {
         $('#leftmenu').html(data);
         loadBots();
     }, "html"); 

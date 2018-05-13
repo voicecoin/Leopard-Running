@@ -30,7 +30,7 @@ $(document).ready(function () {
     $.post('http://yayabot.com/token', {username: $("#email").val(), password: $("#password").val()})
     .done(function (token) {
       localStorage.token = token;
-      window.location.href = '/modules/dashboard/dashboard.html';
+      window.location.href = '/src/dashboard/dashboard.html';
     }).fail(function (xhr, status, error) {
       toastr.error("邮箱或密码错误");
     });
