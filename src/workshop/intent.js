@@ -330,13 +330,13 @@ function intentEventHandle(){
 		//$(this).html("&nbsp;");
 		$(this).val("");
 		$(this).css('border-left','0px solid #37a0e1');
-		$("#ui_Image1").attr("src","images/ui_09.jpg")
+		$("#ui_Image1").attr("src","/images/ui_09.jpg")
 		//#37a0e1
 		//border: 3px solid #37a0e1;
 	});
 	
 	$("#addUserSay").off("focus").on('focus',function(){
-		$("#ui_Image1").attr("src","images/ui_09_b.jpg")
+		$("#ui_Image1").attr("src","/images/ui_09_b.jpg")
 	})
 
 	$("#addUserSay").off("keyup").on('keyup',function(e){

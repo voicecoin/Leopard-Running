@@ -362,7 +362,7 @@
 								
 								$(event.data.fake_input).val($(event.data.fake_input).attr('data-default'));
 								$(event.data.fake_input).css('color',settings.placeholderColor);
-								 $("#intent-state-img").attr("src","images/ui_09.jpg");
+								 $("#intent-state-img").attr("src","/images/ui_09.jpg");
 							}
 							return false;
 						});
