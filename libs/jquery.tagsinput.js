@@ -112,21 +112,28 @@
 					
 					
 					if(leftNumHide=="true"){
-	                    $('<span>').addClass('tag ub').append(
+	                    var item= $('<span>').addClass('tag ub').append(
 	                            $('<span>',{class:'ub-f1 ub ub-ver ub-ac ub-pc'}).text(value).append('&nbsp;&nbsp;'),
 	                            $('<a>', {
 	                            	class:'ub-f1 ub ub-ver ub-ac ub-pc removingtag',
 	                                href  : '#',
 	                                title : 'Removing tag',
 	                                text  : 'x'
-	                            }).click(function () {
-	                            	console.log("jquery.tagsinput.js click")
-	                            	//$('#'+id+'_tag').focus();
-	                            	//return $('#' + id).removeTag(escape(value));
-	                            	removeTagCallBack($('#' + id));
-	                                return $('#' + id).removeTag(escape(value));
 	                            })
+							//comment by robin
+									// .click(function () {
+	                            // 	console.log("jquery.tagsinput.js click")
+	                            // 	//$('#'+id+'_tag').focus();
+	                            // 	//return $('#' + id).removeTag(escape(value));
+	                            // 	removeTagCallBack($('#' + id));
+	                            //     return $('#' + id).removeTag(escape(value));
+	                            // })
 	                        ).insertBefore('#' + id + '_addTag');
+	                    //console.log(item);
+	                    $(item).click(function(){
+                            //modify by robin
+                            return $('#' + id).removeTag(escape(value));
+						});
 					}else{
 	                    $('<span>').addClass('tag ub').append(
 	                            
