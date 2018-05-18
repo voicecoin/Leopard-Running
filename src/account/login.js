@@ -27,7 +27,7 @@ $(document).ready(function () {
   });
   
   function login(){
-    $.post('http://yayabot.com/token', {username: $("#email").val(), password: $("#password").val()})
+    $.post('http://149.28.132.134:127/token', {username: $("#email").val(), password: $("#password").val()})
     .done(function (token) {
       localStorage.token = token;
       window.location.href = '/src/dashboard/dashboard.html';

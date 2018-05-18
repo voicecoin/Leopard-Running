@@ -1,4 +1,4 @@
-var host = 'http://api.yaya.ai';
+var host = 'http://149.28.132.134:128';
 //var host = 'http://localhost:9000';
 
 $(document).ready(function () {
