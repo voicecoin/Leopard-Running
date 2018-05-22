@@ -1,3 +1,6 @@
+var host = 'http://149.28.132.134:127';
+//var host = 'http://localhost:127';
+
 $(document).ready(function () {
   
   //enrollValidate('#formReg');
@@ -27,7 +30,7 @@ $(document).ready(function () {
   });
   
   function login(){
-    $.post('http://149.28.132.134:127/token', {username: $("#email").val(), password: $("#password").val()})
+    $.post(host + '/token', {username: $("#email").val(), password: $("#password").val()})
     .done(function (token) {
       localStorage.token = token;
       window.location.href = '/src/dashboard/dashboard.html';
