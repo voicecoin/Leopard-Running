@@ -1,4 +1,5 @@
 var host = 'http://149.28.132.134:128';
+var userHost = 'http://149.28.132.134:127';
 //var host = 'http://localhost:9000';
 
 $(document).ready(function () {
@@ -26,7 +27,26 @@ $(document).ready(function () {
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(hm, s);
     })();
+
+    getUserInfo();
 });
+
+function getUserInfo() {
+    $.ajax({
+        url: userHost + '/account',
+        type: "get",
+        datType: "JSON",
+        contentType: "application/json",
+        data: {},
+        success: function (response) {
+            if(response && response.userName){
+                $("#loginUserNameDisplay").html(response.userName);
+            }
+           console.dir([response]);
+        },error: function(e) {
+        }
+    });
+}
 
 function getDateDiff(dateTimeStamp){
     var minute = 1000 * 60;

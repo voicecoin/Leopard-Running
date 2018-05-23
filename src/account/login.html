@@ -15,7 +15,7 @@
 
     <!-- Material Design Bootstrap -->
 		<link href="/libs/mdb/mdb.min.css" rel="stylesheet">
-		
+    <link href="/css/page.css" rel="stylesheet">
 
     <style type="text/css">
         .intro-2 {
@@ -109,12 +109,17 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="http://forum.yaya.ai/forum.php" target="_blank">讨论区</a>
-												</li>
-												<li class="nav-item active">
-													<a class="nav-link" href="#">登陆 <span class="sr-only">(current)</span></a>
-											</li>
+                        </li>
+                        <!--<li class="nav-item active">
+                                <a class="nav-link" href="#">登陆 <span class="sr-only">(current)</span></a>
+                        </li>-->
                     </ul>
                     <ul class="navbar-nav ml-auto nav-flex-icons">
+                        <li class="nav-item">
+                            <a class="nav-link waves-effect waves-light fl" href="/src/account/login.html">登陆<span class="sr-only">(current)</span></a>
+                            <span class="fl" style="color: #fff;margin-top: 8px;">|</span>
+                            <a class="nav-link waves-effect waves-light fl" href="/src/account/signup.html">注册</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link waves-effect waves-light" href="https://twitter.com/voicecoin" target="_blank"><i class="fa fa-twitter"></i></a>
                         </li>
@@ -149,13 +154,14 @@
                                                                     <!--Body-->
                                                                     <div class="md-form mb-0">
                                                                             <i class="fa fa-envelope prefix white-text"></i>
-                                                                            <input type="text" id="email" class="form-control" value="support@voicecoin.com">
+                                                                            <input type="text" id="email" class="form-control" value="support@voicecoin.com" autocomplete="off">
                                                                             <label for="email">注册邮箱</label>
                                                                     </div>
 
                                                                     <div class="md-form mb-0">
                                                                             <i class="fa fa-lock prefix white-text"></i>
-                                                                            <input type="password" id="password" class="form-control" value="">
+                                                                            <input type="text" id="passwordText" class="form-control" value="" autocomplete="off">
+                                                                            <input type="password" id="password" class="form-control" value="" readonly style="display: none;" autocomplete="off">
                                                                             <label for="password">密码</label>
                                                                     </div>
 
@@ -259,6 +265,17 @@
 
 		<script type="text/javascript" src="/src/index.js"></script>
 		<script type="text/javascript" src="/src/account/login.js"></script>
+    <script>
+        $(document).ready(function(){
+            cleanPwd();
+        });
+        function cleanPwd() {
+            $("#passwordText").bind('focus', function () {
+                $(this).hide();
+                $("#password").show().attr('readonly', false).focus();
+            })
+        }
+    </script>
 
 </body>
 

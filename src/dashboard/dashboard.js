@@ -129,32 +129,9 @@ $(document).ready(function () {
             }
       });
     }
-  function showCreate(){
-    var bot={};
-    bot.id='';
-    bot.name='';
-    bot.description='';
-    bot.isPublic=false;
-    $("#modal_bot").modal('show');
-        currentBot=bot;
-        initBotInfo();
-  }	
+
       
-    function initBotInfo() {
-    if(currentBot.id.length==0){
-      $("#start").html('+ 创建');
-      $("#bottitle").html("创建聊天机器人");
-    }else{
-      $("#start").html('  保存');
-      $("#bottitle").html("设置聊天机器人");
-    }
-      $("#updateId").val(currentBot.id);
-      $("#name").val(currentBot.name);
-      $("#description").val(currentBot.description);
-      $('#isPublic:first').attr("checked", currentBot.isPublic);
-      if(currentBot.avatar!=null)
-        $('#avatar').attr("src", currentBot.avatar);
-    }
+
 
     function getBot(id){
       for (var i = 0; i < bots.length; i++) {
@@ -238,3 +215,30 @@ $(document).ready(function () {
       }
     }
 });
+
+function showCreate(){
+    var bot={};
+    bot.id='';
+    bot.name='';
+    bot.description='';
+    bot.isPublic=false;
+    $("#modal_bot").modal('show');
+    currentBot=bot;
+    initBotInfo();
+}
+
+function initBotInfo() {
+    if(currentBot.id.length==0){
+        $("#start").html('+ 创建');
+        $("#bottitle").html("创建聊天机器人");
+    }else{
+        $("#start").html('  保存');
+        $("#bottitle").html("设置聊天机器人");
+    }
+    $("#updateId").val(currentBot.id);
+    $("#name").val(currentBot.name);
+    $("#description").val(currentBot.description);
+    $('#isPublic:first').attr("checked", currentBot.isPublic);
+    if(currentBot.avatar!=null)
+        $('#avatar').attr("src", currentBot.avatar);
+}
