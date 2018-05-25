@@ -40,7 +40,7 @@ function getUserInfo() {
         data: {},
         success: function (response) {
             if(response && response.userName){
-                $("#loginUserNameDisplay").html(response.userName);
+                $("#loginUserNameDisplay").html(response.userName).attr('userId',response.id);
             }
            console.dir([response]);
         },error: function(e) {

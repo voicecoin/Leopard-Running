@@ -27,7 +27,7 @@ $(document).ready(function () {
   $("#description").blur(function(){
     $("#sn_img2").attr("src","images/zhuce_03.png");
   });
-
+});
   var bots = [];
   var currentBot=null;
   
@@ -40,7 +40,7 @@ $(document).ready(function () {
           botsList();
            //console.dir(json);
         },error: function(e) {
-          s_tip("错误",e);
+              toastr.error(e,'fail');
         }
       });
 
@@ -58,7 +58,7 @@ $(document).ready(function () {
               initBotInfo();
         },error: function(e) {
           currentBot=null;
-          s_tip(e,'fail');
+              toastr.error(e,'fail');
         }
       });
   }
@@ -85,11 +85,20 @@ $(document).ready(function () {
   }
   
     function createBot(){
-      var data={};
-      data.name=$("#name").val();
-      data.description=$("#description").val();
-      data.isPublic=$('#isPublic').is(':checked')?1:0;
-      data.userId=$.cookie("userId");
+        var $name = $("#name");
+        var name = $name.val();
+        var $description = $("#description");
+        var description = $description.val();
+        var isPublic = $("input[name='isPublic']:checked").val();
+        if(!name){
+            toastr.error('请输入机器人名称', '错误');
+            return false;
+        }
+        var data={};
+      data.name=name;
+      data.description=description;
+      data.published= isPublic == 1 ? true:false;
+      data.userId=$("#loginUserNameDisplay").attr('userId');//$.cookie("userId");
       data.avatar=image;
       $.ajax({
         url: host + '/v1/Agents',
@@ -98,10 +107,10 @@ $(document).ready(function () {
         contentType: "application/json",
         data: JSON.stringify(data),
         success: function () {
-          s_tip("创建成功",'ok');
-            $("#clo_img").click();
+            toastr.success("创建成功",'ok');
+            window.location.reload();
         },error: function(e) {
-          s_tip(e,'fail');
+              toastr.error(e,'fail');
             }
       });
       
@@ -122,10 +131,10 @@ $(document).ready(function () {
         contentType: "application/json",
         data: JSON.stringify(data),
         success: function () {
-           s_tip("已更新",'ok');
-           $("#clo_img").click();
+            toastr.success("已更新",'ok');
+            window.location.reload();
         },error: function(e) {
-             s_tip(e,'fail');
+                 toastr.error(e,'fail');
             }
       });
     }
@@ -214,7 +223,7 @@ $(document).ready(function () {
               }, 'text');
       }
     }
-});
+
 
 function showCreate(){
     var bot={};

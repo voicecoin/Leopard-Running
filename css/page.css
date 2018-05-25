@@ -115,3 +115,10 @@
 	text-align: left; 
 	margin: 0;
 }
+
+/*dashboard-list*/
+.dashboard-list .card{
+	float:left;
+	width:48%;
+	margin:0 20px 20px 0;
+}

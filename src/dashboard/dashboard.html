@@ -15,7 +15,7 @@
 
     <!-- Material Design Bootstrap -->
 		<link href="/libs/mdb/mdb.min.css" rel="stylesheet">
-
+	<link href="/css/page.css" rel="stylesheet">
 		<style type="text/css">
 			html,
 			body,
@@ -89,13 +89,13 @@
 			</nav>
 			
 			<!--Intro Section-->
-			<section id="bots" class="view">
-				<div class="mask">
-					<div class="container h-100 d-flex justify-content-center align-items-center">
-						<div class="row flex-center pt-5 mt-3">
-							<div v-for="bot in bots" class="col-md-10 col-lg-5 text-center text-md-left margins">
+			<section id="bots">
+
+					<div class="container h-100 justify-content-center align-items-center">
+						<div class=" pt-5 mt-3">
+							<div class="clearfix dashboard-list">
 								<!-- Card -->
-								<div class="card">
+								<div class="card"  v-for="bot in bots">
 
 										<!-- Card content -->
 										<div class="card-body">
@@ -117,10 +117,37 @@
 										</div>
 									
 									</div>
+
+
+
+								<div class="card">
+
+									<!-- Card content -->
+									<div class="card-body">
+
+										<!-- Title -->
+										<h4 class="card-title" style="text-align: center;">创建机器人</h4>
+										<hr>
+										<!-- Text -->
+										<p class="card-text" style="height:175px; text-align: center;">
+											<button style="margin-top: 50px;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_bot">
+												立即创建
+											</button>
+										</p>
+
+									</div>
+
+								</div>
+
+
+
 							</div>
+
+
+
+
 						</div>
 					</div>
-				</div>
 			</section>
     </header>
     <!--Main Navigation-->
@@ -128,51 +155,7 @@
 		<!--Main Content-->
 		<main>
 				<!-- 修改机器人弹出层 -->
-				<div id="modal_bot" class="modal fade" tabindex="-1" role="dialog">
-				<form id="form1" method="post" class="form-horizontal">
-					<input type="hidden" id="updateId" />
-					<div class="modal-dialog" role="document">
-						<div class="content">
-							<div class="cont_1">
-							<span class="cont_1_span"><a href="dashboard.html"><img id="clo_img"  src="/images/clo_b.png" /></a></span>
-							<div class="cont_1_body">
-								<h3 id="bottitle">创建聊天机器人</h3>
-								<div class="zc_box">
-									<div class="form-group zc_box_1" id="zc_box1">
-										<div class="zc_box_logo">
-											<img id="sn_img1" src="/images/zhuce_01.png" />
-										</div>
-										<input id="name" class='input-lg form-input name form-control' name="name" placeholder='名字'>
-									</div>
-									<div class="form-group zc_box_1" id="zc_box2">
-										<div class="zc_box_logo">
-											<img id="sn_img2"  src="/images/zhuce_05.jpg" />
-										</div>
-										<input id="description" class='input-lg form-input name form-control' name="description" placeholder='备注'>
-									</div>
-								</div>
-								<div class="chk">
-									<input name="是否公开" type="checkbox" value="1" id="isPublic"/>
-									<span class="chk_span">是否公开</span>
-								</div>
-								<div class="setdata">
-									<div class="setdata_left botIcon">
-										<img id="avatar" class="botIcon" src="/images/int_02.jpg" />
-									</div>
-									<div class="setdata_right">
-											<div style="display:none"><input type="file" onchange="selectImage(this);" accept="image" id="file_image" name="file_image"/></div>
-										<div class="setdata_right_top"><a href="javascript:void(0);" onclick="openfile();">上传新图标</a></div>
-										<div class="setdata_right_btm">图标 （尺寸 120 x 120）</div>
-									</div>
-									
-								</div>
-								<a class="btn btn-lg btn-primary" href="javascript:void();" id="start">+  创建</a>
-							</div>
-						</div>
-						</div>
-					</div>
-					</form>
-				</div>
+
 		
 				<div id="dialog-modal" title="会话测试"  style="display:none;">
 					<div class="ui_right_main">
@@ -188,6 +171,86 @@
 		
 					</div>
 				</div>
+
+
+
+			<div class="modal fade" id="modal_bot" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<!--Modal: Contact form-->
+				<div class="modal-dialog cascading-modal" role="document">
+
+					<!--Content-->
+					<div class="modal-content">
+
+						<!--Header-->
+						<div class="modal-header info-color white-text">
+							<h4 class="title">
+								<i class="fa fa-pencil"></i> 创建机器人</h4>
+							<button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+						<!--Body-->
+						<div class="modal-body">
+
+							<!-- Default input name -->
+							<!--<label for="bot-name">机器人名称</label>-->
+							<input type="text" id="name" class="form-control form-control-sm" placeholder="机器人名称" autocomplete="false">
+
+							<br>
+
+							<!-- Default textarea message -->
+							<textarea type="text" id="description" class="md-textarea form-control" placeholder="简单描述机器人，便于其他人理解" autocomplete="false"></textarea>
+<!--
+							<br>
+
+							<label for="bot-birthday">生日</label>
+							<input type="text" id="bot-birthday" class="form-control form-control-sm" autocomplete="false">
+
+							<br>
+							<label for="bot-lang">语言</label>
+							<input type="text" id="bot-lang" class="form-control form-control-sm" autocomplete="false">-->
+
+
+							<br>
+							<label >公开性</label>
+							<div class="form-check mb-4">
+								<input name="isPublic" value="0" type="radio" class="form-check-input with-gap" id="isPublic1" checked="checked">
+								<label class="form-check-label" for="isPublic1">私有</label>
+								<span style="font-size:12px;color:#999;">仅项目成员可以查看和编辑该机器人</span>
+							</div>
+							<div class="form-check mb-4">
+								<input name="isPublic" value="1" type="radio" class="form-check-input with-gap" id="isPublic2">
+								<label class="form-check-label" for="isPublic2">公开</label>
+								<span style="font-size:12px;color:#999;">任何人都可以通过链接查看该机器人，仅项目成员可以编辑该机器人</span>
+							</div>
+
+							<div class="setdata">
+								<div class="setdata_left botIcon">
+									<img id="avatar" class="botIcon" src="/images/int_02.jpg" />
+								</div>
+								<div class="setdata_right">
+									<div style="display:none"><input type="file" onchange="selectImage(this);" accept="image" id="file_image" name="file_image"/></div>
+									<div class="setdata_right_top"><a href="javascript:void(0);" onclick="openfile();">上传新图标</a></div>
+									<div class="setdata_right_btm">图标 （尺寸 120 x 120）</div>
+								</div>
+
+							</div>
+
+							<div class="text-center mt-4 mb-2">
+								<button class="btn btn-info" id="start" onclick="createBot()">创建机器人</button>
+							</div>
+
+						</div>
+					</div>
+					<!--/.Content-->
+				</div>
+				<!--/Modal: Contact form-->
+			</div>
+
+
+
+
+
 		</main>
 		<!--Main Content-->
 
