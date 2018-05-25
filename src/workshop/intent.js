@@ -186,35 +186,40 @@ function initIntentsPage(){
 
 function initIntents(){
 	var html='';
-	for(var i=0;i<intents.length;i++){
-		html+='<li class="list-group-item ng-scope intent" id="'+intents[i].id+'"><a href="javascript:void(0)" class="name ng-binding">'+intents[i].name+'</a>';
-		html+='<div class="ico-group right">';
-		html+='<a class="ico-item del-icon" style="display:none"  href="javascript:void(0)"><span class="glyphicon glyphicon-trash" intent_id="'+intents[i].id+'"></span></a>';
-		html+='</div></li>';
+	if(intents && intents.length > 0){
+        for(var i=0;i<intents.length;i++){
+            html+='<li class="list-group-item ng-scope intent" id="'+intents[i].id+'"><a href="javascript:void(0)" class="name ng-binding">'+intents[i].name+'</a>';
+            html+='<div class="ico-group right">';
+            html+='<a class="ico-item del-icon" style="display:none"  href="javascript:void(0)"><span class="glyphicon glyphicon-trash" intent_id="'+intents[i].id+'"></span></a>';
+            html+='</div></li>';
+        }
+        $(".list-group").html(html);
+        $(".intent").off('click').on('click', function() {
+            //alert("intent");
+            showIntent($(this).attr('id'));
+        });
+
+        $(".intent").off('mouseenter').on('mouseenter', function() {
+            $(this).find(".del-icon").show();
+        });
+
+        $(".intent").off('mouseleave').on('mouseleave', function() {
+            $(this).find(".del-icon").hide();
+        });
+
+        $(".intent .glyphicon-trash").off('click').on('click', function(event) {
+            //alert("glyphicon-trash");
+            var id = $(this).attr("intent_id");
+            //delEntity(id);
+            event.stopPropagation();
+        });
+	}else{
+		html += '<div style="font-size:14px;line-height: 30px;">';
+		html += '<div><i class="fa  fa-gg-circle" style="font-size: 18px;margin: 0 5px 0 0;"></i>识别会话意图是聊天机器人最核心的一个能力，例如当用户说“明天天气如何？”或者“明天会下雨吗？”机器人就会识别出来这是一个“查询天气”的意图。当机器人正确识别意图之后，就可以给出相应的行动或者回复。</div>';
+        html += '<div style="margin-top:10px;">你可以为机器人创建一系列的会话意图，并为每个意图添加若干句短语，我们的机器学习算法会教会机器人自动识别这些意图。</div>';
+        html += '</div>';
+        $(".list-group").parent().html(html);
 	}
-	$(".list-group").html(html);
-	$(".intent").off('click').on('click', function() {
-		//alert("intent"); 
-		showIntent($(this).attr('id'));
-    });
-	
-	$(".intent").off('mouseenter').on('mouseenter', function() {
-		$(this).find(".del-icon").show();
-    });
-	
-	$(".intent").off('mouseleave').on('mouseleave', function() {
-		$(this).find(".del-icon").hide();
-    });
-	
-	$(".intent .glyphicon-trash").off('click').on('click', function(event) {
-		//alert("glyphicon-trash"); 
-		var id = $(this).attr("intent_id");
-         //delEntity(id);
-         event.stopPropagation();
-     });
-	
-	
-	
 	
 }
 
