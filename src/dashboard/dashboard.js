@@ -5,6 +5,17 @@ var vm = new Vue({
   }
 })
 
+
+layui.use('laydate', function() {
+    var laydate = layui.laydate;
+    laydate.render({
+        elem: '#birthday'
+        , lang: 'en'
+        ,value: new Date()
+    });
+});
+
+
 $(document).ready(function () {
 
   $.get(host + '/v1/Agents/MyAgents', function(data) {
@@ -15,18 +26,11 @@ $(document).ready(function () {
     $('#header').html(data);
  }, "html");*/
 
-  $("#name").focus(function(){
-     $("#sn_img1").attr("src","images/zhuce_01_b.png");
-  });
-  $("#name").blur(function(){
-    $("#sn_img1").attr("src","images/zhuce_01.png");
-  });
-  $("#description").focus(function(){
-    $("#sn_img2").attr("src","images/zhuce_03_b.png");
-  });
-  $("#description").blur(function(){
-    $("#sn_img2").attr("src","images/zhuce_03.png");
-  });
+
+  $("#bot-birthday").pickadate({
+      editable: true
+  })
+
 });
   var bots = [];
   var currentBot=null;
@@ -89,6 +93,10 @@ $(document).ready(function () {
         var name = $name.val();
         var $description = $("#description");
         var description = $description.val();
+        var $birthday = $("#birthday");
+        var birthday = $birthday.val();
+        var $language = $("#language");
+        var language = $language.val();
         var isPublic = $("input[name='isPublic']:checked").val();
         if(!name){
             toastr.error('请输入机器人名称', '错误');
@@ -99,6 +107,8 @@ $(document).ready(function () {
       data.description=description;
       data.published= isPublic == 1 ? true:false;
       data.avatar=image;
+      data.birthday = birthday;
+      data.language = language;
       $.post(host + '/v1/Agents', data, function(){
         toastr.success("创建成功",'ok');
         window.location.reload();

@@ -120,15 +120,15 @@ function genIntentData(){
 
     if (intentNow.id.length > 0) {
         $.put(host + '/v1/Intents/' + intentNow.id, intentNow).done(function (json) {
-            s_tip("场景已保存", "ok");
+            toastr.success("场景已保存", "ok");
         }).fail(function (xhr, status, error) {
-            s_tip(e, "fail");
+            toastr.error(error, "fail");
         });
     } else {
         $.post(host + '/v1/Intents/' + agentId, intentNow).done(function (json) {
-            s_tip("场景已保存", "ok");
+            toastr.success("场景已保存", "ok");
         }).fail(function (xhr, status, error) {
-            s_tip(e, "fail");
+            toastr.error(error, "fail");
         });
     }
 }
@@ -227,14 +227,28 @@ function intentEventHandle(){
 	$("#intent-name").off("focus").on('focus',function(){
 	    $("#intent-name-img").attr("src","/images/ui_03_b.jpg");
 	    
-	    $(this).css("border-color", "#36A0FF");
+	   // $(this).css("border-color", "#36A0FF");
 	});
 	
 	$("#intent-name").off("blur").on('blur',function(){
 	    $("#intent-name-img").attr("src","/images/ui_03.jpg");
-	    $(this).css("border-color", "transparent");
+	   // $(this).css("border-color", "transparent");
 	    
 	});
+
+	/*$("#tags_in_tag").off("focus").on('focus',function(){
+        $("#intent-state-img").attr("src","/images/ui_09_b.jpg");
+    });
+    $("#tags_in_tag").off("blur").on('focus',function(){
+        $("#intent-state-img").attr("src","/images/ui_09.jpg");
+    });
+
+    $("#tags_out_tag").off("focus").on('focus',function(){
+        $("#intent-state-img").attr("src","/images/ui_09_b.jpg");
+    });
+    $("#tags_out_tag").off("blur").on('focus',function(){
+        $("#intent-state-img").attr("src","/images/ui_09.jpg");
+    });*/
 	
 	$("#action").off("focus").on('focus',function(){
 	    $("#action-img").attr("src","/images/ui_17_b.jpg");
@@ -360,7 +374,7 @@ function intentEventHandle(){
 					contentType: "application/json",
 					data: {},
 					success: function (json) {
-						//s_tip("保存成功",'ok');
+						//toastr.success("保存成功",'ok');
 						//$(this).html('&nbsp;');
 						var userSay={};
 						userSay.id='';
@@ -497,7 +511,7 @@ function initParameterPrompts(){
 		html+='<div class="borderless" contenteditable="true" onkeydown="enter_parameter_prompt(this,event)" onkeyup="create_parameter_prompt(this,event)" placeholder="输入提示语句…">'+nowParameterPrompts.parameterprompts[i]+'</div>';
 		html+='</div>';
 		html+='<div class="prompt-cell prompt-cell-actions">';
-		html+='<a href="javascript:void(0)" class="ico-item" style="display: none;"><span class="flaticon glyphicon glyphicon-resize-vertical m_drag ui-sortable-handle"></span></a>';
+		html+='<a href="javascript:void(0)" class="ico-item" style="display: none;"><span class="fa fa-trash-o ui-sortable-handle"></span></a>';
 		html+='<a class="visible-on-hover prompt-remove" href="javascript:void(0)" onclick="prompt_remove_rows(this)" style="display: none;"><span class="glyphicon glyphicon-trash"></span></a>';
 		html+='</div>';
 		html+='</div>';
@@ -563,7 +577,7 @@ function create_empty_prompt(){
 	content += "<div class=\"prompt-cell prompt-cell-second\">";
 	content += "<div class=\"borderless\" contenteditable=\"true\" onkeydown=\"enter_parameter_prompt(this,event)\" onkeyup=\"create_parameter_prompt(this,event)\" placeholder=\"输入提示语句...\"></div></div>";
 	content += "<div class=\"prompt-cell prompt-cell-actions\">";
-	content += "<a href=\"javascript:void(0)\" class=\"ico-item\"><span class=\"flaticon glyphicon glyphicon-resize-vertical m_drag\"></span></a>";
+	content += "<a href=\"javascript:void(0)\" class=\"ico-item\"><span class=\"fa fa-trash-o\"></span></a>";
 	content += "<a class=\"visible-on-hover prompt-remove\" href=\"javascript:void(0)\" onclick=\"prompt_remove_rows(this)\">";
 	content += "<span class=\"glyphicon glyphicon-trash\"></span></a></div></div>";
 	$("#intent-param-prompts-editor").append(content);
@@ -797,7 +811,7 @@ function loadIntent(id){
 				intentEventHandle();
 			},error: function(e) {
 				self.entity=null;
-				s_tip("错误",e);
+                toastr.error("错误",e);
 			}
 		});
 
@@ -830,13 +844,13 @@ function addUserSay(userSay){
 	 }
 	 
 	 userSaysHtml+='<div class="ub ub-ver usersay" id="'+userSay.id+'">';
-	 userSaysHtml+='<div  class="ub" style="width:100%;min-height:40px;height:auto;margin-bottom: -1px; border: 1px solid rgb(221, 221, 221);">';
+	 userSaysHtml+='<div  class="ub" style="width:100%;min-height:40px;height:auto;margin-bottom: -1px; border: 1px solid rgb(221, 221, 221);border-radius: 5px;">';
 		 userSaysHtml+='<div class="ub ub-ver ub-ac ub-pc" style="width:10%">';
 		 userSaysHtml+='<i class="fa ng-scope fa-quote-right" style="color: #b7bbc4;"></i>';
 		 userSaysHtml+='</div>';
 		 userSaysHtml+='<div class="ub ub-ver ub-pc template-editor-holder usersaytext" contenteditable="" placeholder="Add User expression" style="width:80%;word-wrap: break-word;word-break: break-all;">'+datahtml+'</div>';
 		 userSaysHtml+='<div class="ub ub-ver ub-ac ub-pc uhide iconcontainer" style="width:10%">';
-		 userSaysHtml+='<a href="javascript:void(0)" class="ico-item"><span class="flaticon glyphicon glyphicon-resize-vertical m_drag"></span></a>';
+		 userSaysHtml+='<a href="javascript:void(0)" class="ico-item"><span class="fa fa-trash-o"></span></a>';
 		 userSaysHtml+='<a href="javascript:void(0)" class="ico-item delusersayicon"><span class="glyphicon glyphicon-trash del_icon"></span></a>';
 		 userSaysHtml+='</div>';
 	 userSaysHtml+='</div>';
@@ -910,7 +924,7 @@ function genParameter(parameter){
 	 }
 	 
 	 
-	 parametersHtml+='<label></label>';
+	 parametersHtml+='<label style="height:15px;"></label>';
 	 parametersHtml+='</div>';
 	 parametersHtml+='</div>';
 	 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc" style="width:16%">';
@@ -938,7 +952,7 @@ function genParameter(parameter){
 	 parametersHtml+='</div>';
 	 
 	 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc iconcontainer uhide" style="width:20%;">';
-	 parametersHtml+='<a href="javascript:void(0)" class="ico-item"><span class="flaticon glyphicon glyphicon-resize-vertical m_drag"></span></a>';
+	 parametersHtml+='<a href="javascript:void(0)" class="ico-item"><span class="fa fa-trash-o"></span></a>';
 	 parametersHtml+='<a href="javascript:void(0)" class="ico-item delparameter-prompts"><span class="glyphicon glyphicon-trash del_icon"></span></a>';
 	 parametersHtml+='</div>';
 	 
@@ -1071,7 +1085,7 @@ function initIntent(intent){
 }
 
 function genSpeechHTML(speech){
-	var speechhtml='<div class="ub" style="margin-bottom: -1px;border: 1px solid rgb(221, 221, 221);">';
+	var speechhtml='<div class="ub" style="margin-bottom: -1px;border: 1px solid rgb(221, 221, 221);-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;">';
 	speechhtml+='<div class="ub ub-ver ub-pc template-editor-holder speechdiv"  contenteditable="" placeholder="输入机器人回复" data-distinguish="true" style="width:90%;">'+speech+'</div>';
 	speechhtml+='<div class="ub ub-ver ub-ac ub-pc" style="width:10%">';
 	speechhtml+='<a href="javascript:void(0)" class="ico-item no-result delspeech" style="display: inline;"><span class="glyphicon glyphicon-trash del_icon"></span></a>';

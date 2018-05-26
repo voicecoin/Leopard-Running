@@ -148,7 +148,8 @@
 	                                text  : 'x'
 	                            }).click(function () {
 	                            	//$('#'+id+'_tag').focus();
-	                                return $('#' + id).removeTag(escape(value));
+                                    $(this).parent().remove();
+	                               // return $('#' + id).removeTag(escape(value));
 	                            })
 	                        ).insertBefore('#' + id + '_addTag');
 					}

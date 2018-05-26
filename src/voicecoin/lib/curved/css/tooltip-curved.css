@@ -1,0 +1,119 @@
+.dummy-tooltip{
+    width: 320px;
+	margin: 0 auto;
+}
+.dummy-pois{
+	margin-bottom:20px;
+}
+
+.dummy-pois .tooltip{
+	margin-bottom: 10px;
+	position: relative;
+}
+
+.dummy-pois .tooltip-item {
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	bottom: 0;
+	background: url('../../../img/common/logo1.png') no-repeat;
+	background-size:100% 100%;
+}
+.dummy-pois .tooltip-left:last-child .tooltip-item{
+	background: url('../../../img/common/logo2.png') no-repeat;
+	background-size:100% 100%;
+}
+.dummy-pois .tooltip-item img{
+	width: 100%;
+}
+.dummy-pois .tooltip-right .tooltip-item {
+	right:0;
+	display: none;
+ }
+
+.dummy-pois .tooltip-right .tooltip-content {
+	float: right;
+	margin-left:0px;
+	margin-right: 10px;
+}
+
+.dummy-pois .tooltip-content{
+	float: left;
+	max-width: 75%;
+	width:auto;
+	padding: 10px;
+	border-radius: 21px;
+	text-align: left;
+	position: relative;
+	margin-left: 54px;
+	word-break: break-all;
+}
+.dummy-tooltip.dummy-tooltip-540 .dummy-pois .tooltip-content{
+	font-size:17px;
+	padding:15px 20px;
+}
+.dummy-pois .tooltip-content-welcome .tooltip-content{
+	width: auto;
+	margin-left: 52px;
+	float: left;
+	background: #fff;
+	border:1px solid #fff;
+	color:rgb(69, 33, 98);
+}
+.dummy-pois .tooltip-content-welcome .tooltip-content::after{
+	display: none;
+}
+
+.dummy-pois .tooltip-left .tooltip-content{
+	background: #fff;
+	border:1px solid #fff;
+	color:rgb(69, 33, 98);
+}
+
+.dummy-pois .tooltip-right .tooltip-content{
+	background: #c8d0e9;
+	border:1px solid #c8d0e9;
+	color:rgb(69, 33, 98);
+}
+
+.dummy-pois .tooltip-content::before,
+.dummy-pois .tooltip-content::after {
+	content: '';
+	position: absolute;
+}
+
+.tooltip-content::before {
+	height: 100%;
+	width: 3em;
+}
+
+.dummy-pois .tooltip-content::after {
+	width: 2em;
+	height: 2em;
+	bottom: -2px;
+}
+
+.dummy-pois .tooltip-left .tooltip-content::after{
+	background: url(../img/tooltip-white.png) no-repeat center center;
+	background-size: 60%;
+}
+
+.dummy-pois .tooltip-right .tooltip-content::after{
+	background: url(../img/tooltip-gray.png) no-repeat center center;
+	background-size: 78%;
+}
+
+.dummy-pois .tooltip-left .tooltip-content::before,
+.dummy-pois .tooltip-left .tooltip-content::after {
+	left: -14px; /* because of FF, otherwise we have a gap */
+}
+
+.dummy-pois .tooltip-right .tooltip-content::before,
+.dummy-pois .tooltip-right .tooltip-content::after {
+	right: -14px; /* because of FF, otherwise we have a gap */
+}
+
+.dummy-pois .tooltip-right .tooltip-content::after {
+	-webkit-transform: scale3d(-1,1,1);
+	transform: scale3d(-1,1,1);
+}

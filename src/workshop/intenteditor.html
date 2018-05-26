@@ -3,125 +3,173 @@
 				<div class="ub umh5"></div>
 			    <div class="ub">
 			    	<div class="ub ub-ac ub-pc" style="width:10%"><img id="intent-name-img"  src="/images/ui_03.jpg" /></div>
-			    	<div class="ub ub-ac " style="width:60%"><input  id="intent-name" type="text" name="name" value="" autocomplete="off" placeholder="意图名称" class="form-header md-input ng-valid-parse ng-empty ng-valid-pattern ng-pristine ng-invalid ng-invalid-required ng-touched" style="width:100%"></div>
+			    	<div class="ub ub-ac " style="width:60%">
+						<input  id="intent-name" type="text" name="name" value="" autocomplete="off" placeholder="意图名称" class="form-control">
+					</div>
 			    	<div class="ub ub-ac ub-pc" style="width:30%"><button type="button" style="width:70px;height:40px;background-color: #1698F3;color:#ffffff;border:1px solid #1698F3;font-size:16px;" onclick="saveIntent();">保  存</button><i class="glyphicon glyphicon-option-vertical"></i></div>
 			    </div>
-			    <div class="ub umh1"></div>
-			    <div class="ub" style="width:100%;">
-			        	<div class="ub ub-ac ub-pc" style="width:10%"><img id="intent-state-img"  src="/images/ui_09.jpg"/></div>
-			    		<div class="ub ub-ac" style="width:90%">语境<img src="/images/ui_003.jpg" alt="会话的语境，上下文"></div>
-			    </div>
 			    <div class="workplace ng-scope">
-			        <div id="intent-editor">
-				      <div id="entry_0" class="ub entry ub-ver" style="height:auto;margin-bottom: -1px;">
-	
-						
-						<div class="ub ub-ver ub-ac ub-pc" style="width:100%; border-bottom: 1px solid rgb(221, 221, 221);">
-						<input id="tags_in" type="text" class="tags" value="" placeholder="添加输入语境"/>
-						</div>
-						
-						<div class="ub ub-ver ub-ac ub-pc" align="left" style="width:100%; border-bottom: 1px solid rgb(221, 221, 221);">
-						<input id="tags_out" type="text" class="tags" value="" placeholder="添加输出语境"/>
-						</div>
-						
-						<!-- 用户说-->
-						<div class="ub ub-ver">
-						     <div class="ub" style="width:100%;">
-					        	<div class="ub ub-ac" style="width:10%"><img id="ui_Image1" src="/images/ui_09.jpg"/></div>
-					    		<div class="ub ub-ac" style="width:90%">用户提问：<img src="/images/ui_003.jpg" alt="用户提问"></div>
-				   			 </div>
-						      
-						     <div class="ub usersaystable ub-ver" >
-						     
-						     </div>
-						     
-						     
-						    <div class="ub " style="width:100%;min-height:40px;height:auto;margin-bottom: -1px; border: 1px solid rgb(221, 221, 221);">
-					        	<div class="ub ub-ver ub-ac ub-pc" style="width:10%"><i class="fa ng-scope fa-quote-right" style="color: #b7bbc4;"></i></div>
-					        	<div class="ub ub-ver ub-pc" style="width:80%;">
-					        		<input id="addUserSay" placeholder="按回车添加用户提问"/>
-					        	</div>
-					        	<div class="ub ub-ver ub-ac ub-pc" style="width:10%">
-				        	      
-				        		</div>
-			        	</div>
-						</div>
-						
-						
-						
-						<div class="ub umh1"><input type="hidden" id="responseId"></div>
-			        	<!-- 单个详情 按回车键盘添加出来的 
-			        	
-			        	<div class="ui_3">
-							<div class="ui_mid_04"><div class="ui_3_1"><a href="javascript:void(0);" onclick="addRow();"><b>+添加参数</b></a></div></div>
-						</div>-->
-						
-						<div class="ub ub-ver">
-							<div class="ub" style="width:100%;">
-					        	<div class="ub ub-ac" style="width:10%"><img id="action-img" src="/images/ui_17.jpg"/></div>
-					    		<div class="ub ub-ac" style="width:90%">机器人执行：<img src="/images/ui_003.jpg" alt="机器人执行的命令"></div>
-				   			 </div>
-				   			<div class="ub umh1"></div>
-				        	<div class="ub ub-ac" style="border-bottom: 1px solid rgb(221, 221, 221);">
-								<input id="action" type="text" style="width:100%" value="" placeholder="输入函数名"/>
-							</div>
-							<div class="ub umh1"></div>
-							<div class="ub" style="background-color: #1698F3;min-height:40px;height:auto;color: #ffffff;">
-				        		<div class="ub ub-f1 ub-ac ub-pc" contenteditable="" style="width:10%;word-wrap: break-word;word-break: break-all;">
-				        		必选（？）
-				        	    </div>
-				        	    <div class="ub ub-f1 ub-ac ub-pc entityselect"  style="width:16%">
-				        		参数名
-				        		</div>
-				        		<div class="ub ub-f1 ub-ac ub-pc"  style="width:16%">
-				        		参数类型
-				        		</div>
-				        		<div class="ub ub-f1 ub-ac ub-pc"  style="width:16%">
-				        		默认值	
-				        		</div>
 
-				        		<div class="ub ub-f1 ub-ac ub-pc ppdiv"  style="width:16%">
-				        		提示语
-				        		</div>
-				        	</div>
-				        	<div class="ub ub-ver"  style="width:100%;" id="parameters"></div>
-				        	
-				        	<div class="ui_3">
-							<div class="ui_mid_04"><div class="ui_3_1"><a href="javascript:void(0);" onclick="addParameter();"><b>+添加参数</b></a></div></div>
+					<!--Accordion wrapper-->
+					<div class="accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+
+						<!-- Accordion card -->
+						<div class="card">
+
+							<!-- Card header -->
+							<div class="card-header" role="tab" id="headingOne">
+								<a data-toggle="collapse" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+									<h5 class="mb-0">
+										<img id="intent-state-img"  src="/images/ui_09.jpg" style="display: inline-block;width: 30px;margin: 0 5px 0 0;"/>上下文语境 <i class="fa fa-angle-down rotate-icon"></i>
+									</h5>
+								</a>
+							</div>
+
+							<!-- Card body -->
+							<div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordionEx" >
+								<div class="card-body">
+									<!--<label for="tags_in">添加输入语境</label>-->
+									<input type="text"  id="tags_in" class="form-control form-control-sm" placeholder="添加输入语境" autocomplete="false">
+									<input id="tags_out" type="text" class="tags" value="" placeholder="添加输出语境"/>
+								</div>
 							</div>
 						</div>
-						
-			        	 
-			        	 <div class="ub umh1"></div>
-			        	 <!-- AI回复 -->
-						<div class="ub ub-ver">
-							<div class="ub" style="width:100%;">
-				        		<div class="ub ub-ac" style="width:10%"><img id="replyname-img" src="/images/ui_19.jpg"/></div>
-				    			<div class="ub ub-ac" style="width:90%">机器人回答：<img src="/images/ui_003.jpg" alt="机器人的回复语"></div>
-			   			 	</div>
-							
-							<div class="ub umh1"></div>
-							<div id="replytable" class="ub ub-ver"></div>
-							<div class="ub umh1"></div>
-				        	<div class="ub ub-ac" style="border-bottom: 1px solid rgb(221, 221, 221);">
-							<div class="ub ub-ver ub-ac ub-pc" style="width:10%"><i class="fa ng-scope fa-quote-right" style="color: #b7bbc4;"></i></div>
-								<input id="replyname" type="text" style="width:100%" value="" placeholder="按回车添加回答"/>
+						<!-- Accordion card -->
+
+						<!-- Accordion card -->
+						<div class="card">
+
+							<!-- Card header -->
+							<div class="card-header" role="tab" id="headingTwo">
+								<a class="collapsed" data-toggle="collapse" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+									<h5 class="mb-0">
+										<img style="display: inline-block;width: 30px;margin: 0 5px 0 0;" id="ui_Image1" src="/images/ui_09.jpg"/>
+										用户提问
+										<i class="fa fa-angle-down rotate-icon"></i>
+									</h5>
+								</a>
 							</div>
-							
+
+							<!-- Card body -->
+							<div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordionEx" >
+								<div class="card-body">
+
+									<div class="ub " style="width:100%;min-height:40px;height:auto;margin-bottom: -1px; border: 1px solid rgb(221, 221, 221);    border-radius: 5px;">
+										<div class="ub ub-ver ub-ac ub-pc" style="width:10%"><i class="fa ng-scope fa-quote-right" style="color: #b7bbc4;"></i></div>
+										<div class="ub ub-ver ub-pc" style="width:80%;">
+											<input id="addUserSay" placeholder="按回车添加用户提问"/>
+										</div>
+										<div class="ub ub-ver ub-ac ub-pc" style="width:10%">
+
+										</div>
+									</div>
+
+
+									<div class="ub usersaystable ub-ver" >
+
+									</div>
+
+
+								</div>
+							</div>
 						</div>
-				        <div class="ub umh5"></div>	 
+						<!-- Accordion card -->
+
+						<!-- Accordion card -->
+						<div class="card">
+
+							<!-- Card header -->
+							<div class="card-header" role="tab" id="headingThree">
+								<a class="collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+									<h5 class="mb-0">
+										<img id="action-img" src="/images/ui_17.jpg"  style="display: inline-block;width: 30px;margin: 0 5px 0 0;"/>
+										机器人执行
+										<i class="fa fa-angle-down rotate-icon"></i>
+									</h5>
+								</a>
+							</div>
+
+							<!-- Card body -->
+							<div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordionEx">
+								<div class="card-body">
+									<input id="action" type="text" style="width:100%" value="" placeholder="输入函数名" class="form-control form-control-sm"/>
+
+
+									<div class="ub" style="background-color: #1698F3; margin-top:10px;min-height:40px;height:auto;color: #ffffff;">
+										<div class="ub ub-f1 ub-ac ub-pc" contenteditable="" style="width:10%;word-wrap: break-word;word-break: break-all;">
+											必选（？）
+										</div>
+										<div class="ub ub-f1 ub-ac ub-pc entityselect"  style="width:16%">
+											参数名
+										</div>
+										<div class="ub ub-f1 ub-ac ub-pc"  style="width:16%">
+											参数类型
+										</div>
+										<div class="ub ub-f1 ub-ac ub-pc"  style="width:16%">
+											默认值
+										</div>
+
+										<div class="ub ub-f1 ub-ac ub-pc ppdiv"  style="width:16%">
+											提示语
+										</div>
+									</div>
+									<div class="ub ub-ver"  style="width:100%;" id="parameters"></div>
+
+									<div class="ui_3">
+										<div class="ui_mid_04"><div class="ui_3_1"><a href="javascript:void(0);" onclick="addParameter();"><b>+添加参数</b></a></div></div>
+									</div>
+
+
+								</div>
+							</div>
+						</div>
+						<!-- Accordion card -->
+
+
+						<!-- Accordion card -->
+						<div class="card">
+
+							<!-- Card header -->
+							<div class="card-header" role="tab" id="headingFour">
+								<a data-toggle="collapse" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+									<h5 class="mb-0">
+										<img id="replyname-img" src="/images/ui_19.jpg" style="display: inline-block;width: 30px;margin: 0 5px 0 0;"/>
+										机器人回答
+										<i class="fa fa-angle-down rotate-icon"></i>
+									</h5>
+								</a>
+							</div>
+
+							<!-- Card body -->
+							<div id="collapseFour" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordionEx" >
+								<div class="card-body">
+
+									<div id="replytable" class="ub ub-ver"></div>
+									<div class="ub umh1"></div>
+									<div class="ub ub-ac" style="border-bottom: 1px solid rgb(221, 221, 221);">
+										<div class="ub ub-ver ub-ac ub-pc" style="width:10%"><i class="fa ng-scope fa-quote-right" style="color: #b7bbc4;"></i></div>
+										<input id="replyname" type="text" style="width:100%" value="" placeholder="按回车添加回答"/>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						<!-- Accordion card -->
+
+
 					</div>
-   
-						
-			        </div>
+					<!--/.Accordion wrapper-->
+
+
+					<div id="json-tab" class="json-tab">
+						<ul class="nav-tabs clearfix">
+							<li>
+								<a>JSON</a>
+							</li>
+						</ul>
+						<textarea class="ng-json-empty" rows="10"></textarea>
+					</div>
 			        
-			        <div id="json-tab" class="json-tab">
-			            <ul class="nav-tabs clearfix">
-			                <li>
-			                    <a>JSON</a>
-			                </li>
-			            </ul>
-			            <textarea class="ng-json-empty" rows="10"></textarea>
-			        </div>
+
 			    </div>
 	

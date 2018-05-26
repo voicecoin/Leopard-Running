@@ -1330,3 +1330,58 @@ vertical-align: middle;
 .isMeta{
 background-color:rgb(255, 205, 246)
 }
+
+
+.accordion .card .card-body {
+    padding: 0 20px 10px 20px;
+}
+
+#tags_in_tagsinput span.tag,
+#tags_in_tagsinput span.tag:hover,
+#tags_out_tagsinput span.tag,
+#tags_out_tagsinput span.tag:hover{
+    padding: 5px 10px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    display: block;
+    float: left;
+    text-decoration: none;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    font-family: helvetica;
+    font-size: 11px;
+    border-radius: 5px;
+    background: #1698F3;
+    color: #fff;
+    border: 1px solid #1698F3;
+}
+#tags_in_tagsinput span.tag a,
+#tags_in_tagsinput span.tag a:hover,
+#tags_out_tagsinput span.tag a,
+#tags_out_tagsinput span.tag a:hover
+{
+    color:#fff;
+    opacity: 1;
+}
+#tags_in_tagsinput .leftNum,
+#tags_out_tagsinput .leftNum{
+    text-align: center;
+    width: 30px;
+    height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    border: 0;
+    resize: none;
+    white-space: nowrap;
+    overflow: none;
+    line-height: 20px;
+    padding: 0;
+    margin-right: 5px;
+    vertical-align: top;
+}
+
+input.parameter-name,
+input.parameter-dataType,
+input.parameter-value{
+    font-size:12px;
+}

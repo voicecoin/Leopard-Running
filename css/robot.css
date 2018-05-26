@@ -131,7 +131,7 @@ body{background: url(../images/bg.png) repeat;background-size:100%;font-family: 
 
 
 /*ui閻ｅ矂娼�*/
-.ui_side{background:url(../images/ui_bg_01.jpg) repeat;width:16%;height:900px;text-align: center;float:left;overflow: hidden;}
+.ui_side{background:#f9f9f9 repeat;width:12%;height:900px;text-align: center;float:left;overflow: hidden;}
 .ui_side_top{padding-top:15px;padding-bottom: 15px;}
 .ui_side_btm{width:200px;margin:0 auto;}
 /*.ui_side_btm_left{float: left;padding-right:15px;}
@@ -166,7 +166,7 @@ body{background: url(../images/bg.png) repeat;background-size:100%;font-family: 
 .ui_div{width:100%;height:40px;background-color:#1698F3;margin-top:210px;color:#ffffff;font-size:16px;line-height:40px;text-align: center;}
 .ui_div span{padding-right:35px;padding-left:15px;}
 
-.ui_right{width:24%;float:right;height:900px;background-color:#F7F7F7;}
+.ui_right{width:28%;float:right;height:700px;}
 .ui_right_main{width:90%;height:100%;margin:0 auto;padding-top:30px;text-align: center;}
 .ui_right_top{height:40px;border-bottom:2px solid #EDEEF0;}
 .ui_right_top span{color:#000000;font-size:16px;}
