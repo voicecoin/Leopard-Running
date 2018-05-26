@@ -98,22 +98,11 @@ $(document).ready(function () {
       data.name=name;
       data.description=description;
       data.published= isPublic == 1 ? true:false;
-      data.userId=$("#loginUserNameDisplay").attr('userId');//$.cookie("userId");
       data.avatar=image;
-      $.ajax({
-        url: host + '/v1/Agents',
-        type: "POST",
-        datType: "JSON",
-        contentType: "application/json",
-        data: JSON.stringify(data),
-        success: function () {
-            toastr.success("创建成功",'ok');
-            window.location.reload();
-        },error: function(e) {
-              toastr.error(e,'fail');
-            }
+      $.post(host + '/v1/Agents', data, function(){
+        toastr.success("创建成功",'ok');
+        window.location.reload();
       });
-      
     }
     
     

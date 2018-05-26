@@ -1,6 +1,6 @@
-var host = 'http://149.28.132.134:128';
 var userHost = 'http://149.28.132.134:127';
-//var host = 'http://localhost:9000';
+var host = 'http://149.28.132.134:128';
+//var host = 'http://localhost:128';
 
 $(document).ready(function () {
 
