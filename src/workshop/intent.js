@@ -13,6 +13,7 @@ function saveIntent(){
 
 function genIntentData(){
 	var intentNow={};
+    intentNow.agentId = agentId;
 	intentNow.id=$("#intent-id").val();
 	intentNow.name=$("#intent-name").val();
 	if($("#tags_in").val().length>0)

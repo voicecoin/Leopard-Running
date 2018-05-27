@@ -631,7 +631,7 @@ function showList(){
     		showEntity('');
     	});
 		initPage();
-    }); 
+    },'html');
 }
 
 
