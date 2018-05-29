@@ -191,7 +191,7 @@ function initIntents(){
         for(var i=0;i<intents.length;i++){
             html+='<li class="list-group-item ng-scope intent" id="'+intents[i].id+'"><a href="javascript:void(0)" class="name ng-binding">'+intents[i].name+'</a>';
             html+='<div class="ico-group right">';
-            html+='<a class="ico-item del-icon" style="display:none"  href="javascript:void(0)"><span class="glyphicon glyphicon-trash" intent_id="'+intents[i].id+'"></span></a>';
+            html+='<a class="ico-item del-icon" style="display:none"  href="javascript:void(0)"><span class="fa fa-trash-o" intent_id="'+intents[i].id+'"></span></a>';
             html+='</div></li>';
         }
         $(".list-group").html(html);
@@ -208,11 +208,11 @@ function initIntents(){
             $(this).find(".del-icon").hide();
         });
 
-        $(".intent .glyphicon-trash").off('click').on('click', function(event) {
-            //alert("glyphicon-trash");
-            var id = $(this).attr("intent_id");
-            //delEntity(id);
+        $(".intent .del-icon").off('click').on('click', function(event) {
             event.stopPropagation();
+            //alert("glyphicon-trash");
+            var id = $(this).find("span.fa-trash-o").attr("intent_id");
+            delEntity(id);
         });
 	}else{
 		html += '<div style="font-size:14px;line-height: 30px;">';
@@ -222,6 +222,22 @@ function initIntents(){
         $(".list-group").parent().html(html);
 	}
 	
+}
+
+function delEntity(id){
+    $.ajax({
+        url: host + '/v1/Agents/'+id,
+        type: "DELETE",
+        datType: "JSON",
+        contentType: "application/json",
+        data: {},
+        success: function () {
+            toastr.success("删除成功",'ok');
+            initPage();
+        },error: function(e) {
+            toastr.error(e,'fail');
+        }
+    });
 }
 
 function intentEventHandle(){
@@ -385,7 +401,7 @@ function intentEventHandle(){
 						usersayEventHandler();
 						$("#addUserSay").val("");
 					},error: function(e) {
-						//s_tip(e,'fail');
+						//toastr(e,'fail');
 					}
 				});
 			}
@@ -513,7 +529,7 @@ function initParameterPrompts(){
 		html+='</div>';
 		html+='<div class="prompt-cell prompt-cell-actions">';
 		html+='<a href="javascript:void(0)" class="ico-item" style="display: none;"><span class="fa fa-trash-o ui-sortable-handle"></span></a>';
-		html+='<a class="visible-on-hover prompt-remove" href="javascript:void(0)" onclick="prompt_remove_rows(this)" style="display: none;"><span class="glyphicon glyphicon-trash"></span></a>';
+		html+='<a class="visible-on-hover prompt-remove" href="javascript:void(0)" onclick="prompt_remove_rows(this)" style="display: none;"><span class="fa fa-trash-o"></span></a>';
 		html+='</div>';
 		html+='</div>';
 	}
@@ -580,7 +596,7 @@ function create_empty_prompt(){
 	content += "<div class=\"prompt-cell prompt-cell-actions\">";
 	content += "<a href=\"javascript:void(0)\" class=\"ico-item\"><span class=\"fa fa-trash-o\"></span></a>";
 	content += "<a class=\"visible-on-hover prompt-remove\" href=\"javascript:void(0)\" onclick=\"prompt_remove_rows(this)\">";
-	content += "<span class=\"glyphicon glyphicon-trash\"></span></a></div></div>";
+	content += "<span class=\"fa fa-trash-o\"></span></a></div></div>";
 	$("#intent-param-prompts-editor").append(content);
 	resetNumber($("#intent-param-prompts-editor"));
 }
@@ -852,7 +868,7 @@ function addUserSay(userSay){
 		 userSaysHtml+='<div class="ub ub-ver ub-pc template-editor-holder usersaytext" contenteditable="" placeholder="Add User expression" style="width:80%;word-wrap: break-word;word-break: break-all;">'+datahtml+'</div>';
 		 userSaysHtml+='<div class="ub ub-ver ub-ac ub-pc uhide iconcontainer" style="width:10%">';
 		 userSaysHtml+='<a href="javascript:void(0)" class="ico-item"><span class="fa fa-trash-o"></span></a>';
-		 userSaysHtml+='<a href="javascript:void(0)" class="ico-item delusersayicon"><span class="glyphicon glyphicon-trash del_icon"></span></a>';
+		 userSaysHtml+='<a href="javascript:void(0)" class="ico-item delusersayicon"><span class="fa fa-trash-o del_icon"></span></a>';
 		 userSaysHtml+='</div>';
 	 userSaysHtml+='</div>';
 	 
@@ -954,7 +970,7 @@ function genParameter(parameter){
 	 
 	 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc iconcontainer uhide" style="width:20%;">';
 	 parametersHtml+='<a href="javascript:void(0)" class="ico-item"><span class="fa fa-trash-o"></span></a>';
-	 parametersHtml+='<a href="javascript:void(0)" class="ico-item delparameter-prompts"><span class="glyphicon glyphicon-trash del_icon"></span></a>';
+	 parametersHtml+='<a href="javascript:void(0)" class="ico-item delparameter-prompts"><span class="fa fa-trash-o del_icon"></span></a>';
 	 parametersHtml+='</div>';
 	 
 	 parametersHtml+='</div>';
@@ -1089,7 +1105,7 @@ function genSpeechHTML(speech){
 	var speechhtml='<div class="ub" style="margin-bottom: -1px;border: 1px solid rgb(221, 221, 221);-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;">';
 	speechhtml+='<div class="ub ub-ver ub-pc template-editor-holder speechdiv"  contenteditable="" placeholder="输入机器人回复" data-distinguish="true" style="width:90%;">'+speech+'</div>';
 	speechhtml+='<div class="ub ub-ver ub-ac ub-pc" style="width:10%">';
-	speechhtml+='<a href="javascript:void(0)" class="ico-item no-result delspeech" style="display: inline;"><span class="glyphicon glyphicon-trash del_icon"></span></a>';
+	speechhtml+='<a href="javascript:void(0)" class="ico-item no-result delspeech" style="display: inline;"><span class="fa fa-trash-o del_icon"></span></a>';
 	speechhtml+='</div>';
 	speechhtml+='</div>';
 	return speechhtml;
@@ -1105,7 +1121,7 @@ function addSpeech(speech){
 		/*speechhtml+='<div class="ub">';
 		speechhtml+='<div class="ub ub-ver ub-pc template-editor-holder speechdiv" contenteditable="" placeholder="输入机器人回复" data-distinguish="true" style="width:90%;">'+speech.speech[i]+'</div>';
 		speechhtml+='<div class="ub ub-ver ub-ac ub-pc" style="width:10%">';
-		speechhtml+='<a href="javascript:void(0)" class="ico-item no-result delspeech" style="display: inline;"><span class="glyphicon glyphicon-trash del_icon"></span></a>';
+		speechhtml+='<a href="javascript:void(0)" class="ico-item no-result delspeech" style="display: inline;"><span class="fa fa-trash-o del_icon"></span></a>';
 		speechhtml+='</div>';
 		speechhtml+='</div>';*/
 	}

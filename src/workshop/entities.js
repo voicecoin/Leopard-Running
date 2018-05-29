@@ -608,7 +608,7 @@ function addEntry(entry,idIndex){
 	html+='</div>';
 	html+='<div class="ub ub-ver ub-ac ub-pc icodiv" style="width:15%">';
 	html+='	<a href="javascript:void(0)" class="ico-item no-result"><span class="glyphicon glyphicon-upload upload_icon"></span></a>'
-	html+='	<a href="javascript:void(0)" class="ico-item no-result"><span class="glyphicon glyphicon-trash del_icon"></span></a>';
+	html+='	<a href="javascript:void(0)" class="ico-item no-result"><span class="fa fa-trash-o del_icon"></span></a>';
 	//html+='</div>';
 	html+='</div>';
 	html+='</div>';
@@ -694,7 +694,7 @@ function initEntities(entities){
 	for(var i=0;i<entities.length;i++){
 		html+='<li class="list-group-item ng-scope entity" id="'+entities[i].id+'"><a href="javascript:void(0)" class="name ng-binding">'+entities[i].name+'</a>';
 		html+='<div class="ico-group right">';
-		html+='<a class="ico-item del-icon" style="display:none"  href="javascript:void(0)"><span class="glyphicon glyphicon-trash" entity_id="'+entities[i].id+'"></span></a>';
+		html+='<a class="ico-item del-icon" style="display:none"  href="javascript:void(0)"><span class="fa fa-trash-o" entity_id="'+entities[i].id+'"></span></a>';
 		html+='</div></li>';
 	}
 
