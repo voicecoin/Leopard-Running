@@ -1385,3 +1385,7 @@ input.parameter-dataType,
 input.parameter-value{
     font-size:12px;
 }
+
+.list-group-item .ico-item span.fa-trash-o{
+    margin-top:13px;
+}

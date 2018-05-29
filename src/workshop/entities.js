@@ -12,10 +12,10 @@ function delEntity(id){
    			contentType: "application/json",
    			data: {},
    			success: function () {
-   			    s_tip("删除成功",'ok');
+   			    toastr.success("删除成功",'ok');
 				initPage();
    			},error: function(e) {
-			   s_tip(e,'fail');
+			   toastr.error(e,'fail');
  	    	}
    	});
 }
@@ -102,7 +102,7 @@ function loadEntity(id){
 				  initEntititesPage(self.entity.id);
 	    	  },error: function(e) {
 	    		  self.entity=null;
-	    		  s_tip(JSON.stringify(e),'fail');
+	    		  toastr.error(JSON.stringify(e),'fail');
 	    	  }
 	    });
 
@@ -173,13 +173,13 @@ function updateEntryEntities(entryDom){
 	    		  contentType: "application/json",
 		    	  success: function(json) {
 		    		  //entity.name=$("#entity-name").val();
-		    		  //s_tip('','fail');
+		    		  //toastr.success('','fail');
 		    		  console.log(json);
 		    		  entryDom.attr("data-id",json)
-		    		  s_tip('已同步','ok');
+		    		  toastr.success('已同步','ok');
 		    	  },error: function(e) {
 		    		  //currentBot=null;
-		    		  s_tip(JSON.stringify(e),'fail');
+		    		  toastr.error(JSON.stringify(e),'fail');
 		    	  }
 		    	});
 		}else{
@@ -193,10 +193,10 @@ function updateEntryEntities(entryDom){
 	    		  contentType: "application/json",
 		    	  success: function(json) {
 		    		  console.log(json);
-		    		  s_tip('已同步','ok');
+		    		  toastr.success('已同步','ok');
 		    	  },error: function(e) {
 		    		  //currentBot=null;
-		    		  s_tip(JSON.stringify(e),'fail');
+		    		  toastr.error(JSON.stringify(e),'fail');
 		    	  }
 		    });
 		}
@@ -229,9 +229,9 @@ function entityEventHander(){
 		    		  contentType: "application/json",
 			    	  success: function(json) {
 			    		  entity.name=$("#entity-name").val();
-			    		  s_tip('已同步','ok');
+			    		  toastr.success('已同步','ok');
 			    	  },error: function(e) {
-			    		  s_tip(JSON.stringify(e),'fail');
+			    		  toastr.error(JSON.stringify(e),'fail');
 			    	  }
 			    	});
 			}
@@ -295,9 +295,9 @@ function entityEventHander(){
 					contentType: "application/json",
 					success: function(json) {
 						showEntity(entity.id);
-						s_tip('已同步','ok');
+						toastr.success('已同步','ok');
 					},error: function(e) {
-						s_tip(JSON.stringify(e),'fail');
+						toastr.error(JSON.stringify(e),'fail');
 					}
 				});
 			//}
@@ -367,7 +367,7 @@ function entityEventHander(){
 		console.log('keyup');
 		if(e.keyCode == 13){
 			if($(this).val().length==0){
-				s_tip("请输入关键字",'fail');
+				toastr.success("请输入关键字",'fail');
 			}else{
 				$(this).parent().parent().find("input:last").focus();
 			}
@@ -412,10 +412,10 @@ function entityEventHander(){
 					data: JSON.stringify(entry),
 					success: function(json) {
 						$("#pageContainer1").zPager('pageData',$("#pageContainer1"),$("#pageContainer1").find(".current").attr("page-id"));
-						s_tip("条目已保存","ok");
+						toastr.success("条目已保存","ok");
 					},error: function(e) {
 						//self.entity=null;
-						s_tip(e,"fail");
+						toastr.error(e,"fail");
 					}
 				});
 			}else{
@@ -427,12 +427,12 @@ function entityEventHander(){
 					contentType: "application/json",
 					data: JSON.stringify(entry),
 					success: function(json) {
-						s_tip("条目已保存","ok");
+						toastr.success("条目已保存","ok");
 						$("#pageContainer1").zPager('pageData',$("#pageContainer1"),$("#pageContainer1").find(".current").attr("page-id"));
 						//$("#pageContainer1").find(".current").trigger('click');
 					},error: function(e) {
 						//self.entity=null;
-						s_tip(e,"fail");
+						toastr.error(e,"fail");
 					}
 				});
 			}
@@ -460,7 +460,7 @@ function delEntryEntities(id){
 		success: function () {
 
 		},error: function(e) {
-			//s_tip(e,'fail');
+			//toastr.error(e,'fail');
   	  	}
 	});
 }
@@ -732,7 +732,7 @@ function submitEntity(){
 		//data.id=$("#entity_id").val();
 		data.name=$("#entity-name").val();
 		if(data.name.length==0){
-			s_tip('词库名称不能为空','fail');
+			toastr.error('词库名称不能为空','fail');
 			return;
 		}
 	}else{
@@ -766,14 +766,14 @@ function submitEntity(){
 				contentType: "application/json",
 				data: JSON.stringify(data),
 				success: function (json) {
-					s_tip("保存成功",'ok');
+					toastr.success("保存成功",'ok');
 				},error: function(e) {
-					s_tip(e,'fail');
+					toastr.error(e,'fail');
 				}
 			});
 
 		}else{
-			s_tip('请添加关键字','fail');
+			toastr.error('请添加关键字','fail');
 		}
 	}else{
 		//对比name
