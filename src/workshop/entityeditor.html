@@ -1,0 +1,124 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<style>
+	div.tagsinput span.tag,
+	div.tagsinput span.tag:hover{
+		padding: 5px 10px;
+		-moz-border-radius: 2px;
+		-webkit-border-radius: 2px;
+		display: block;
+		float: left;
+		text-decoration: none;
+		margin-right: 5px;
+		margin-bottom: 5px;
+		font-family: helvetica;
+		font-size: 11px;
+		border-radius: 5px;
+		background: #1698F3;
+		color: #fff;
+		border: 1px solid #1698F3;
+	}
+
+	div.tagsinput span.tag a,
+	div.tagsinput span.tag a:hover
+	{
+		color:#fff;
+		opacity: 1;
+	}
+</style>
+
+<script>
+</script>
+
+<div class="top-panel">
+	<div id="inner-header" class="inner-header">
+		<div class="wrap">
+			<div class="view-header">
+				<div class="wrap-actions loaded">
+					<div class="btn-holder select-button" aria-hidden="false">
+						<div class="btn-group btn-group-lg">
+							<a class="n_btn left" id="save_btn" href="javascript:void(0);">保存</a>
+							<i class="glyphicon glyphicon-option-vertical left"></i>
+						</div>
+					</div>
+					<div class="header-form" style="max-width:80%">
+						<div class="md-input-container ng-valid-parse">
+							<input type="hidden" id="entity_id" value="">
+							<input  id="entity-name" type="text" name="name" value="" autocomplete="off" placeholder="词库名称" class="form-control">
+							<div role="alert" ng-messages="headerForm.name" class="ng-scope md-input-messages-animation ng-active">
+								<div ng-message-exp="config.messageExp" class="ng-binding ng-scope">
+									<font>词库名称只能包含中文、字母、数字及下划线</font>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="workplace ng-scope">
+	<div class="entity-checkbox">
+		<div class="ng-empty ng-empty-synonyms ng-checked"> <!--ng-checked-->
+			<input type="hidden" id="synonyms-data" name="type" value="1">
+			<div class="md-container md-ink-ripple">
+				<div class="md-icon"></div>
+			</div>
+			<div class="md-label">
+				<span class="ng-scope">定义同义词</span>
+				<i class="fa fa-question-circle ng-scope"></i>
+			</div>
+		</div>
+		<!--<div class="ng-empty">
+          <input type="hidden" id="expansion-data" name="automated_expansion" value="0" />
+          <input class="entity-checkbox-btn" id="expansion" type="checkbox" value="0" />
+          <div class="md-container md-ink-ripple">
+              <div class="md-icon"></div>
+          </div>
+          <div class="md-label">
+              <span class="ng-scope">允许自动扩展</span>
+          </div>
+      </div>-->
+	</div>
+	<div class="alert-operation-tip" style="display: block;">
+		<p class="close right">
+			<span>×</span>
+		</p>
+		<span class="glyphicon glyphicon-info-sign	"></span>
+		<label>按enter键来分离同义词</label>
+	</div>
+	<div id="entity-editor" class="style-1" style="height:320px;overflow-y:auto;">
+
+
+
+		<!-- 新的词条
+        <div class="ub entry">
+                <div class="ub ub-ver ub-ac ub-pc" style="width:10%">
+                    <input id="ui_input4" class="input-lg form-input name" type="text" placeholder="添加关键字" value="">
+                </div>
+
+                <div class="ub ub-ver ub-ac ub-pc" style="width:70%">
+                    <input id="tags_1" type="text" class="tags" value="" />
+                </div>
+                <div class="ub ub-ver ub-ac ub-pc" style="width:20%">
+                    <a href="javascript:void(0)" class="ico-item"><span class="flaticon glyphicon glyphicon-pencil edit-entityitem-icon"></span></a>
+                    <a href="javascript:void(0)" class="ico-item"><span class="glyphicon glyphicon-trash del_icon"></span></a>
+                </div>
+        </div>-->
+
+	</div>
+	<div class="ui_3">
+		<div class="ui_mid_04"><div class="ui_3_1"><a href="javascript:void(0);" onclick="addRow();"><b>+添加一行</b></a></div></div>
+	</div>
+	<div class="ui_mid_04" style="text-align: center;">
+		<div id="pageContainer1" class="pager clearfix" style="display:none"></div>
+	</div>
+	<div id="json-tab" class="json-tab">
+		<ul class="nav-tabs clearfix">
+			<li>
+				<a>JSON</a>
+			</li>
+		</ul>
+		<textarea class="ng-json-empty" rows="10"></textarea>
+	</div>
+</div>

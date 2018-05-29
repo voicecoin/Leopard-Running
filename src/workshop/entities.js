@@ -691,32 +691,43 @@ function startSearch(){
 
 function initEntities(entities){
 	var html='';
-	for(var i=0;i<entities.length;i++){
-		html+='<li class="list-group-item ng-scope entity" id="'+entities[i].id+'"><a href="javascript:void(0)" class="name ng-binding">'+entities[i].name+'</a>';
-		html+='<div class="ico-group right">';
-		html+='<a class="ico-item del-icon" style="display:none"  href="javascript:void(0)"><span class="fa fa-trash-o" entity_id="'+entities[i].id+'"></span></a>';
-		html+='</div></li>';
+	if(entities && entities.length > 0){
+        for(var i=0;i<entities.length;i++){
+            html+='<li class="list-group-item ng-scope entity" id="'+entities[i].id+'"><a href="javascript:void(0)" class="name ng-binding">'+entities[i].name+'</a>';
+            html+='<div class="ico-group right">';
+            html+='<a class="ico-item del-icon" style="display:none"  href="javascript:void(0)"><span class="fa fa-trash-o" entity_id="'+entities[i].id+'"></span></a>';
+            html+='</div></li>';
+        }
+        $(".list-group").html(html);
+
+        $(".entity").off('click').on('click', function() {
+            showEntity($(this).attr('id'));
+        });
+
+        $(".entity").off('mouseenter').on('mouseenter', function() {
+            $(this).find(".del-icon").show();
+        });
+
+        $(".entity").off('mouseleave').on('mouseleave', function() {
+            $(this).find(".del-icon").hide();
+        });
+
+        $(".entity .glyphicon-trash").off('click').on('click',function(event) {
+            var id = $(this).attr("entity_id");
+            delEntity(id);
+            event.stopPropagation();
+        });
+
+	}else {
+        html += '<div style="font-size:14px;line-height: 30px;">';
+        html += '<div><i class="fa  fa-gg-circle" style="font-size: 18px;margin: 0 5px 0 0;"></i>用户词库是用户定义的便于机器人识别的一系列关键词及它们的近义词，同时对关键词进行了分类，这个分类我们就叫“实体”。例如在一个“查询天气”的意图识别场景中，我们可以创建“温度”，“穿着”这些实体，温度这个实体下包含的关键词可能有：“冷”，“热”，“暖和”等；而穿着这个实体下可能包含：“外套”，“裙子”，“短袖”，“棉裤”等关键词。</div>';
+        html += '<div style="margin-top:10px;">实体以及它对应的关键词是机器人执行动作的必要参数，只有识别了实体以及对应关键词，机器人才能正确的帮我们执行某一项任务。例如当用户说：查询明天上海的天气，机器人会识别出来“明天”这个关键词属于“日期”这个实体，“上海”这个关键词属于“地点”这个实体，机器人知道了日期和地点，自然就能查询到天气的结果。\n</div>';
+        html += '</div>';
+        $("#wrapper").parent().html(html);
 	}
 
-	$(".list-group").html(html);
 
-	$(".entity").off('click').on('click', function() {
-		showEntity($(this).attr('id'));
-    });
-	
-	$(".entity").off('mouseenter').on('mouseenter', function() {
-		$(this).find(".del-icon").show();
-    });
-	
-	$(".entity").off('mouseleave').on('mouseleave', function() {
-		$(this).find(".del-icon").hide();
-    });
-	
-	$(".entity .glyphicon-trash").off('click').on('click',function(event) {
-         var id = $(this).attr("entity_id");
-         delEntity(id);
-         event.stopPropagation();
-     });
+
 
 
 

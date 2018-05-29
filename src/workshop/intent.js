@@ -845,19 +845,22 @@ function loadIntent(id){
 
 function addUserSay(userSay){
 	 var userSaysHtml='';
-	 var data=userSay.data;
+
 	 var datahtml='';
 	 var metaarray=[];
-	 for(var j=0;j<data.length;j++){
-		 
-		 datahtml+='<span';
-		 if(data[j].meta!=null){
-			 datahtml+=' class="isMeta" style="background-color:'+data[j].color+'"';
-			 metaarray.push(data[j]);
-		 }
-		 datahtml+='>';
-		 datahtml+=data[j].text;
-		 datahtml+='</span>';
+	 if(userSay && userSay.data && userSay.data.data){
+         var data=userSay.data.data;
+         for(var j=0;j<data.length;j++){
+
+             datahtml+='<span';
+             if(data[j].meta!=null){
+                 datahtml+=' class="isMeta" style="background-color:'+data[j].color+'"';
+                 metaarray.push(data[j]);
+             }
+             datahtml+='>';
+             datahtml+=data[j].text;
+             datahtml+='</span>';
+         }
 	 }
 	 
 	 userSaysHtml+='<div class="ub ub-ver usersay" id="'+userSay.id+'">';
@@ -867,7 +870,7 @@ function addUserSay(userSay){
 		 userSaysHtml+='</div>';
 		 userSaysHtml+='<div class="ub ub-ver ub-pc template-editor-holder usersaytext" contenteditable="" placeholder="Add User expression" style="width:80%;word-wrap: break-word;word-break: break-all;">'+datahtml+'</div>';
 		 userSaysHtml+='<div class="ub ub-ver ub-ac ub-pc uhide iconcontainer" style="width:10%">';
-		 userSaysHtml+='<a href="javascript:void(0)" class="ico-item"><span class="fa fa-trash-o"></span></a>';
+//		 userSaysHtml+='<a href="javascript:void(0)" class="ico-item"><span class="fa fa-trash-o"></span></a>';
 		 userSaysHtml+='<a href="javascript:void(0)" class="ico-item delusersayicon"><span class="fa fa-trash-o del_icon"></span></a>';
 		 userSaysHtml+='</div>';
 	 userSaysHtml+='</div>';
@@ -1030,7 +1033,7 @@ function initIntent(intent){
 	 }
 
 	 $('#tags_out').val(tags_out_value);
-	 $('#tags_out').tagsInput({width:'100%',defaultText:'添加输出状态',height:'auto',hide:false,autosize:true,leftNumHide:false});
+	 $('#tags_out').tagsInput({width:'100%',defaultText:'配置上下文语境',height:'auto',hide:false,autosize:true,leftNumHide:false});
 	 $('#tags_out').setEditModel(false);
 	 $('#tags_out').setEditModel(true);
 	 
