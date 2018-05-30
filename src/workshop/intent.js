@@ -703,16 +703,9 @@ function usersayEventHandler(){
 }
 
 function autoCompleteEntity(id,key){
-    $.ajax({
-  	  url: host + '/v1/Entities/'+agentId+'/Query?name='+key,
-  	  type: 'GET',
-  	  data: {},
-  	  success: function(json) {
-  		initAutoCompleteDiv(id,json.items);
-  	  },error: function(e) {
-  		  
-  	  }
-  	});
+	$.get(host + '/v1/Entities/'+agentId+'/Query?name='+key, function(json){
+		initAutoCompleteDiv(id,json.items);
+	})
 }
 
 

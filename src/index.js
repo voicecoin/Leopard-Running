@@ -4,9 +4,6 @@ var host = 'http://149.28.132.134:128';
 
 $(document).ready(function () {
 
-    //Animation init
-    new WOW().init();
-
     $.ajaxSetup({
         processData: false,
         dataType: "json",
@@ -29,6 +26,9 @@ $(document).ready(function () {
     })();
 
     getUserInfo();
+
+    //Animation init
+    new WOW().init();
 });
 
 function getUserInfo() {

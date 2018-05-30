@@ -26,7 +26,7 @@ function showEntity(id){
 	$.get("entityeditor.html", function(data) {
         $('.ui_mid').html(data);
         loadEntity(entityId);
-    }); 
+    }, 'html'); 
 }
 
 function cacheEntityEntries(data){
@@ -470,16 +470,9 @@ function delEntryEntities(id){
  * @出filter
  * */
 function autoCompleteEntity(id,key){
-    $.ajax({
-  	  url: host + '/v1/Entities/'+agentId+'/Query?name='+key,
-  	  type: 'GET',
-  	  data: {},
-  	  success: function(json) {
-  		initAutoCompleteDiv(id,json.items);
-  	  },error: function(e) {
-  		  
-  	  }
-  	});
+	$.get(host + '/v1/Entities/'+agentId+'/Query?name='+key, function(json){
+		initAutoCompleteDiv(id,json.items);
+	})
 }
 
 
@@ -797,23 +790,16 @@ function submitEntity(){
 	
 }
 
-$(document).ready(function(){ 
-	agentId=getQuery('agentId');
-	showList();
-	loadLeft();
-	loadRight();
-});
-
 function loadRight(){
 	$.get("bottest.html", function(data) {
         $('.ui_right').html(data);
-    });
+    }, 'html');
 }
 function loadLeft(){
 	$.get("left.html", function(data) {
         $('#leftmenu').html(data);
         loadBots();
-    }); 
+    }, 'html'); 
 }
 
 function resetAgent(id){
@@ -828,3 +814,10 @@ function resetAgent(id){
 	}
 	loadRight();
 }
+
+$(document).ready(function(){ 
+	agentId=getQuery('agentId');
+	showList();
+	loadLeft();
+	loadRight();
+});
