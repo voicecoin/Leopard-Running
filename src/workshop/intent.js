@@ -857,8 +857,8 @@ function addUserSay(userSay){
 
 	 var datahtml='';
 	 var metaarray=[];
-	 if(userSay && userSay.data && userSay.data.data){
-         var data=userSay.data.data;
+	 if(userSay && userSay.data){
+         var data=userSay.data;
          for(var j=0;j<data.length;j++){
 
              datahtml+='<span';

@@ -5,19 +5,9 @@ var entityId=null;
 var showModel=1;
 var totalIndex=0;
 function delEntity(id){
-     $.ajax({
-   			url: host + '/v1/Entities/'+id,
-   			type: "DELETE",
-   			datType: "JSON",
-   			contentType: "application/json",
-   			data: {},
-   			success: function () {
-   			    toastr.success("删除成功",'ok');
-				initPage();
-   			},error: function(e) {
-			   toastr.error(e,'fail');
- 	    	}
-   	});
+	$.delete(host + '/v1/Entities/'+id, function(){
+		toastr.success("删除成功",'ok');
+	})
 }
 
 function showEntity(id){
@@ -763,19 +753,9 @@ function submitEntity(){
 		if(data.entries.length>0)
 		{
 			data.agentId =agentId;
-			$.ajax({
-				url: apiurl,
-				type: "POST",
-				datType: "JSON",
-				contentType: "application/json",
-				data: JSON.stringify(data),
-				success: function (json) {
-					toastr.success("保存成功",'ok');
-				},error: function(e) {
-					toastr.error(e,'fail');
-				}
-			});
-
+			$.post(apiurl, data, function(){
+				toastr.success("保存成功",'ok');
+			})
 		}else{
 			toastr.error('请添加关键字','fail');
 		}
