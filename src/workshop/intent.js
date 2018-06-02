@@ -12,6 +12,14 @@ function saveIntent(){
 }
 
 function genIntentData(){
+	var $intentName = $("#intent-name");
+	var intentName = $intentName.val();
+	if(!intentName){
+        jqueryAlert({
+            'content' : '请输入意图名称'
+        })
+        return false;
+	}
 	var intentNow={};
     intentNow.agentId = agentId;
 	intentNow.id=$("#intent-id").val();
@@ -123,13 +131,17 @@ function genIntentData(){
         $.put(host + '/v1/Intents/' + intentNow.id, intentNow).done(function (json) {
             toastr.success("场景已保存", "ok");
         }).fail(function (xhr, status, error) {
-            toastr.error(error, "fail");
+            jqueryAlert({
+                'content' :error
+            })
         });
     } else {
         $.post(host + '/v1/Intents/' + agentId, intentNow).done(function (json) {
             toastr.success("场景已保存", "ok");
         }).fail(function (xhr, status, error) {
-            toastr.error(error, "fail");
+            jqueryAlert({
+                'content' :error
+            })
         });
     }
 }
@@ -235,7 +247,9 @@ function delEntity(id){
             toastr.success("删除成功",'ok');
             initPage();
         },error: function(e) {
-            toastr.error(e,'fail');
+            jqueryAlert({
+                'content' :e
+            })
         }
     });
 }
@@ -821,7 +835,9 @@ function loadIntent(id){
 				intentEventHandle();
 			},error: function(e) {
 				self.entity=null;
-                toastr.error("错误",e);
+                jqueryAlert({
+                    'content' :e
+                })
 			}
 		});
 
@@ -965,7 +981,7 @@ function genParameter(parameter){
 	 parametersHtml+='</div>';
 	 
 	 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc iconcontainer uhide" style="width:20%;">';
-	 parametersHtml+='<a href="javascript:void(0)" class="ico-item"><span class="fa fa-trash-o"></span></a>';
+//	 parametersHtml+='<a href="javascript:void(0)" class="ico-item"><span class="fa fa-trash-o"></span></a>';
 	 parametersHtml+='<a href="javascript:void(0)" class="ico-item delparameter-prompts"><span class="fa fa-trash-o del_icon"></span></a>';
 	 parametersHtml+='</div>';
 	 

@@ -572,7 +572,7 @@ function addEntry(entry,idIndex){
 	var tagsValue='';
 	if(entry.synonyms.length>0){
 		for(var j=0;j<entry.synonyms.length;j++){
-			tagsValue+=entry.synonyms[j];
+			tagsValue+=entry.synonyms[j].synonym || '';
 			if(j!=entry.synonyms.length-1){
 				tagsValue+=',';
 			}
