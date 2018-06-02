@@ -1,13 +1,29 @@
-
+var dialog;
 var entity=null;
 var agentId=null;
 var entityId=null;
 var showModel=1;
 var totalIndex=0;
 function delEntity(id){
-	$.delete(host + '/v1/Entities/'+id, function(){
+    $.ajax({
+        url: host + '/v1/Entities/'+id,
+        type: "DELETE",
+        datType: "JSON",
+        contentType: "application/json",
+        data: {},
+        success: function () {
+            toastr.success("删除成功",'ok');
+            //window.location.reload();
+            initPage();
+        },error: function(e) {
+            jqueryAlert({
+                'content' :e
+            })
+        }
+    });
+	/*$.delete(host + '/v1/Entities/'+id, function(){
 		toastr.success("删除成功",'ok');
-	})
+	})*/
 }
 
 function showEntity(id){
@@ -92,7 +108,9 @@ function loadEntity(id){
 				  initEntititesPage(self.entity.id);
 	    	  },error: function(e) {
 	    		  self.entity=null;
-	    		  toastr.error(JSON.stringify(e),'fail');
+                  jqueryAlert({
+                      'content' :e
+                  })
 	    	  }
 	    });
 
@@ -169,7 +187,9 @@ function updateEntryEntities(entryDom){
 		    		  toastr.success('已同步','ok');
 		    	  },error: function(e) {
 		    		  //currentBot=null;
-		    		  toastr.error(JSON.stringify(e),'fail');
+                    jqueryAlert({
+                        'content' :e
+                    })
 		    	  }
 		    	});
 		}else{
@@ -186,7 +206,9 @@ function updateEntryEntities(entryDom){
 		    		  toastr.success('已同步','ok');
 		    	  },error: function(e) {
 		    		  //currentBot=null;
-		    		  toastr.error(JSON.stringify(e),'fail');
+                    jqueryAlert({
+                        'content' :e
+                    })
 		    	  }
 		    });
 		}
@@ -221,7 +243,9 @@ function entityEventHander(){
 			    		  entity.name=$("#entity-name").val();
 			    		  toastr.success('已同步','ok');
 			    	  },error: function(e) {
-			    		  toastr.error(JSON.stringify(e),'fail');
+                          jqueryAlert({
+                              'content' :e
+                          })
 			    	  }
 			    	});
 			}
@@ -287,7 +311,9 @@ function entityEventHander(){
 						showEntity(entity.id);
 						toastr.success('已同步','ok');
 					},error: function(e) {
-						toastr.error(JSON.stringify(e),'fail');
+                        jqueryAlert({
+                            'content' :e
+                        })
 					}
 				});
 			//}
@@ -405,7 +431,9 @@ function entityEventHander(){
 						toastr.success("条目已保存","ok");
 					},error: function(e) {
 						//self.entity=null;
-						toastr.error(e,"fail");
+						jqueryAlert({
+							'content' :e
+						})
 					}
 				});
 			}else{
@@ -422,7 +450,9 @@ function entityEventHander(){
 						//$("#pageContainer1").find(".current").trigger('click');
 					},error: function(e) {
 						//self.entity=null;
-						toastr.error(e,"fail");
+						jqueryAlert({
+							'content' :e
+						})
 					}
 				});
 			}
@@ -448,9 +478,13 @@ function delEntryEntities(id){
 		contentType: "application/json",
 		data: {},
 		success: function () {
-
+            jqueryAlert({
+                'content' :'删除成功'
+            })
 		},error: function(e) {
-			//toastr.error(e,'fail');
+            jqueryAlert({
+                'content' :e
+            })
   	  	}
 	});
 }
@@ -678,7 +712,7 @@ function initEntities(entities){
         for(var i=0;i<entities.length;i++){
             html+='<li class="list-group-item ng-scope entity" id="'+entities[i].id+'"><a href="javascript:void(0)" class="name ng-binding">'+entities[i].name+'</a>';
             html+='<div class="ico-group right">';
-            html+='<a class="ico-item del-icon" style="display:none"  href="javascript:void(0)"><span class="fa fa-trash-o" entity_id="'+entities[i].id+'"></span></a>';
+            html+='<a class="ico-item del-icon" style="display:none;    margin-top: 8px;"  href="javascript:void(0)"><span class="fa fa-trash-o" entity_id="'+entities[i].id+'"></span></a>';
             html+='</div></li>';
         }
         $(".list-group").html(html);
@@ -695,10 +729,26 @@ function initEntities(entities){
             $(this).find(".del-icon").hide();
         });
 
-        $(".entity .glyphicon-trash").off('click').on('click',function(event) {
-            var id = $(this).attr("entity_id");
-            delEntity(id);
+        $(".entity .del-icon").off('click').on('click',function(event) {
+        	var $this = $(this);
             event.stopPropagation();
+            dialog = jqueryAlert({
+                'title'   : '提示',
+                'content' : '确定要删除吗？',
+                'modal'   : true,
+               	'width'     : '300px',
+               'height'     : '120px',
+                'buttons' :{
+                    '确定' : function(){
+                        var id =$this.find(".fa-trash-o").attr("entity_id");
+                        dialog.close();
+                        delEntity(id);
+                    },
+                    '取消' : function(){
+                        dialog.close();
+                    }
+                }
+            })
         });
 
 	}else {
@@ -726,7 +776,9 @@ function submitEntity(){
 		//data.id=$("#entity_id").val();
 		data.name=$("#entity-name").val();
 		if(data.name.length==0){
-			toastr.error('词库名称不能为空','fail');
+            jqueryAlert({
+                'content' :'词库名称不能为空'
+            })
 			return;
 		}
 	}else{
@@ -755,9 +807,12 @@ function submitEntity(){
 			data.agentId =agentId;
 			$.post(apiurl, data, function(){
 				toastr.success("保存成功",'ok');
+				location.reload();
 			})
 		}else{
-			toastr.error('请添加关键字','fail');
+            jqueryAlert({
+                'content' :'请添加关键字'
+            })
 		}
 	}else{
 		//对比name

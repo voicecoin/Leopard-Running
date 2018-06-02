@@ -36,7 +36,6 @@ body{
     top:0;
     z-index: 999;
     width:100%;
-    text-align: center;
 }
 .alert-content{
     font-size: 14px;
@@ -66,6 +65,8 @@ body{
     line-height: 35px;
     cursor: pointer;
     color:#222;
+    padding:0;
+    margin:0;
 }
 .alert-btn-p:hover{
     background: #eee;

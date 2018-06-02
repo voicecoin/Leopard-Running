@@ -224,7 +224,23 @@ function initIntents(){
             event.stopPropagation();
             //alert("glyphicon-trash");
             var id = $(this).find("span.fa-trash-o").attr("intent_id");
-            delEntity(id);
+            dialog = jqueryAlert({
+                'title'   : '提示',
+                'content' : '确定要删除吗？',
+                'modal'   : true,
+                'width'     : '300px',
+                'height'     : '120px',
+                'buttons' :{
+                    '确定' : function(){
+                        dialog.close();
+                        delEntity(id);
+                    },
+                    '取消' : function(){
+                        dialog.close();
+                    }
+                }
+            })
+
         });
 	}else{
 		html += '<div style="font-size:14px;line-height: 30px;">';
@@ -245,11 +261,17 @@ function delEntity(id){
         data: {},
         success: function () {
             toastr.success("删除成功",'ok');
-            initPage();
+            initIntents();
         },error: function(e) {
-            jqueryAlert({
-                'content' :e
-            })
+        	if(e && e.status == 200) {
+                jqueryAlert({
+                    'content' :e
+                })
+			}else{
+                jqueryAlert({
+                    'content' :'网络异常，请稍后再试。'
+                })
+			}
         }
     });
 }
