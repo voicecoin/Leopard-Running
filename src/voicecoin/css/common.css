@@ -102,8 +102,8 @@ body{
 }
 
 #canvas-bg .canvas-footer{
-    background-image: url('../img/common/features-bg.svg');
-    background-repeat: no-repeat;
+   /* background-image: url('../img/common/features-bg.svg');
+    background-repeat: no-repeat;*/
     background-size: 100% auto;
     background-size: cover;
     background-position: bottom;
@@ -124,6 +124,7 @@ body{
     overflow-scrolling: touch;
     overflow-y: auto;
     overflow-x: hidden;
+/*    max-height:90% !important;*/
 }
 
 .page-header{
