@@ -751,6 +751,14 @@ function initEntities(entities){
             })
         });
 
+        $('#search').unbind();
+
+        $('#search').bind('keyup', function(event) {
+            if (event.keyCode == "13") {
+                //回车执行查询
+                initPage();
+            }
+        });
 	}else {
         html += '<div style="font-size:14px;line-height: 30px;">';
         html += '<div><i class="fa  fa-gg-circle" style="font-size: 18px;margin: 0 5px 0 0;"></i>用户词库是用户定义的便于机器人识别的一系列关键词及它们的近义词，同时对关键词进行了分类，这个分类我们就叫“实体”。例如在一个“查询天气”的意图识别场景中，我们可以创建“温度”，“穿着”这些实体，温度这个实体下包含的关键词可能有：“冷”，“热”，“暖和”等；而穿着这个实体下可能包含：“外套”，“裙子”，“短袖”，“棉裤”等关键词。</div>';

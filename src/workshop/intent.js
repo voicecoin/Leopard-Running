@@ -7,6 +7,7 @@ var intentId=null;
 var showModel=1;
 
 
+
 function saveIntent(){
 	genIntentData();
 }
@@ -241,6 +242,14 @@ function initIntents(){
                 }
             })
 
+        });
+        $('#search').unbind();
+
+        $('#search').bind('keyup', function(event) {
+            if (event.keyCode == "13") {
+                //回车执行查询
+                initIntentsPage();
+            }
         });
 	}else{
 		html += '<div style="font-size:14px;line-height: 30px;">';
