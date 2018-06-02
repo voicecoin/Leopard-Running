@@ -426,7 +426,9 @@ function intentEventHandle(){
 			e.preventDefault();
 			//e.preventDefault();
 			if(v.length==0){
-				s_tip("请输入用户提问",'fail');
+                jqueryAlert({
+                    'content' :'请输入用户提问'
+                })
 				$(this).val("");
 			}else{
 				$.ajax({
@@ -888,8 +890,8 @@ function addUserSay(userSay){
 
 	 var datahtml='';
 	 var metaarray=[];
-	 if(userSay && userSay.data){
-         var data=userSay.data;
+	 if(userSay && userSay.data && userSay.data.data){
+         var data=userSay.data.data;
          for(var j=0;j<data.length;j++){
 
              datahtml+='<span';
