@@ -1162,18 +1162,19 @@ function genSpeechHTML(speech){
 function addSpeech(speech){
 	var speechhtml='';
 	speechhtml+='<div data-id="'+speech.id+'" data-intentResponseId="'+speech.intentResponseId+'" data-type="'+speech.type+'" data-platform="'+speech.platform+'" class="ub ub-ver messagediv" style="width:100%;height:auto;margin-bottom: -1px;">';
-	
-	for(var i=0;i<speech.speeches.length;i++){
-		
-		speechhtml+=genSpeechHTML(speech.speeches[i]);
-		/*speechhtml+='<div class="ub">';
-		speechhtml+='<div class="ub ub-ver ub-pc template-editor-holder speechdiv" contenteditable="" placeholder="输入机器人回复" data-distinguish="true" style="width:90%;">'+speech.speech[i]+'</div>';
-		speechhtml+='<div class="ub ub-ver ub-ac ub-pc" style="width:10%">';
-		speechhtml+='<a href="javascript:void(0)" class="ico-item no-result delspeech" style="display: inline;"><span class="fa fa-trash-o del_icon"></span></a>';
-		speechhtml+='</div>';
-		speechhtml+='</div>';*/
-	}
 
+	if(speech && speech.speeches && speech.speeches.length > 0 ){
+        for(var i=0;i<speech.speeches.length;i++){
+
+            speechhtml+=genSpeechHTML(speech.speeches[i]);
+            /*speechhtml+='<div class="ub">';
+            speechhtml+='<div class="ub ub-ver ub-pc template-editor-holder speechdiv" contenteditable="" placeholder="输入机器人回复" data-distinguish="true" style="width:90%;">'+speech.speech[i]+'</div>';
+            speechhtml+='<div class="ub ub-ver ub-ac ub-pc" style="width:10%">';
+            speechhtml+='<a href="javascript:void(0)" class="ico-item no-result delspeech" style="display: inline;"><span class="fa fa-trash-o del_icon"></span></a>';
+            speechhtml+='</div>';
+            speechhtml+='</div>';*/
+        }
+	}
 	speechhtml+='</div>';
     return speechhtml;
 }
