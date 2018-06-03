@@ -1335,6 +1335,9 @@ background-color:rgb(255, 205, 246)
 .accordion .card .card-body {
     padding: 0 20px 10px 20px;
 }
+#replytable .ub:hover > .ub> .no-result{
+    display: inline-block;
+}
 
 #tags_in_tagsinput span.tag,
 #tags_in_tagsinput span.tag:hover,

@@ -23,7 +23,7 @@ function calContanerHeight(){
     var $pageContainer = $("#page-container");
     var $pageHeader = $pageContainer.find('.page-header');
     var $pageBody = $pageContainer.find('.page-body');
-    var hg = winHg - $pageHeader.height() - 80;
+    var hg = winHg - $pageHeader.height() - 20;
     $pageContainer.css({"max-height":hg});
     if(winWd >= 700){
         $pageContainer.find('.dummy-tooltip').addClass('dummy-tooltip-540');

@@ -131,6 +131,7 @@ function genIntentData(){
     if (intentNow.id.length > 0) {
         $.put(host + '/v1/Intents/' + intentNow.id, intentNow).done(function (json) {
             toastr.success("场景已保存", "ok");
+            location.reload();
         }).fail(function (xhr, status, error) {
             jqueryAlert({
                 'content' :error
@@ -139,6 +140,7 @@ function genIntentData(){
     } else {
         $.post(host + '/v1/Intents/' + agentId, intentNow).done(function (json) {
             toastr.success("场景已保存", "ok");
+            location.reload();
         }).fail(function (xhr, status, error) {
             jqueryAlert({
                 'content' :error
@@ -1153,7 +1155,7 @@ function genSpeechHTML(speech){
 	var speechhtml='<div class="ub" style="margin-bottom: -1px;border: 1px solid rgb(221, 221, 221);-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;">';
 	speechhtml+='<div class="ub ub-ver ub-pc template-editor-holder speechdiv"  contenteditable="" placeholder="输入机器人回复" data-distinguish="true" style="width:90%;">'+speech+'</div>';
 	speechhtml+='<div class="ub ub-ver ub-ac ub-pc" style="width:10%">';
-	speechhtml+='<a href="javascript:void(0)" class="ico-item no-result delspeech" style="display: inline;"><span class="fa fa-trash-o del_icon"></span></a>';
+	speechhtml+='<a href="javascript:void(0)" class="ico-item no-result delspeech"><span class="fa fa-trash-o del_icon"></span></a>';
 	speechhtml+='</div>';
 	speechhtml+='</div>';
 	return speechhtml;
