@@ -441,8 +441,8 @@ function intentEventHandle(){
 						//toastr.success("保存成功",'ok');
 						//$(this).html('&nbsp;');
 						var userSay={};
-						userSay.id='';
-						userSay.data=json;
+						userSay=json;
+                        userSay.id='';
 						var userSaysHtml=addUserSay(userSay);
 						$(".usersaystable").append(userSaysHtml);
 						usersayEventHandler();
@@ -890,8 +890,8 @@ function addUserSay(userSay){
 
 	 var datahtml='';
 	 var metaarray=[];
-	 if(userSay && userSay.data && userSay.data.data){
-         var data=userSay.data.data;
+	 if(userSay && userSay.data){
+         var data=userSay.data;
          for(var j=0;j<data.length;j++){
 
              datahtml+='<span';
@@ -1033,12 +1033,15 @@ function initIntent(intent){
 	 $("#intent-name").val(intent.name);
 	 
 	 var tags_in_value='';
-	 for(var i=0;i<intent.contexts.length;i++){
-		 tags_in_value+=intent.contexts[i];
-		 if(i!=(intent.contexts.length-1)){
-			 tags_in_value+=',';
-		 }
+	 if(intent && intent.contexts && intent.contexts.length > 0){
+         for(var i=0;i<intent.contexts.length;i++){
+             tags_in_value+=intent.contexts[i];
+             if(i!=(intent.contexts.length-1)){
+                 tags_in_value+=',';
+             }
+         }
 	 }
+
 	 $('#tags_in').val(tags_in_value);
 	 $('#tags_in').tagsInput({width:'100%',defaultText:'添加输入状态',height:'auto',hide:false,autosize:true,leftNumHide:true});
 	 $('#tags_in').setEditModel(false);
