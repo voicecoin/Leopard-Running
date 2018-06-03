@@ -94,21 +94,22 @@
 
 					<div class="container h-100 justify-content-center align-items-center">
 						<div class=" pt-5 mt-3">
-							<div class="clearfix dashboard-list">
-								<!-- Card -->
-								<div class="card"  v-for="bot in bots">
+							<div class="row clearfix dashboard-list">
+								<div class="col-md-10 col-lg-6"  v-for="bot in bots">
+
+									<div class="card " >
 
 										<!-- Card content -->
 										<div class="card-body">
-									
+
 											<!-- Title -->
 											<h4 class="card-title">{{bot.name}}</h4>
 											<hr>
 											<!-- Text -->
-											<p class="card-text" style="height:50px;">{{bot.description}}</p>
+											<p class="card-text">{{bot.description}}</p>
 											<a :href="'/src/workshop/intent.html?agentId=' + bot.id" class="btn btn-primary">设计</a>
 										</div>
-									
+
 										<!-- Card footer -->
 										<div class="rounded-bottom mdb-color lighten-3 text-center pt-3">
 											<ul class="list-unstyled list-inline font-small">
@@ -116,28 +117,35 @@
 												<!--<li class="list-inline-item pr-2"><a href="#" class="white-text"><i class="fa fa-comments-o pr-1"></i>12</a></li>-->
 											</ul>
 										</div>
-									
-									</div>
-
-
-
-								<div class="card">
-
-									<!-- Card content -->
-									<div class="card-body">
-
-										<!-- Title -->
-										<h4 class="card-title" style="text-align: center;">创建机器人</h4>
-										<hr>
-										<!-- Text -->
-										<p class="card-text" style="height:140px; text-align: center;">
-											<button style="margin-top: 50px;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_bot">
-												立即创建
-											</button>
-										</p>
 
 									</div>
 
+
+
+
+								</div>
+								<!-- Card -->
+
+
+								<div class="col-md-10 col-lg-6">
+									<div class="card">
+
+										<!-- Card content -->
+										<div class="card-body">
+
+											<!-- Title -->
+											<h4 class="card-title" style="text-align: center;">创建机器人</h4>
+											<hr>
+											<!-- Text -->
+											<p class="card-text" style="height:140px; text-align: center;">
+												<button style="margin-top: 50px;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_bot">
+													立即创建
+												</button>
+											</p>
+
+										</div>
+
+									</div>
 								</div>
 
 

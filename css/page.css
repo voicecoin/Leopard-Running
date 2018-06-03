@@ -118,7 +118,6 @@
 
 /*dashboard-list*/
 .dashboard-list .card{
-	float:left;
-	width:48%;
-	margin:20px 20px 0 0;
+	margin:20px 0px 0 0;
+	min-height: 230px;
 }
