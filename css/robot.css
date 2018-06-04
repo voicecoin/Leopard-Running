@@ -131,7 +131,7 @@ body{background: url(../images/bg.png) repeat;background-size:100%;font-family: 
 
 
 /*ui閻ｅ矂娼�*/
-.ui_side{background:#f9f9f9 repeat;width:12%;height:900px;text-align: center;float:left;overflow: hidden;}
+.ui_side{background:#f9f9f9 repeat;width:12%;height:900px;text-align: center;float:left;}
 .ui_side_top{padding-top:15px;padding-bottom: 15px;}
 .ui_side_btm{width:200px;margin:0 auto;}
 /*.ui_side_btm_left{float: left;padding-right:15px;}
@@ -190,7 +190,37 @@ body{background: url(../images/bg.png) repeat;background-size:100%;font-family: 
 .ui_side_list_li_right a:hover{color:#4F4949;}
 /*.caret{margin-left:10px;}*/
 .ui_list1{margin-top:40px;}
-.dropdown{float: left;}
+.dropdown{
+    float: left;
+    cursor: pointer;
+}
+.dropdown .caret{
+    background: url("../images/common/icon-arrow-bottom.png") no-repeat;
+    display: inline-block;
+    width: 20px;
+    height: 15px;
+    background-size: 100%;
+    display: none;
+}
+.dropdown .dropdown-menu{
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    max-width: 300px;
+    padding:0;
+}
+.dropdown .dropdown-menu li{
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.dropdown .dropdown-menu li a{
+    display: block;
+    font-size: 12px;
+    line-height: 26px;
+    padding: 5px 10px;
+}
+.dropdown .dropdown-menu li a:hover{
+    background: #f9f9f9;
+}
 .ui_icon_right{float:right;padding-left:10px;}
 .ui_icon_right img{width:20px;height:20px;}
 .ui_btn{border:none;background-color: #F7F7F7;color:#808080;}
@@ -279,6 +309,7 @@ body{background: url(../images/bg.png) repeat;background-size:100%;font-family: 
     margin: 0;
     line-height: 1.42857143;
     height: 46px;
+    font-size:20px;
 }
 .top-panel .inner-header h1 .ico {
     font-size: inherit;

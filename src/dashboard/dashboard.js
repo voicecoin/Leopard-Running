@@ -20,6 +20,7 @@ $(document).ready(function () {
 
   $.get(host + '/v1/Agents/MyAgents', function(data) {
     vm.bots = data.items;
+    $("#showAddBoxEntry").show();
   });
 
   /*$.get("head.html", function(data) {

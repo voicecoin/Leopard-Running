@@ -427,12 +427,25 @@ function intentEventHandle(){
 		if(e.keyCode == 13){
 			e.preventDefault();
 			//e.preventDefault();
+            var repeat = checkUsersayRepeat(v);
+            if(repeat){
+                jqueryAlert({
+                    'content' :'提问内容已经存在'
+                })
+            	return false;
+			}
 			if(v.length==0){
                 jqueryAlert({
                     'content' :'请输入用户提问'
                 })
 				$(this).val("");
 			}else{
+				var isLoading = false;
+				if(isLoading) {
+					return false;
+				}
+                $(this).val("");
+                isLoading = true;
 				$.ajax({
 					url: host + '/v1/Intents/Markup?text='+v,
 					type: "GET",
@@ -440,6 +453,7 @@ function intentEventHandle(){
 					contentType: "application/json",
 					data: {},
 					success: function (json) {
+                        isLoading = false;
 						//toastr.success("保存成功",'ok');
 						//$(this).html('&nbsp;');
 						var userSay={};
@@ -450,6 +464,7 @@ function intentEventHandle(){
 						usersayEventHandler();
 						$("#addUserSay").val("");
 					},error: function(e) {
+                        isLoading = false;
 						//toastr(e,'fail');
 					}
 				});
@@ -461,6 +476,18 @@ function intentEventHandle(){
 	usersayEventHandler();
 	parameterEventHandler();
 	messageEventHandler();
+}
+
+function checkUsersayRepeat(text){
+	var repeat = false;
+	$("#collapseTwo .usersay").each(function () {
+		var $this = $(this);
+		var usersaytext = $this.find(".usersaytext > span").html();
+		if(text == usersaytext){
+            repeat = true;
+		}
+    });
+	return repeat;
 }
 
 function messageEventHandler(){

@@ -30,6 +30,7 @@ $(document).ready(function () {
     $.post('http://149.28.132.134:127/token', {username: $("#email").val(), password: $("#password").val()})
     .done(function (token) {
       localStorage.token = token;
+ //       setItems('token',token);
       window.location.href = '/src/dashboard/dashboard.html';
     }).fail(function (xhr, status, error) {
       toastr.error("邮箱或密码错误");

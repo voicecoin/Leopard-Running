@@ -68,10 +68,12 @@ var menuBots=[];
 
 function menuChangeBot(id,nowbotname){
     $("#nowbot").html(nowbotname);
+    console.dir(['dd']);
+    $("#botlistmenu").hide();
     for(var i=0;i<menuBots.length;i++){
     	if(menuBots[i].id==id){
     		menuBots[i].avatar='';
-    		$.cookie("currentBot",JSON.stringify(menuBots[i]),{"expires":1});
+ //   		$.cookie("currentBot",JSON.stringify(menuBots[i]),{"expires":1});
     		break;
     	}
     }
@@ -91,7 +93,7 @@ function loadBots(){
 	        	 $("#nowbot").html(robt.name);
 	         }
 	       }
-	       $("#botlistmenu").html(robts);
+	       $("#botlistmenu").html(robts).parent().find('.caret').css({"display":"inline-block"});
 		
 	});
 
@@ -116,11 +118,15 @@ function goIntegrations(){
 }
 
 function logoutLeft(){
-	$.get(host + '/v1/Account/Logout', null,function(json) {
+    deleteItem('token');
+    window.location.href = '/index.html';
+/*	$.get(host + '/v1/Account/Logout', null,function(json) {
     	window.location.href="login.html";
     	
-    });
+    });*/
 }
+
+goIndexPage();
 
 </script>
 
@@ -137,12 +143,12 @@ function logoutLeft(){
 				</div>
 				<div class="ui_side_list_li_right">
 					 <div class="dropdown">
-					  <button class="ui_btn" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+					  <button class="ui_btn"  type="button" id="dropdownMenu1">
 					    
-					    <span id="nowbot">我的机器人</span>
+					    <span id="nowbot"><!--我的机器人--></span>
 					    <span class="caret"></span>
 					  </button>
-					  <ul id="botlistmenu" class="dropdown-menu" aria-labelledby="dropdownMenu1">
+					  <ul id="botlistmenu" class="dropdown-menu">
 					   
 					  </ul>
 					</div>
@@ -244,3 +250,15 @@ function logoutLeft(){
 		</div>
   </div>
 	</div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+        showHideDropdownMenu1();
+	});
+	function showHideDropdownMenu1() {
+		var $dropdownMenu1 = $("#dropdownMenu1");
+        $dropdownMenu1.bind('click',function(){
+            $dropdownMenu1.next(".dropdown-menu").toggle();
+		});
+    }
+</script>

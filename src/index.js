@@ -24,12 +24,30 @@ $(document).ready(function () {
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(hm, s);
     })();
-
+    checkLogin();
     getUserInfo();
 
     //Animation init
     new WOW().init();
 });
+
+function goIndexPage(){
+    var token = getItems('token');
+    if(!token){
+        window.location.href = '/src/account/login.html';
+    }
+}
+
+function checkLogin(){
+    var token = getItems('token');
+    if(token){
+        $("#hasLogin").show();
+        $("#noHasLogin").hide();
+    }else {
+        $("#hasLogin").hide();
+        $("#noHasLogin").show();
+    }
+}
 
 function getUserInfo() {
     $.ajax({
@@ -119,3 +137,19 @@ jQuery.extend({
         return _ajax_request(url, data, callback, type, 'DELETE');
     }
 });
+
+//localStorage存值永久有效
+function setItems(name,item){
+    localStorage.setItem(name,JSON.stringify(item));
+}
+//localStorage取值
+function getItems(name){
+    var data = localStorage.getItem(name);
+    return data;
+}
+
+//localStorage删除指定键对应的值
+function deleteItem(name){
+    localStorage.removeItem(name);
+    console.log(localStorage.getItem(name));
+}
