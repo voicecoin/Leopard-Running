@@ -908,7 +908,7 @@ function addUserSay(userSay){
 	 }
 	 
 	 userSaysHtml+='<div class="ub ub-ver usersay" id="'+userSay.id+'">';
-	 userSaysHtml+='<div  class="ub" style="width:100%;min-height:40px;height:auto;margin-bottom: -1px; border: 1px solid rgb(221, 221, 221);border-radius: 5px;">';
+	 userSaysHtml+='<div  class="ub" style="width:100%;min-height:40px;height:auto;margin-bottom: -1px; border: 1px solid rgb(221, 221, 221);">';
 		 userSaysHtml+='<div class="ub ub-ver ub-ac ub-pc" style="width:10%">';
 		 userSaysHtml+='<i class="fa ng-scope fa-quote-right" style="color: #b7bbc4;"></i>';
 		 userSaysHtml+='</div>';
@@ -1080,7 +1080,7 @@ function initIntent(intent){
 	 }
 
 	 $('#tags_out').val(tags_out_value);
-	 $('#tags_out').tagsInput({width:'100%',defaultText:'配置上下文语境',height:'auto',hide:false,autosize:true,leftNumHide:false});
+	 $('#tags_out').tagsInput({width:'100%',defaultText:'添加输出状态',height:'auto',hide:false,autosize:true,leftNumHide:false});
 	 $('#tags_out').setEditModel(false);
 	 $('#tags_out').setEditModel(true);
 	 
@@ -1152,7 +1152,7 @@ function initIntent(intent){
 }
 
 function genSpeechHTML(speech){
-	var speechhtml='<div class="ub" style="margin-bottom: -1px;border: 1px solid rgb(221, 221, 221);-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;">';
+	var speechhtml='<div class="ub" style="margin-bottom: -1px;border: 1px solid rgb(221, 221, 221);">';
 	speechhtml+='<div class="ub ub-ver ub-pc template-editor-holder speechdiv"  contenteditable="" placeholder="输入机器人回复" data-distinguish="true" style="width:90%;">'+speech+'</div>';
 	speechhtml+='<div class="ub ub-ver ub-ac ub-pc" style="width:10%">';
 	speechhtml+='<a href="javascript:void(0)" class="ico-item no-result delspeech"><span class="fa fa-trash-o del_icon"></span></a>';
