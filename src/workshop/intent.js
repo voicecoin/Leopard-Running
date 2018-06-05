@@ -110,18 +110,23 @@ function genIntentData(){
 		var parameter={};
 		//parameter.isList=false;
 		parameter.id=$(this).attr('id');
-		if(parameter.id.indexOf('tmpparameter')>-1){
+		/*if(parameter.id.indexOf('tmpparameter')>-1){
 			parameter.id='';
-		}
+		}*/
 		parameter.name=$(this).find('.parameter-name:first').val();
 		if(parameter.name.length==0){
 			return true;
+		}
+		var promptsStr = $(this).find('.parameter-prompts').val();
+		var promptsAttr = [];
+		if(promptsStr){
+            promptsAttr = promptsStr.split(',');
 		}
 		parameter.dataType=$(this).find('.parameter-dataType').val();
 		parameter.value=$(this).find('.parameter-value').val();
 		//parameter.defaultValue='';
 		parameter.required=$(this).find('.parameter-required').is(':checked');
-		parameter.prompts=JSON.parse($(this).find('.parameter-prompts').val());
+		parameter.prompts=promptsAttr;
 		response.parameters.push(parameter);
 	});
 
@@ -134,7 +139,7 @@ function genIntentData(){
             location.reload();
         }).fail(function (xhr, status, error) {
             jqueryAlert({
-                'content' :error
+                'content' :'网络异常，请稍后重试'
             })
         });
     } else {
@@ -143,7 +148,7 @@ function genIntentData(){
             location.reload();
         }).fail(function (xhr, status, error) {
             jqueryAlert({
-                'content' :error
+                'content' :'网络异常，请稍后重试'
             })
         });
     }
@@ -539,15 +544,15 @@ function parameterEventHandler(){
 		var parameterdataType=parent.find(".parameter-dataType:first").val();
 		var parametervalue=parent.find(".parameter-value:first").val();
 		var parameterprompts=parent.find(".parameter-prompts:first").val();
-		if(parameterprompts.length==0){
+		/*if(parameterprompts.length==0){
 			parameterprompts=[];
-		}
+		}*/
 		var parameterid=parent.attr("id");
 		nowParameterPrompts.id=parameterid;
 		nowParameterPrompts.parametername=parametername;
 		nowParameterPrompts.parameterdataType=parameterdataType;
 		nowParameterPrompts.parametervalue=parametervalue;
-		nowParameterPrompts.parameterprompts=JSON.parse(parameterprompts);
+		nowParameterPrompts.parameterprompts=parameterprompts;
 		initParameterPrompts();
 	});
 	
@@ -559,7 +564,7 @@ function parameterEventHandler(){
 		 $(this).find('.iconcontainer').addClass("uhide");
 	});
 	$(".delparameter-prompts").off("click").on('click',function(){
-		 $(this).parent().parent().find('.parameter-prompts:first').val('[]');
+		 $(this).parent().parent().find('.parameter-prompts:first').val('');
 	});
 	
 	
@@ -595,13 +600,18 @@ function initParameterPrompts(){
 	$("#prompt-datatype").val(nowParameterPrompts.parameterdataType);
 	$("#prompt-value").html(nowParameterPrompts.parametervalue);
 	var html='';
-	for(var i=0;i<nowParameterPrompts.parameterprompts.length;i++){
+	var parameterpromptsStr = nowParameterPrompts.parameterprompts;
+	var parameterprompts = [];
+	if(parameterpromptsStr){
+        parameterprompts = parameterpromptsStr.split(',');
+	}
+	for(var i=0;i<parameterprompts.length;i++){
 		html+='<div class="prompt-row">';
 		html+='<div class="prompt-cell prompt-cell-first">';
 		html+=(i+1);
 		html+='</div>';
 		html+='<div class="prompt-cell prompt-cell-second">';
-		html+='<div class="borderless" contenteditable="true" onkeydown="enter_parameter_prompt(this,event)" onkeyup="create_parameter_prompt(this,event)" placeholder="输入提示语句…">'+nowParameterPrompts.parameterprompts[i]+'</div>';
+		html+='<div class="borderless" contenteditable="true" onkeydown="enter_parameter_prompt(this,event)" onkeyup="create_parameter_prompt(this,event)" placeholder="输入提示语句…">'+parameterprompts[i]+'</div>';
 		html+='</div>';
 		html+='<div class="prompt-cell prompt-cell-actions">';
 		html+='<a href="javascript:void(0)" class="ico-item" style="display: none;"><span class="fa fa-trash-o ui-sortable-handle"></span></a>';
@@ -639,16 +649,20 @@ function initParameterPrompts(){
             //保存强制参数为空时，回复提醒
             var _prompt_param = $(".default-window-box .prompt-cell-second").find(".borderless");
             var tmpprompts = [];
+            var tmppromptsHtml = '';
             $.each(_prompt_param, function(m, n) {
                 if ($(n).html() != "") {
                 	tmpprompts.push($(n).html());
+                    tmppromptsHtml += $(n).html() + ',';
                 }
             });
             
             if (tmpprompts.length > 0) {
-            	$("#"+nowParameterPrompts.id).find(".parameter-prompts:first").val(JSON.stringify(tmpprompts));
+                tmppromptsHtml = tmppromptsHtml.substr(0,tmppromptsHtml.length - 1);
+            	//$("#"+nowParameterPrompts.id).find(".parameter-prompts:first").val(JSON.stringify(tmpprompts));
+                $("#"+nowParameterPrompts.id).find(".parameter-prompts:first").val(tmppromptsHtml);
             } else {
-            	$("#"+nowParameterPrompts.id).find(".parameter-prompts:first").val("[]");
+            	$("#"+nowParameterPrompts.id).find(".parameter-prompts:first").val("");
             }
         }
     	$("#default-window-box").hide();
@@ -682,7 +696,7 @@ function create_parameter_prompt(obj, event, type) {
 	var e = event || window.event;
 	if($.trim($(obj).html()) != ""){
 
-		var sum = $("#intent-param-prompts-editor .prompt-row").size();
+		var sum = $("#intent-param-prompts-editor .prompt-row").length;
 		
 		if($(obj).parents(".prompt-row").index()+1 == sum){
 			create_empty_prompt();
@@ -703,7 +717,7 @@ function enter_parameter_prompt(obj,event,type){
 	}
 }
 function resetNumber(obj){
-    var len = obj.find(".prompt-row").size();
+    var len = obj.find(".prompt-row").length;
     for(var i =0;i<len;i++){
         obj.find(".prompt-row").eq(i).find(".prompt-cell-first").html(i+1);
     }
@@ -996,7 +1010,7 @@ function genParameter(parameter){
 		 //parameter.isList=false;
 		 parameter.name='';
 		 parameter.dataType='';
-		 parameter.value=[];
+		 parameter.value='';
 		 //parameter.defaultValue='';
 		 parameter.required=true;
 		 parameter.prompts=[];
@@ -1038,8 +1052,17 @@ function genParameter(parameter){
 	 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc ppdiv" style="width:16%">';
 	 
 	 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc" style="width:80%">';
-	 var showprompts=JSON.stringify(parameter.prompts==null?"[]":parameter.prompts);
-	 parametersHtml+="<input type='text' class='parameter-prompts' value='"+showprompts+"' placeholder='添加提示...'>";
+	 var showprompts= '';//JSON.stringify(parameter.prompts==null?"":parameter.prompts);
+	if(parameter.prompts && parameter.prompts.length > 0){
+		for (var i =0;i < parameter.prompts.length;i++){
+			if(i == parameter.prompts.length - 1){
+                showprompts += parameter.prompts[i];
+			}else {
+                showprompts += parameter.prompts[i] + ',';
+			}
+		}
+	}
+	 parametersHtml+="<input type='text' class='parameter-prompts' value='"+showprompts+"' placeholder='添加提示...' readonly>";
 	 parametersHtml+='</div>';
 	 
 	 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc iconcontainer uhide" style="width:20%;">';

@@ -95,7 +95,7 @@ function loadEntity(id){
 		entity.entries=[{id:'',value:'',synonyms:[]},{id:'',value:'',synonyms:[]},{id:'',value:'',synonyms:[]},{id:'',value:'',synonyms:[]},{id:'',value:'',synonyms:[]}];
 		initEntity(entity);
 	}else{
-         $("#save_btn").hide();   
+       /*  $("#save_btn").hide();   */
 		 var self=this;
 	      $.ajax({
 	    	  url: host + '/v1/Entities/'+id,
@@ -607,7 +607,7 @@ function addEntry(entry,idIndex){
 	
 	
 	
-	html+='<div id="entry_'+idIndex+'" data-id="'+entry.id+'" class="ub entry" style="min-height: 40px;height:auto;margin-bottom: -1px;border: 1px solid #ddd;">';
+	html+='<div id="entry_'+idIndex+'" data-id="'+entry.id+'" class="ub entry" style="min-height:55px;height:55px;margin-bottom: -1px;border: 1px solid #ddd;">';
 	
 	
 	
@@ -779,8 +779,8 @@ function submitEntity(){
 	var data={};
 	var apiurl="";
 	data.id=$("#entity_id").val();
+    apiurl=host + '/v1/Entities/'+agentId;
 	if($("#entity_id").val().length==0){
-		apiurl=host + '/v1/Entities/'+agentId;
 		//data.id=$("#entity_id").val();
 		data.name=$("#entity-name").val();
 		if(data.name.length==0){
@@ -809,26 +809,30 @@ function submitEntity(){
 		}
     });
 	//新增
-	if($("#entity_id").val().length==0){
+//	if($("#entity_id").val().length==0){
 		if(data.entries.length>0)
 		{
 			data.agentId =agentId;
 			$.post(apiurl, data, function(){
 				toastr.success("保存成功",'ok');
 				location.reload();
-			})
+            }).fail(function (xhr, status, error) {
+                jqueryAlert({
+                    'content' :'网络异常，请稍后重试'
+                })
+            });
 		}else{
             jqueryAlert({
                 'content' :'请添加关键字'
             })
 		}
-	}else{
+//	}else{
 		//对比name
 
 		//对比同义词checkBox
 
 		//如果同义词有继续对比是否有修改的条目
-	}
+//	}
 
 	
 }

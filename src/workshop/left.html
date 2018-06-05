@@ -70,6 +70,7 @@ function menuChangeBot(id,nowbotname){
     $("#nowbot").html(nowbotname);
     console.dir(['dd']);
     $("#botlistmenu").hide();
+//    window.location.href = '/src/workshop/entities.html?agentId='+id;
     for(var i=0;i<menuBots.length;i++){
     	if(menuBots[i].id==id){
     		menuBots[i].avatar='';

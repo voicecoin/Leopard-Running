@@ -848,6 +848,10 @@ a.prompts-edit-label{
     -o-transform: scale(1);
     transform: scale(1);
 }
+.default-window-box .inner-container .default-modal-body{
+    max-height: 350px;
+    overflow: auto;
+}
 .default-modal-header{
 	padding: 20px 32px;
     background: #f8f8f8;
@@ -869,6 +873,7 @@ a.prompts-edit-label{
 }
 .params-modal-head{
 	color: #9399a6;
+    display:none;
 }
 .params-attribute-cell {
     width: 33.3%;
@@ -918,6 +923,7 @@ a.prompts-edit-label{
 .params-modal-attributes{
 	border-bottom: 1px solid #9399a6;
 	padding-bottom: 20px;
+    display:none;
 }
 .text-container{
     margin: 15px 0;
@@ -1007,8 +1013,8 @@ a.prompts-edit-label{
 	display: block;
 	width: 100%;
 	padding: 0 16px;
-	height: 40px;
-	line-height: 40px;
+	height: 30px;
+	line-height: 30px;
 }
 .menu-list{
 	padding: 8px 0;
@@ -1018,8 +1024,8 @@ a.prompts-edit-label{
 }
 .menu-list li a{
 	display: block;
-	height: 48px;
-	line-height: 48px;
+	height: 30px;
+	line-height: 30px;
 	padding: 0 16px;
 }
 .menu-list li a:hover,.select-head .selected-content:hover{
@@ -1057,6 +1063,9 @@ a.prompts-edit-label{
 }
 .prompt-table .prompt-row {
    display: table-row;
+}
+.prompt-table .prompt-row:first-child .prompt-cell-actions a{
+    display: none !important;
 }
 .prompt-table .prompt-cell.prompt-cell-first {
     width: 40px;
@@ -1097,6 +1106,9 @@ a.prompts-edit-label{
 .prompt-table .prompt-row .prompt-cell-actions {
     width: 54px;
     padding-right: 10px;
+}
+.prompt-table .prompt-row .prompt-cell-actions a.ico-item{
+    display:none !important;
 }
 .flaticon.stroke.trash:before{
     content: "\e480";
@@ -1391,4 +1403,20 @@ input.parameter-value{
 
 .list-group-item .ico-item span.fa-trash-o{
     margin-top:13px;
+}
+
+
+.checkbox-single > label{
+    display:none;
+}
+.checkbox-single > input.parameter-required{
+    position: relative;
+    left:0;
+    top:0;
+    opacity: 1;
+    visibility: visible;
+}
+
+.parameter-prompts{
+    width:100%;
 }

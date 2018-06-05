@@ -24,7 +24,6 @@ $(document).ready(function () {
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(hm, s);
     })();
-    checkLogin();
     getUserInfo();
 
     //Animation init
@@ -60,8 +59,15 @@ function getUserInfo() {
             if(response && response.userName){
                 $("#loginUserNameDisplay").html(response.userName).attr('userId',response.id);
             }
+            checkLogin();
            console.dir([response]);
         },error: function(e) {
+            if(e.status == 401){
+                deleteItem('token');
+                $("#hasLogin").hide();
+                $("#noHasLogin").show();
+                console.dir([e]);
+            }
         }
     });
 }
