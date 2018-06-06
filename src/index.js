@@ -3,7 +3,6 @@ var host = 'http://149.28.132.134:128';
 //var host = 'http://localhost:128';
 
 $(document).ready(function () {
-
     $.ajaxSetup({
         processData: false,
         dataType: "json",
@@ -158,4 +157,52 @@ function getItems(name){
 function deleteItem(name){
     localStorage.removeItem(name);
     console.log(localStorage.getItem(name));
+}
+
+function showHideBotDialog() {
+    var $dialog_bot_switch = $("#dialog-bot-switch");
+    var $dialog_bot = $("#dialog-bot");
+    if(!$dialog_bot_switch.hasClass('open')){
+        $dialog_bot_switch.addClass('open');
+        $dialog_bot.fadeIn();
+    }else{
+        $dialog_bot_switch.removeClass('open');
+        $dialog_bot.fadeOut();
+    }
+}
+
+function urlPara (v){
+    var url = window.location.search;
+    if (url.indexOf(v) != -1){
+        var start = url.indexOf(v)+v.length;
+        var end = url.indexOf('&',start) == -1 ? url.length : url.indexOf('&',start);
+        return url.substring(start,end);
+    } else { return '';}
+}
+
+function queryByAgentId() {
+    var agentId = urlPara ('agentId=');
+    var url = host + '/v1/Conversation/'+agentId;
+    $.ajax({
+        type: 'get',
+        url: url,
+        data: {},
+        success: function ( response ) {
+            var conversationId = response;
+            var $dialog_bot = $("#dialog-bot");
+            var $iframe = $dialog_bot.find('iframe');
+            var src = '../voicecoin/index.html?conversationId='+conversationId+'&token='+localStorage.token;
+            console.dir([$iframe]);
+            $iframe.attr('src',src);
+        },
+        timeout: 15000,
+        error: function ( response ) {
+
+        }
+    })
+}
+
+function reloadIframe(){
+    var agentId = urlPara ('agentId=');
+    queryByAgentId();
 }

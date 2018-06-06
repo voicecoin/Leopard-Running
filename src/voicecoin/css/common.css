@@ -125,6 +125,9 @@ body{
     overflow-y: auto;
     overflow-x: hidden;
 /*    max-height:90% !important;*/
+    max-height: 340px !important;
+    overflow: auto;
+    overflow-x: hidden;
 }
 
 .page-header{
@@ -393,12 +396,19 @@ body{
     font-size: 12px;
     text-align: right;
     margin-top: 5px;
+    display: none;
 }
 .dummy-tooltip.dummy-tooltip-540 .press-enter-tip{
     font-size:14px;
 }
+.dummy-tooltip .search{
+    position: fixed;
+    bottom:5px;
+    left:0;
+    width: 94%;
+}
 
-/*loading*/
+    /*loading*/
 .load-container {
     width: 70px;
     height: 28px;

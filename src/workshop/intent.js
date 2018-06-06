@@ -1250,6 +1250,7 @@ $(document).ready(function(){
 function loadRight(){
 	$.get("/src/workshop/bottest.html", function(data) {
         $('.ui_right').html(data);
+        reloadIframe();
     }, "html");
 }
 

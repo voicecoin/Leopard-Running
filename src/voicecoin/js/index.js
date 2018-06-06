@@ -1,4 +1,5 @@
-var sesstionId = '';
+var conversationId = '';
+var baseUrl = 'http://149.28.132.134:128';
 $(document).ready(function(){
     initPageFontSize();
     setAnimation();
@@ -46,7 +47,12 @@ function setAnimation(){
         monitorInput();
     },200);
 }
+function sendEvent(){
+    conversationId = urlPara ('conversationId=');
+    sendApi();
+}
 function sendApi(){
+    var token = urlPara ('token=');
     var $myQuestionInput = $("#my-question-input");
     var $dummyPois = $("#dummy-pois");
     var myQuestionInput = $myQuestionInput.val();
@@ -54,24 +60,27 @@ function sendApi(){
         var rightHtml = buildRightTooltipHtml(myQuestionInput,'');
         $dummyPois.append(rightHtml);
         $myQuestionInput.val('');
-
         $dummyPois.parent().find('.load-container').remove();
         var loadingHtml = buildLoadingHtml();
         $dummyPois.append(loadingHtml);
-        if(!sesstionId){
-            sesstionId = new Date().getTime();
-        }
-        var url = 'http://149.28.132.134:128/v1/Conversation/'+sesstionId+'/50dbb57981654aa1a6bbf24f612f207f?text='+myQuestionInput;
+
+        var url = baseUrl + '/v1/Conversation/'+conversationId+'/Test?text='+myQuestionInput;
         scrollToEnd();
         $.ajax({
             type: 'get',
+            headers: {
+                Accept: "application/json; charset=utf-8",
+                Authorization: "bearer " + token
+            },
             url: url,
             data: {},
             success: function ( response ) {
-                $dummyPois.parent().find('.load-container').remove();
-                var answerContent = response;
-                var answerHtml = buildLeftTooltipHtml(answerContent,'');
-                $dummyPois.append(answerHtml);
+                if(response && response.fulfillmentText){
+                    $dummyPois.parent().find('.load-container').remove();
+                    var answerContent = response.fulfillmentText;
+                    var answerHtml = buildLeftTooltipHtml(answerContent,'');
+                    $dummyPois.append(answerHtml);
+                }
                 scrollToEnd();
             },
             timeout: 15000,
@@ -81,11 +90,13 @@ function sendApi(){
         })
     }
 }
+
+
 function monitorInput(){
     var $myQuestionInput = $("#my-question-input");
     $myQuestionInput.bind('keyup', function(event) {
         if (event.keyCode == "13") {
-            sendApi();
+            sendEvent();
         }
     }).bind('focus',function(event){
         scrollToEnd();
@@ -121,8 +132,8 @@ function buildRightTooltipHtml(content,animate){//bounceInRight
 function buildQuestionInputHtml() {
     var html = '';
     html += '<div class="clrfix search d7">\n' +
-        '  <input type="text" class="my-question-input" id="my-question-input" placeholder="在这里输入..." />\n' +
-        ' <button type="submit" onclick="sendApi();"></button>           </div>';
+        '  <input type="text" autocomplete="false" class="my-question-input" id="my-question-input" placeholder="在这里输入..." />\n' +
+        ' <button type="submit" onclick="sendEvent();"></button>           </div>';
     html += '<div class="clrfix press-enter-tip">按回车键发送</div>';
     return html;
 }
@@ -133,4 +144,13 @@ function buildLoadingHtml(){
         '                <div class="loader">Loading...</div>\n' +
         '            </div>';
     return html;
+}
+
+function urlPara (v){
+    var url = window.location.search;
+    if (url.indexOf(v) != -1){
+        var start = url.indexOf(v)+v.length;
+        var end = url.indexOf('&',start) == -1 ? url.length : url.indexOf('&',start);
+        return url.substring(start,end);
+    } else { return '';}
 }

@@ -131,9 +131,16 @@ body{background: url(../images/bg.png) repeat;background-size:100%;font-family: 
 
 
 /*ui閻ｅ矂娼�*/
-.ui_side{background:#f9f9f9 repeat;width:12%;height:900px;text-align: center;float:left;}
-.ui_side_top{padding-top:15px;padding-bottom: 15px;}
-.ui_side_btm{width:200px;margin:0 auto;}
+.ui_side{background:#f9f9f9 repeat;width:180px;text-align: center;float:left;
+    position: fixed;
+    left:0;
+    top:0;
+    height:100%;
+    z-index: 1;
+    border-right: 1px solid #eee;
+}
+.ui_side_top{/*padding-top:15px;*/padding-bottom: 15px;}
+.ui_side_btm{margin:0 auto;}
 /*.ui_side_btm_left{float: left;padding-right:15px;}
 .ui_side_btm_right{text-align: left;color:#808080;font-size: 15px;line-height: 2.6;}
 .ui_side_btm_right_p1{padding-top:5px;}
@@ -142,7 +149,7 @@ body{background: url(../images/bg.png) repeat;background-size:100%;font-family: 
 .ui_side_btm_right_p2{padding-top:55px;}
 .ui_side_btm_right_p3{padding-top:52px;}*/
 
-.ui_mid{width:60%;height:900px;float:left;}
+.ui_mid{/*width:80%;float:left;*/    margin-left: 170px; padding-bottom: 80px;}
 .ui_mid_main{width:95%;height:100%;margin:0 auto;padding-top:40px;color:#808080;}
 .ui_mid_main img{padding-right:10px;}
 .ui_mid_01{padding-bottom:20px;height:50px;}
@@ -167,8 +174,8 @@ body{background: url(../images/bg.png) repeat;background-size:100%;font-family: 
 .ui_div{width:100%;height:40px;background-color:#1698F3;margin-top:210px;color:#ffffff;font-size:16px;line-height:40px;text-align: center;}
 .ui_div span{padding-right:35px;padding-left:15px;}
 
-.ui_right{width:28%;float:right;height:700px;}
-.ui_right_main{width:90%;height:100%;margin:0 auto;padding-top:30px;text-align: center;}
+.ui_right{}
+.ui_right_main{height:100%;margin:0 auto;text-align: center;}
 .ui_right_top{height:40px;border-bottom:2px solid #EDEEF0;}
 .ui_right_top span{color:#000000;font-size:16px;}
 .ui_right_mid{padding-top:15px;text-align: left;}
@@ -193,6 +200,9 @@ body{background: url(../images/bg.png) repeat;background-size:100%;font-family: 
 .dropdown{
     float: left;
     cursor: pointer;
+}
+.dropdown button{
+    background: none;
 }
 .dropdown .caret{
     background: url("../images/common/icon-arrow-bottom.png") no-repeat;
@@ -963,3 +973,87 @@ img {
  .tmpui_right_btm{
  	position: relative;bottom:0px
  }
+
+
+ #dialog-bot{
+     position: fixed;
+     bottom: 100px;
+     right: 30px;
+     background: #566473;
+     border-radius: 5px;
+     overflow: hidden;
+     z-index: 9;
+     display: none;
+ }
+#dialog-bot .ui_right_top{
+    height: 60px;
+    border-bottom:none;
+    background: #1d52f0;
+    color: #fff;
+    padding:0 20px;
+    line-height: 60px;
+    text-align: left;
+}
+#dialog-bot .ui_right_top span{
+    color: #fff;
+}
+#dialog-bot .ui_right_main{
+    width:100%;
+    padding-top:0;
+}
+#dialog-bot .ui_launch{
+    margin-right: 5px;
+}
+.dialog-bot-switch{
+    box-shadow: 0 6px 6px 0 rgba(0,0,0,.2);
+    background: #1d52f0;
+    border-radius: 50%;
+    cursor: pointer;
+    height: 60px;
+    position: fixed;
+    width: 60px;
+    bottom: 20px;
+    right:30px;
+    z-index: 99;
+}
+.dialog-bot-switch span{
+    background: #fff;
+    background-clip: padding-box;
+    border-radius: 50%;
+    display: block;
+    height: 6px;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    margin-top: -3px;
+    margin-left: -3px;
+    transition: margin .13s ease-out .23s,opacity .13s ease-out .23s,transform .13s ease-out,background .14s linear;
+    width: 6px;
+}
+.dialog-bot-switch span.dot-01{
+    margin-left: -16px;
+ }
+.dialog-bot-switch span.dot-03{
+    margin-left:10px;
+}
+
+.dialog-bot-switch.open span{
+    border-radius: 0;
+    height: 3px;
+    transition: margin .16s ease-out,opacity .16s ease-out,transform .16s cubic-bezier(.175,.885,.485,1.19) .26s,background .14s linear;
+    width: 28px;
+}
+.dialog-bot-switch.open span.dot-01{
+    margin-top: -2px;
+    transform: rotate(-45deg) scale(.95);
+    margin-left: -14px;
+}
+.dialog-bot-switch.open span.dot-02{
+    display: none;
+
+}
+.dialog-bot-switch.open span.dot-03{
+    margin-top: -2px;
+    transform: rotate(45deg) scale(.95);
+    margin-left: -14px;
+}
