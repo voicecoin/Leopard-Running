@@ -124,7 +124,7 @@ function genIntentData(){
 		}
 		parameter.dataType=$(this).find('.parameter-dataType').val();
 		parameter.value=$(this).find('.parameter-value').val();
-		//parameter.defaultValue='';
+        parameter.defaultValue=$(this).find('.parameter-default-value').val();
 		parameter.required=$(this).find('.parameter-required').is(':checked');
 		parameter.prompts=promptsAttr;
 		response.parameters.push(parameter);
@@ -1011,6 +1011,7 @@ function genParameter(parameter){
 		 parameter.name='';
 		 parameter.dataType='';
 		 parameter.value='';
+		 parameter.defaultValue = '';
 		 //parameter.defaultValue='';
 		 parameter.required=true;
 		 parameter.prompts=[];
@@ -1043,6 +1044,10 @@ function genParameter(parameter){
 	 parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc" style="width:16%">';
 	 parametersHtml+='<input type="text" class="parameter-value" value="'+parameter.value+'" placeholder="添加参取值...">';
 	 parametersHtml+='</div>';
+
+    parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc" style="width:16%">';
+    parametersHtml+='<input type="text" class="parameter-default-value" value="'+parameter.defaultValue+'" placeholder="添加默认值...">';
+    parametersHtml+='</div>';
 	 
 	 
 	 //parametersHtml+='<div class="ub ub-f1 ub-ac ub-pc" style="width:16%">';
