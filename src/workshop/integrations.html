@@ -66,7 +66,7 @@ $(document).ready(function () {
 function loadRight(){
 	$.get("bottest.html", function(data) {
         $('.ui_right').html(data);
-        reloadIframe();
+        reloadIframe(agentId);
     });
 }
 

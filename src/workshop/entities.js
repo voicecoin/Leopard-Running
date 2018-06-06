@@ -840,7 +840,7 @@ function submitEntity(){
 function loadRight(){
 	$.get("bottest.html", function(data) {
         $('.ui_right').html(data);
-        reloadIframe();
+        reloadIframe(agentId);
     }, 'html');
 }
 function loadLeft(){

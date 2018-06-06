@@ -180,8 +180,8 @@ function urlPara (v){
     } else { return '';}
 }
 
-function queryByAgentId() {
-    var agentId = urlPara ('agentId=');
+function queryByAgentId(agentId) {
+    var agentId = agentId;//urlPara ('agentId=');
     var url = host + '/v1/Conversation/'+agentId;
     $.ajax({
         type: 'get',
@@ -202,7 +202,6 @@ function queryByAgentId() {
     })
 }
 
-function reloadIframe(){
-    var agentId = urlPara ('agentId=');
-    queryByAgentId();
+function reloadIframe(agentId){
+    queryByAgentId(agentId);
 }

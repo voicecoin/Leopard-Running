@@ -69,7 +69,7 @@ h4, .h4 {
     function loadRight(){
     	$.get("bottest.html", function(data) {
             $('.ui_right').html(data);
-            reloadIframe();
+            reloadIframe(agentId);
         });
     }
     
