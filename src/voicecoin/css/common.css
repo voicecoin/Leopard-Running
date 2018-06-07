@@ -335,8 +335,8 @@ body{
     float: right;
 }
 .d7 input {
-   /* width: 120px;*/
-    width:88%;
+   width: 240px;
+   /* width:88%;*/
     height: 42px;
     padding-left: 15px;
     border-radius: 5px;
@@ -359,8 +359,8 @@ body{
 }
 
 .d7 input:focus {
-    width:88%;
-    border:2px solid #ee0076;
+    /*width:88%;*/
+    border:2px solid #1d52f0;
 }
 
 
@@ -405,7 +405,26 @@ body{
     position: fixed;
     bottom:5px;
     left:0;
-    width: 94%;
+    width: 340px;
+}
+.dummy-tooltip .search img{
+    height: 48px;
+    border-radius: 5px;
+    position: absolute;
+    left: 10px;
+    cursor: pointer;
+}
+.dummy-tooltip .search .img-animate{
+    display: none;
+}
+.dummy-tooltip .search.on-speaking .img-mic{
+    display: none;
+}
+.dummy-tooltip .search.on-speaking .img-animate{
+    display: block;
+}
+.dummy-tooltip .search input{
+    width:258px;
 }
 
     /*loading*/

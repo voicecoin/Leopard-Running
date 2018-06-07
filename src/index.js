@@ -191,6 +191,7 @@ function queryByAgentId(agentId) {
             var conversationId = response;
             var $dialog_bot = $("#dialog-bot");
             var $iframe = $dialog_bot.find('iframe');
+            $dialog_bot.attr('agentId',agentId);
             var src = '../voicecoin/index.html?conversationId='+conversationId+'&token='+localStorage.token;
             console.dir([$iframe]);
             $iframe.attr('src',src);

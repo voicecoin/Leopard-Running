@@ -75,7 +75,9 @@ function bottestdiaolog(){
 }
 
 function cleanDialog(){
-	$("#testcontent").html('');
+    var $dialog_bot = $("#dialog-bot");
+    var agentId = $dialog_bot.attr('agentId');
+    reloadIframe(agentId);
 }
 </script>
 
@@ -88,9 +90,9 @@ function cleanDialog(){
 				<img id="dialog_img" class="ui_launch" style="border:none;" src="/src/voicecoin/img/common/logo2.png" />
 			</a>
 			<span>会话测试</span>
-			<!--<a href="javascript:void(0);" onclick="cleanDialog();">
-				<img style="border:none;" id="ui_11"  src="/images/ui_11_b.jpg" />
-			</a>-->
+			<a href="javascript:void(0);" onclick="cleanDialog();" style="float: right;">
+				<img style="border:none;" id="ui_11"  src="/images/ui_11_b.jpg" title="会话重置" />
+			</a>
 		</div>
 
 		<iframe src="" style="height:400px;width:350px;border:none;" scrolling="0"></iframe>
