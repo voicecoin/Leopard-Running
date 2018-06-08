@@ -129,21 +129,21 @@ function buildRightTooltipHtml(content,animate){//bounceInRight
     return html;
 }
 
-function showSpeaking(obj) {
-    var $obj = $(obj);
-    $obj.parent().addClass('on-speaking');
+function showSpeaking() {
+    var $obj = $("#search-input-question");
+    $obj.addClass('on-speaking');
 }
-function hideSpeaking(obj) {
-    var $obj = $(obj);
-    $obj.parent().removeClass('on-speaking');
+function hideSpeaking() {
+    var $obj = $("#search-input-question");
+    obj.removeClass('on-speaking');
 }
 
 function buildQuestionInputHtml() {
     var html = '';
-    html += '<div class="clrfix search d7">';
+    html += '<div class="clrfix search d7" id="search-input-question">';
 //    html += '<button id="start_button" onclick="startButton(event)" style="display: inline-block;"><img alt="Start" id="start_img" src="img/common/mic.gif"></button>';
-    html += '<img src="img/common/mic.gif" onclick="showSpeaking(this);startButton(event);" class="img-mic"/>';
-    html += '<img src="img/common/mic-animate.gif" onclick="hideSpeaking(this);startButton(event);" class="img-animate"/>';
+    html += '<img src="img/common/mic.gif" onclick="showSpeaking();startButton();" class="img-mic"/>';
+    html += '<img src="img/common/mic-animate.gif" onclick="hideSpeaking();startButton();" class="img-animate"/>';
     html += '<input type="text" autocomplete="false" class="my-question-input" id="my-question-input" placeholder="在这里输入..." />';
     html += '<button type="submit" onclick="sendEvent();"></button></div>';
     html += '<div class="clrfix press-enter-tip">按回车键发送</div>';

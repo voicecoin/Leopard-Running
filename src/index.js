@@ -1,8 +1,8 @@
 var userHost = 'http://149.28.132.134:127';
 var host = 'http://149.28.132.134:128';
-if(location.hostname == 'localhost') {
+/*if(location.hostname == 'localhost') {
     host = 'http://localhost:128';
-}
+}*/
 
 $(document).ready(function () {
     $.ajaxSetup({

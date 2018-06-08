@@ -211,6 +211,9 @@
             $my_question_input.val(final_transcript);
             if(final_transcript.length > 0) {
                 console.log(final_transcript);
+				sendEvent();
+				hideSpeaking();
+				startButton();
                 // add send message and clear input box
             }
             
@@ -248,7 +251,7 @@
         recognition.start();
  //       recognition.onstart();
         ignore_onend = false;
-        start_timestamp = event.timeStamp;
+ //       start_timestamp = event.timeStamp;
     }
     function showInfo(s) {
         /*if (s) {
