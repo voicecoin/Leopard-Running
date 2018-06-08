@@ -135,7 +135,7 @@ function showSpeaking() {
 }
 function hideSpeaking() {
     var $obj = $("#search-input-question");
-    obj.removeClass('on-speaking');
+    $obj.removeClass('on-speaking');
 }
 
 function buildQuestionInputHtml() {
