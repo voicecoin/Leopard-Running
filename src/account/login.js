@@ -1,6 +1,5 @@
 $(document).ready(function () {
-  
-  //enrollValidate('#formReg');
+//  enrollValidate('#formReg');
 
   $("#loginbtn").click(function(){
     login();
@@ -27,15 +26,39 @@ $(document).ready(function () {
   });
   
   function login(){
-    $.post('http://149.28.132.134:127/token', {username: $("#email").val(), password: $("#password").val()})
+    var $email = $("#email");
+    var email = $email.val();
+    var $password = $("#password");
+    var password = $password.val();
+      if(!email){
+          jqueryAlert({
+              'content' :'请输入注册邮箱'
+          })
+          return false;
+      }
+      if(!password){
+          jqueryAlert({
+              'content' :'请输入密码'
+          })
+          return false;
+      }
+      var data = {
+          username: email,
+          password: password
+      };
+    $.post('http://149.28.132.134:127/token', data)
     .done(function (token) {
       localStorage.token = token;
  //       setItems('token',token);
       window.location.href = '/src/dashboard/dashboard.html';
     }).fail(function (xhr, status, error) {
-      toastr.error("邮箱或密码错误");
+        jqueryAlert({
+            'content' :'邮箱或密码错误'
+        })
     });
   }
+
+
   
   function enrollValidate(id){
     $(id).bootstrapValidator({

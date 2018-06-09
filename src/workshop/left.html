@@ -129,6 +129,22 @@ function logoutLeft(){
 }
 
 goIndexPage();
+$("body").click(function(e){
+    console.dir([e]);
+    var $ui_a1 = $(e.target).parentsUntil('#ui_a1').parent();
+
+    var is = false;
+    if($ui_a1.length > 0){
+        for(var i = 0;i < $ui_a1.length;i++){
+			if($ui_a1[i].id == 'ui_a1'){
+                is = true;
+			}
+		}
+	}
+	if(!is){
+        $("#botlistmenu").hide();
+	}
+});
 
 </script>
 

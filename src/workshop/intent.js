@@ -136,7 +136,8 @@ function genIntentData(){
     if (intentNow.id.length > 0) {
         $.put(host + '/v1/Intents/' + intentNow.id, intentNow).done(function (json) {
             toastr.success("场景已保存", "ok");
-            location.reload();
+ //           location.reload();
+            goIntent();
         }).fail(function (xhr, status, error) {
             jqueryAlert({
                 'content' :'网络异常，请稍后重试'
@@ -145,7 +146,8 @@ function genIntentData(){
     } else {
         $.post(host + '/v1/Intents/' + agentId, intentNow).done(function (json) {
             toastr.success("场景已保存", "ok");
-            location.reload();
+      //      location.reload();
+            goIntent();
         }).fail(function (xhr, status, error) {
             jqueryAlert({
                 'content' :'网络异常，请稍后重试'
@@ -564,7 +566,8 @@ function parameterEventHandler(){
 		 $(this).find('.iconcontainer').addClass("uhide");
 	});
 	$(".delparameter-prompts").off("click").on('click',function(){
-		 $(this).parent().parent().find('.parameter-prompts:first').val('');
+//		 $(this).parent().parent().find('.parameter-prompts:first').val('');
+        $(this).parent().parent().parent().remove();
 	});
 	
 	
@@ -890,6 +893,39 @@ function showIntent(id){
     }, "html"); 
 }
 
+function showExpendPanel(intent){
+	var $collapseOne = $("#collapseOne");
+    var $collapseTwo = $("#collapseTwo");
+    var $collapseThree = $("#collapseThree");
+    var $collapseFour = $("#collapseFour");
+
+    var $headingOne = $("#headingOne");
+    var $headingTwo = $("#headingTwo");
+    var $headingThree = $("#headingThree");
+    var $headingFour = $("#headingFour");
+    if(intent){
+        var responses = intent.responses;
+        var response = responses[0];
+        if(intent.contexts.length > 0 ||  response.affectedContexts.length > 0 ) {
+            $collapseOne.addClass('show');
+            $headingOne.children('a').removeClass('collapsed');
+        }
+        if( intent.userSays.length > 0){
+            $collapseTwo.addClass('show');
+            $headingTwo.children('a').removeClass('collapsed');
+        }
+        if(response.action ||  response.parameters.length > 0){
+            $collapseThree.addClass('show');
+            $headingThree.children('a').removeClass('collapsed');
+        }
+        if( response.messages.length > 0){
+            $collapseFour.addClass('show');
+            $headingFour.children('a').removeClass('collapsed');
+		}
+	}
+
+}
+
 function loadIntent(id){
 	//alert(id);
 	if(id==null || id.length==0){
@@ -907,6 +943,7 @@ function loadIntent(id){
 			data: {},
 			success: function(json) {
 				self.intent=json;
+                showExpendPanel(self.intent);
 				initIntent(self.intent);
 				intentEventHandle();
 			},error: function(e) {

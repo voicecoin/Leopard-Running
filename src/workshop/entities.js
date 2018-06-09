@@ -68,7 +68,7 @@ function delEntityEntriesFromCache(id){
 
 function initEntititesPage(id){
 	if(id!=null && id.length>0){
-		$("#pageContainer1").show();
+//		$("#pageContainer1").show();
 		var url=host + "/v1/EntityEntries/"+id+"/Query";
 		$("#pageContainer1").zPager({
 			url:url,
@@ -144,6 +144,9 @@ function initEntity(entity){
 	 if(entity.entries!=null && entity.entries !== undefined && entity.entries.length>0){
 		for(var i=0;i<entity.entries.length;i++){
 			addEntry(entity.entries[i],i);
+			if(i != 0){
+                totalIndex+=1;
+			}
 		}
 		entityEventHander();
 	 }
@@ -288,10 +291,21 @@ function entityEventHander(){
 			$("#synonyms-data").val("1");
 			$(".alert-operation-tip").show();
 			//operare_entity._fnShowStyle();
+            $("#entity-editor .entry").each(function () {
+                var $tags = $(this).children().eq(2).children('.tags');
+                $tags.show().removeAttr('disabled');
+           	 	var $tagsinput = $(this).children().eq(2).children('.tagsinput');
+                $tagsinput.hide();
+            });
 		}else{
 			$("#synonyms-data").val("0");
 			$(".alert-operation-tip").hide();
 			//$(".entry-value-input").removeAttr("readonly");
+            $("#entity-editor .entry").each(function () {
+                $(this).children().eq(2).children('.tags').hide().attr('disabled',true);
+                var $tagsinput = $(this).children().eq(2).children('.tagsinput');
+                $tagsinput.hide();
+            });
 		}
 		if(entity.id.length>0){
 			var newsynony=($("#synonyms-data").val()==1);
@@ -312,7 +326,7 @@ function entityEventHander(){
 						toastr.success('已同步','ok');
 					},error: function(e) {
                         jqueryAlert({
-                            'content' :e
+                            'content' :'网络异常，请稍后重试'
                         })
 					}
 				});
@@ -342,7 +356,10 @@ function entityEventHander(){
 	$("#entity-editor").off('click','.entry').on('click','.entry',function(){
 		//如果是新建的
 		$("#entity-editor").find(".entry").each(function(){
-			$('#tags_'+$(this).attr('id').replace('entry_','')).setEditModel(false);
+			var $input = $('#tags_'+$(this).attr('id').replace('entry_',''));
+			if(!$input.attr('disabled')){
+                $input.setEditModel(false);
+            }
 	    });
 		var id=$(this).attr('id');
 		//alert(id);
@@ -351,7 +368,9 @@ function entityEventHander(){
 		if($("#synonyms-data").val()==1){
 			$('#'+tag_id).setEditModel(true);
 		}else{
-			$('#'+tag_id).setEditModel(false);
+            if(!$('#'+tag_id).attr('disabled')){
+                $('#'+tag_id).setEditModel(false);
+            }
 		}
 		
 		if($(this).find('.entryname:first').val().length==0){
@@ -364,7 +383,11 @@ function entityEventHander(){
 	$(".entryname").off('focusout').on('focusout',function(){
 		if($(this).val().length>0 && $("#synonyms-data").val()==1){
 			var entityId=$(this).parent().parent().attr('id');
-			$('#tags_'+entityId.replace('entry_','')).importTags($(this).val());
+			var $tagsEntry = $('#tags_'+entityId.replace('entry_',''));
+			var tagsEntry = $tagsEntry.val();
+			if(!tagsEntry){
+                $('#tags_'+entityId.replace('entry_','')).importTags($(this).val());
+			}
 		}
 	});
 	
@@ -394,7 +417,7 @@ function entityEventHander(){
 	$("#entity-editor .del_icon").off('click').on('click',function(){
 		console.log('data-id'+$(this).parent().parent().parent().attr('data-id'));
 		$(this).parent().parent().parent().remove();
-		delEntryEntities($(this).parent().parent().parent().attr('data-id'));
+//		delEntryEntities($(this).parent().parent().parent().attr('data-id'));
 	});
 
 	//新增或修改条目
@@ -571,7 +594,7 @@ function updateSynonyms(){
 			console.log("id="+id);
 			$("#"+id).importTags('');
 			$("#"+id).setEditModel(false);
-			$(this).attr('disabled', true);
+			$(this).hide().attr('disabled', true);
 		 });
 	}
 }
@@ -586,6 +609,7 @@ function addRow(){
 	totalIndex+=1;
 	addEntry(tmpEntry,totalIndex);
 	entityEventHander();
+    updateSynonyms();
 }
 
 /**

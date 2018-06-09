@@ -12,6 +12,7 @@
     <link href="/libs/bootstrap/bootstrap.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
 		<link href="/libs/mdb/mdb.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/src/js/alert/alert.css" />
     <link href="/css/page.css" rel="stylesheet">
 
     <style type="text/css">
@@ -139,7 +140,7 @@
 												<div class="col-xl-5 col-lg-6 col-md-10 col-sm-12 mx-auto mt-lg-5">
 
 														<!--Form with header-->
-														<div class="card wow fadeIn" data-wow-delay="0.3s">
+														<div class="card wow fadeIn" data-wow-delay="0.3s" id="formReg">
 																<div class="card-body">
 
 																		<!--Header-->
@@ -169,7 +170,7 @@
 																		</div>
 
 																		<div class="text-center">
-																				<button class="btn pink-gradient btn-lg">注 册</button>
+																				<button class="btn pink-gradient btn-lg" onclick="saveRegForm();">注 册</button>
 																		</div>
 
 																</div>
@@ -251,7 +252,7 @@
 
     <!-- JQuery -->
     <script type="text/javascript" src="/libs/jquery/jquery-3.3.1.js"></script>
-
+    <script type="text/javascript" src="/src/js/alert/alert.js"></script>
     <!-- Bootstrap tooltips -->
     <script type="text/javascript" src="/libs/popper/popper.js"></script>
 
@@ -274,6 +275,72 @@
                 $(this).hide();
                 $("#orangeForm-pass").show().attr('readonly', false).focus();
             })
+
+        }
+        var isSaving = false;
+        function saveRegForm() {
+            var $formReg = $("#formReg");
+            var $orangeForm_name = $("#orangeForm-name");
+            var $orangeForm_email = $("#orangeForm-email");
+            var $orangeForm_pass = $("#orangeForm-pass");
+            var orangeForm_name = $orangeForm_name.val();
+            var orangeForm_email = $orangeForm_email.val();
+            var orangeForm_pass = $orangeForm_pass.val();
+            var reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
+            if(!orangeForm_name){
+                jqueryAlert({
+                    'content' :'请输入用户昵称'
+                })
+                return false;
+            }
+            if(!orangeForm_email){
+                jqueryAlert({
+                    'content' :'请输入注册邮箱'
+                })
+                return false;
+            }else if(!reg.test(orangeForm_email)){
+                jqueryAlert({
+                    'content' :'注册邮箱格式不正确'
+                })
+                return false;
+            }
+
+            if(!orangeForm_pass){
+                jqueryAlert({
+                    'content' :'请输入密码'
+                })
+                return false;
+            }else if(orangeForm_pass.length < 6){
+                jqueryAlert({
+                    'content' :'密码至少6位字符'
+                })
+                return false;
+            }
+
+            var param = {
+                "fullName": orangeForm_name,
+                "email": orangeForm_email,
+                "password": orangeForm_pass,
+                "invitationCode": "string"
+            }
+            var url = 'http://149.28.132.134:127/Account';
+            if(isSaving){
+                return false;
+            }
+            isSaving = true;
+           $.post(url, JSON.stringify(param))
+                .done(function (token) {
+                    isSaving = false;
+                    console.dir([token]);
+                    localStorage.token = token;
+                    //       setItems('token',token);
+                    window.location.href = '/src/dashboard/dashboard.html';
+                }).fail(function (xhr, status, error) {
+                    isSaving = false;
+                    jqueryAlert({
+                        'content' :'网络异常，请稍后重试'
+                    })
+            });
 
         }
     </script>

@@ -568,8 +568,8 @@ a:active,a:hover,a:link,a:visited {
 .alert-operation-tip {
     display: none;
     margin: 0 0 30px;
-    color: #fff;
-    background: #9399a6;
+    /*color: #fff;
+    background: #9399a6;*/
 }
 .alert-operation-tip .close {
     display: inline-block;
