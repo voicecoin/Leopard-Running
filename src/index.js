@@ -194,7 +194,8 @@ function queryByAgentId(agentId) {
             var $dialog_bot = $("#dialog-bot");
             var $iframe = $dialog_bot.find('iframe');
             $dialog_bot.attr('agentId',agentId);
-            var src = '../voicecoin/index.html?conversationId='+conversationId+'&token='+localStorage.token;
+            var language = urlPara ('language=');
+            var src = '../voicecoin/index.html?conversationId='+conversationId+'&token='+localStorage.token+'&language='+language;
             console.dir([$iframe]);
             $iframe.attr('src',src);
         },

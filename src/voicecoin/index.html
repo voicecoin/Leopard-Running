@@ -240,6 +240,11 @@
     }
 
     function startButton(event) {
+        var lang = 'cmn-Hans-CN';
+        var language = urlPara ('language=');
+        if(language == 'en'){
+            lang = 'en-US';
+        }
         if (recognizing) {
             recognition.stop();
             recognizing = false;
@@ -247,7 +252,7 @@
         }
         recognizing = true;
         final_transcript = '';
-        recognition.lang = 'cmn-Hans-CN';//select_dialect.value;
+        recognition.lang = lang;//select_dialect.value;
         recognition.start();
  //       recognition.onstart();
         ignore_onend = false;
