@@ -799,66 +799,55 @@ function initEntities(entities){
 }
 
 function submitEntity(){
-	//alert('submitEntity');
-	var data={};
-	var apiurl="";
-	data.id=$("#entity_id").val();
-    apiurl=host + '/v1/Entities/'+agentId;
-	if($("#entity_id").val().length==0){
-		//data.id=$("#entity_id").val();
-		data.name=$("#entity-name").val();
-		if(data.name.length==0){
-            jqueryAlert({
-                'content' :'词库名称不能为空'
-            })
-			return;
-		}
-	}else{
-		data.entityId=$("#entity_id").val();
-	}
 
-	data.entries=[];
-    data.isEnum = ($("#synonyms-data").val() == 1) ? "False" : "True";
-	$("#entity-editor").find(".entry").each(function(){
-		var entry={};
-		var t=$(this).find(".entryname:first").val();
-		if(t.length>0){
-			entry.value=t;
-			entry.synonyms=[];
+	var data = {
+		id: $("#entity_id").val(),
+		name: $("#entity-name").val(),
+		entries: [],
+		isEnum: $("#synonyms-data").val() != 1,
+		agentId: agentId
+	};
+
+	$("#entity-editor").find(".entry").each(function() {
+		var entry = {};
+		var t = $(this).find(".entryname:first").val();
+		if(t.length > 0) {
+			entry.value = t;
+			entry.synonyms = [];
 			
-			if($("#synonyms-data").val()==1){
-				entry.synonyms=$(this).find(".tags:first").val().split(',');
+			if($("#synonyms-data").val() == 1) {
+				entry.synonyms = $(this).find(".tags:first").val().split(',');
 			}
+
 			data.entries.push(entry);
 		}
-    });
-	//新增
-//	if($("#entity_id").val().length==0){
-		if(data.entries.length>0)
-		{
-			data.agentId =agentId;
-			$.post(apiurl, data, function(){
-				toastr.success("保存成功",'ok');
-				location.reload();
-            }).fail(function (xhr, status, error) {
-                jqueryAlert({
-                    'content' :'网络异常，请稍后重试'
-                })
-            });
-		}else{
-            jqueryAlert({
-                'content' :'请添加关键字'
-            })
-		}
-//	}else{
-		//对比name
-
-		//对比同义词checkBox
-
-		//如果同义词有继续对比是否有修改的条目
-//	}
-
+	});
 	
+	if(data.entries.length == 0) {
+		return jqueryAlert({
+			'content' :'请添加关键字'
+		});
+	}
+
+	if(data.name.length==0){
+		return jqueryAlert({
+				'content' :'词库名称不能为空'
+		});
+	}
+
+	if($("#entity_id").val().length==0) {
+		//新增
+		var apiurl = host + '/v1/Entities/' + agentId;
+		$.post(apiurl, data, function(){
+			toastr.success("创建成功",'ok');
+		});
+	} else {
+		//修改
+		var apiurl = host + '/v1/Entities/' + data.id;
+		$.put(apiurl, data, function(){
+			toastr.success("保存成功",'ok');
+		});
+	}
 }
 
 function loadRight(){
