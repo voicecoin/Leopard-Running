@@ -1,5 +1,5 @@
 var conversationId = '';
-var baseUrl = 'http://149.28.132.134:128';
+var baseUrl = 'https://api.yaya.ai';
 $(document).ready(function(){
     initPageFontSize();
     setAnimation();

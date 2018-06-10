@@ -1,5 +1,5 @@
-var userHost = 'http://149.28.132.134:127';
-var host = 'http://149.28.132.134:128';
+var userHost = 'https://om.yaya.ai';
+var host = 'https://api.yaya.ai';
 //host = 'http://localhost:128';
 
 

@@ -1,5 +1,4 @@
-var host = 'http://149.28.132.134:127';
-//var host = 'http://localhost:127';
+var host = 'https://om.yaya.ai';
 
 $(document).ready(function(){
 
