@@ -823,22 +823,36 @@ function submitEntity(){
 			data.entries.push(entry);
 		}
     });
+
+    if(data.entries.length == 0) {
+        return jqueryAlert({
+            'content' :'请添加关键字'
+        });
+    }
+
+    if(data.name.length==0){
+        return jqueryAlert({
+            'content' :'词库名称不能为空'
+        });
+    }
+
+    if(isSaving){
+        jqueryAlert({
+            'content' :'请不要重复提交'
+        })
+        return false;
+    }
+    isSaving = true;
+/*    jqueryAlert({
+        'content' :'保存中...'
+    })*/
+
 	//新增
-//	if($("#entity_id").val().length==0){
+	if($("#entity_id").val().length==0){
 		if(data.entries.length>0)
 		{
 			data.agentId =agentId;
 
-			if(isSaving){
-                jqueryAlert({
-                    'content' :'请不要重复提交'
-                })
-				return false;
-			}
-            isSaving = true;
-            jqueryAlert({
-                'content' :'保存中...'
-            })
 			$.post(apiurl, data, function(){
                 isSaving = false;
 				toastr.success("保存成功",'ok');
@@ -854,37 +868,31 @@ function submitEntity(){
                 'content' :'请添加关键字'
             })
 		}
-//	}else{
-		//对比name
+	}else{//编辑词库
+        //修改
+        var apiurl = host + '/v1/Entities/' + data.id;
+        $.put(apiurl, data, function(){
+            isSaving = false;
+            toastr.success("保存成功",'ok');
+        }).fail(function (xhr, status, error) {
+            isSaving = false;
+            jqueryAlert({
+                'content' :'网络异常，请稍后重试'
+            })
+        });
 
-		//对比同义词checkBox
-	});
+        /*if($("#entity_id").val().length==0) {
+            //新增
+            var apiurl = host + '/v1/Entities/' + agentId;
+            $.post(apiurl, data, function(){
+                toastr.success("创建成功",'ok');
+            });
+        } else {
+
+        }*/
+	};
 	
-	if(data.entries.length == 0) {
-		return jqueryAlert({
-			'content' :'请添加关键字'
-		});
-	}
 
-	if(data.name.length==0){
-		return jqueryAlert({
-				'content' :'词库名称不能为空'
-		});
-	}
-
-	if($("#entity_id").val().length==0) {
-		//新增
-		var apiurl = host + '/v1/Entities/' + agentId;
-		$.post(apiurl, data, function(){
-			toastr.success("创建成功",'ok');
-		});
-	} else {
-		//修改
-		var apiurl = host + '/v1/Entities/' + data.id;
-		$.put(apiurl, data, function(){
-			toastr.success("保存成功",'ok');
-		});
-	}
 }
 
 function loadRight(){
