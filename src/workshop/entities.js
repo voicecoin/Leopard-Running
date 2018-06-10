@@ -307,6 +307,7 @@ function entityEventHander(){
                 $tagsinput.hide();
             });
 		}
+		return false;//不用实时同步
 		if(entity.id.length>0){
 			var newsynony=($("#synonyms-data").val()==1);
 			//if(newsynony!=entity.isEnum){
@@ -677,7 +678,7 @@ function showList(){
 
 
 
-function initPage(){
+function initPage(isSearch){
 	var key=$("#search").val();
 	if(agentId!=null){
 		var url=host + "/v1/Entities/"+agentId+"/Query";
@@ -689,7 +690,7 @@ function initPage(){
 			htmlBox: $('.list-group'),
 			btnShow: false,
 			dataRender: function(data){
-				initEntities(data);
+				initEntities(data,isSearch);
 		    }
 		});
 	}
@@ -730,9 +731,9 @@ function startSearch(){
 	initPage();
 }
 
-function initEntities(entities){
+function initEntities(entities,isSearch){
 	var html='';
-	if(entities && entities.length > 0){
+	if(isSearch || (entities && entities.length > 0)){
         for(var i=0;i<entities.length;i++){
             html+='<li class="list-group-item ng-scope entity" id="'+entities[i].id+'"><a href="javascript:void(0)" class="name ng-binding">'+entities[i].name+'</a>';
             html+='<div class="ico-group right">';
@@ -778,10 +779,10 @@ function initEntities(entities){
         $('#search').unbind();
 
         $('#search').bind('keyup', function(event) {
-            if (event.keyCode == "13") {
+            //if (event.keyCode == "13") {
                 //回车执行查询
-                initPage();
-            }
+                initPage(true);
+           // }
         });
 	}else {
         html += '<div style="font-size:14px;line-height: 30px;">';
@@ -797,7 +798,7 @@ function initEntities(entities){
 
 
 }
-
+var isSaving = false;
 function submitEntity(){
 	//alert('submitEntity');
 	var data={};
@@ -837,10 +838,23 @@ function submitEntity(){
 		if(data.entries.length>0)
 		{
 			data.agentId =agentId;
+
+			if(isSaving){
+                jqueryAlert({
+                    'content' :'请不要重复提交'
+                })
+				return false;
+			}
+            isSaving = true;
+            jqueryAlert({
+                'content' :'保存中...'
+            })
 			$.post(apiurl, data, function(){
+                isSaving = false;
 				toastr.success("保存成功",'ok');
 				location.reload();
             }).fail(function (xhr, status, error) {
+                isSaving = false;
                 jqueryAlert({
                     'content' :'网络异常，请稍后重试'
                 })

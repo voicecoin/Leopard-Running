@@ -11,7 +11,7 @@ var showModel=1;
 function saveIntent(){
 	genIntentData();
 }
-
+var isSaving = false;
 function genIntentData(){
 	var $intentName = $("#intent-name");
 	var intentName = $intentName.val();
@@ -132,23 +132,36 @@ function genIntentData(){
 
 	intentNow.responses.push(response);
 	console.dir(intentNow);
-
+    if(isSaving){
+        jqueryAlert({
+            'content' :'请不要重复提交'
+        })
+        return false;
+    }
+    isSaving = true;
+    jqueryAlert({
+        'content' :'保存中...'
+    })
     if (intentNow.id.length > 0) {
         $.put(host + '/v1/Intents/' + intentNow.id, intentNow).done(function (json) {
+            isSaving = false;
             toastr.success("场景已保存", "ok");
  //           location.reload();
             goIntent();
         }).fail(function (xhr, status, error) {
+            isSaving = false;
             jqueryAlert({
                 'content' :'网络异常，请稍后重试'
             })
         });
     } else {
         $.post(host + '/v1/Intents/' + agentId, intentNow).done(function (json) {
+            isSaving = false;
             toastr.success("场景已保存", "ok");
       //      location.reload();
             goIntent();
         }).fail(function (xhr, status, error) {
+            isSaving = false;
             jqueryAlert({
                 'content' :'网络异常，请稍后重试'
             })
@@ -184,7 +197,7 @@ function loadIntents(){
 	initIntentsPage();
 }
 
-function initIntentsPage(){
+function initIntentsPage(isSearch){
 	var key=$("#search").val();
 	if(agentId!=null){
 		$("#createIntent").off('click').on('click',function(){
@@ -201,15 +214,15 @@ function initIntentsPage(){
 			btnShow: false,
 			dataRender: function(data){
 				intents=data;
-				initIntents();
+				initIntents(isSearch);
 			}
 		});
 	}
 }
 
-function initIntents(){
+function initIntents(isSearch){
 	var html='';
-	if(intents && intents.length > 0){
+	if(isSearch || (intents && intents.length > 0)){
         for(var i=0;i<intents.length;i++){
             html+='<li class="list-group-item ng-scope intent" id="'+intents[i].id+'"><a href="javascript:void(0)" class="name ng-binding">'+intents[i].name+'</a>';
             html+='<div class="ico-group right">';
@@ -255,10 +268,10 @@ function initIntents(){
         $('#search').unbind();
 
         $('#search').bind('keyup', function(event) {
-            if (event.keyCode == "13") {
+            //if (event.keyCode == "13") {
                 //回车执行查询
-                initIntentsPage();
-            }
+                initIntentsPage(true);
+            //}
         });
 	}else{
 		html += '<div style="font-size:14px;line-height: 30px;">';
