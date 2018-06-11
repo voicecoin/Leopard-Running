@@ -180,16 +180,20 @@ function urlPara (v){
         return url.substring(start,end);
     } else { return '';}
 }
-
-function queryByAgentId(agentId) {
+var conversationId = '';
+function queryByAgentId(agentI, isReset) {
     var agentId = agentId;//urlPara ('agentId=');
     var url = host + '/v1/Conversation/'+agentId;
+    if(isReset){
+        url = host + '/v1/Conversation/'+conversationId+'/reset';
+
+    }
     $.ajax({
         type: 'get',
         url: url,
         data: {},
         success: function ( response ) {
-            var conversationId = response;
+            conversationId = response;
             var $dialog_bot = $("#dialog-bot");
             var $iframe = $dialog_bot.find('iframe');
             $dialog_bot.attr('agentId',agentId);
@@ -205,6 +209,6 @@ function queryByAgentId(agentId) {
     })
 }
 
-function reloadIframe(agentId){
-    queryByAgentId(agentId);
+function reloadIframe(agentId , isReset){
+    queryByAgentId(agentId, isReset);
 }
