@@ -182,8 +182,8 @@ function urlPara (v){
 }
 var conversationId = '';
 function queryByAgentId(agentI, isReset) {
-    var agentId = agentId;//urlPara ('agentId=');
-    var url = host + '/v1/Conversation/'+agentId;
+    var agentId = urlPara ('agentId=');
+    var url = host + '/v1/Conversation/'+agentId + '/start';
     if(isReset){
         url = host + '/v1/Conversation/'+conversationId+'/reset';
 

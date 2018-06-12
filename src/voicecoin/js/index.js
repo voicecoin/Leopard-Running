@@ -1,5 +1,7 @@
 var conversationId = '';
 var baseUrl = 'https://api.yaya.ai';
+//baseUrl = 'http://localhost:128';
+
 $(document).ready(function(){
     initPageFontSize();
     setAnimation();
