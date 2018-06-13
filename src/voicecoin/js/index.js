@@ -1,6 +1,6 @@
 var conversationId = '';
-var baseUrl = 'https://api.yaya.ai';
-//baseUrl = 'http://localhost:128';
+var baseUrl = 'http://api.yaya.ai';
+//baseUrl = 'http://149.28.132.134:128';
 
 $(document).ready(function(){
     initPageFontSize();

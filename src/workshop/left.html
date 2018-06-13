@@ -103,7 +103,11 @@ function loadBots(){
 
 function goIntent(){
 
-	  window.location.href='intent.html?agentId='+agentId;
+    window.location.href='intent.html?agentId='+agentId;
+}
+
+function goSettingPage(){
+    window.location.href='setting.html?agentId='+agentId;
 }
 
 function goEntity(){
@@ -171,6 +175,9 @@ $("body").click(function(e){
 					  </ul>
 					</div>
 				</div>
+				<a href="javascript:;" onclick="goSettingPage();" style="margin-top: 12px;float: right;">
+					<i class="fa fa-gear"></i>
+				</a>
 			</div>
 		</div>
 		<div class="ui_side_list">

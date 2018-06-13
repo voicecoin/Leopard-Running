@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="renderer" content="webkit|ie-comp|ie-stand">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <meta name="description" content="最简易的聊天机器人设计及协作平台，十分钟轻松制作我的聊天机器人！集成深度神经网络、知识图谱和自然语言处理的超强技术!" />
+  <title>会话意图设置</title>
+  <link rel="stylesheet" type="text/css" href="/libs/bootstrap/bootstrap.css" >
+  <link rel="stylesheet" type="text/css" href="/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="/src/js/alert/alert.css" />
+  <link rel="stylesheet" type="text/css" href="/css/robot.css">
+  <link rel="stylesheet" type="text/css" href="/css/ui-box.css" />
+  <link rel="stylesheet" type="text/css" href="/css/ui-base.css" />
+  <link rel="stylesheet" type="text/css" href="/css/jquery.tagsinput.css" />
+  <link rel="stylesheet" type="text/css" href="/css/awesome-bootstrap-checkbox.css" />
+    <link href="/libs/layui/css/layui.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="/css/page.css" />
+  <link rel="stylesheet" type="text/css" href="/libs/jquery-ui/jquery-ui.css" >
+  <link rel="stylesheet" type="text/css" href="/css/scrollstyle.css" >
+  <link rel="stylesheet" type="text/css" href="/src/workshop/intent.css" />
+    <style type="text/css">
+        .pills-secondary .nav-link.active {
+            background-color: #4285f4!important;
+        }
+    </style>
+</head>
+
+<body style="background:#ffffff;height:auto;width:100%;">
+<div  style="width:100%;height:auto;">
+<div id="leftmenu" class="ui_side" >
+
+</div>
+
+<div class="ui_mid">
+
+
+    <ul class="nav md-pills nav-justified pills-secondary">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#panel11" role="tab">基本信息</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#panel12" role="tab">机器学习配置</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#panel13" role="tab">导入和导出</a>
+        </li>
+    </ul>
+
+    <!-- Tab panels -->
+    <div class="tab-content">
+
+        <!--Panel 1-->
+        <div class="tab-pane fade in show active" id="panel11" role="tabpanel">
+
+
+            <!-- Default input name -->
+            <!--<label for="bot-name">机器人名称</label>-->
+            <input type="text" id="name" class="form-control form-control-sm" placeholder="机器人名称" autocomplete="false">
+
+            <br>
+
+            <!-- Default textarea message -->
+            <textarea type="text" id="description" class="md-textarea form-control" placeholder="简单描述机器人，便于其他人理解" autocomplete="false"></textarea>
+
+            <br>
+
+            <label for="birthday">生日</label>
+            <input type="text" id="birthday" class="form-control form-control-sm datepicker" autocomplete="false" >
+
+            <br>
+            <label for="language">语言</label>
+            <!--<input type="text" id="bot-lang" class="form-control form-control-sm" autocomplete="false">-->
+            <select id="language" name="language" class="form-control" style="display: block !important;">
+                <option value="zh" selected="">简体中文</option>
+                <option value="en" >英文</option>
+            </select>
+
+            <br>
+            <label >公开性</label>
+            <div class="form-check mb-4">
+                <input name="isPublic" value="0" type="radio" class="form-check-input with-gap" id="isPublic1" checked="checked">
+                <label class="form-check-label" for="isPublic1">私有</label>
+                <span style="font-size:12px;color:#999;">仅项目成员可以查看和编辑该机器人</span>
+            </div>
+            <div class="form-check mb-4">
+                <input name="isPublic" value="1" type="radio" class="form-check-input with-gap" id="isPublic2">
+                <label class="form-check-label" for="isPublic2">公开</label>
+                <span style="font-size:12px;color:#999;">任何人都可以通过链接查看该机器人，仅项目成员可以编辑该机器人</span>
+            </div>
+
+            <div class="setdata">
+                <div class="setdata_left botIcon">
+                    <img id="avatar" class="botIcon" src="/images/int_02.jpg" />
+                </div>
+                <div class="setdata_right">
+                    <div style="display:none"><input type="file" onchange="selectImage(this);" accept="image" id="file_image" name="file_image"/></div>
+                    <div class="setdata_right_top"><a href="javascript:void(0);" onclick="openfile();">上传新图标</a></div>
+                    <div class="setdata_right_btm">图标 （尺寸 120 x 120）</div>
+                </div>
+
+            </div>
+            <br>
+            <label for="birthday">客户端token</label>
+            <input type="text" readonly id="client_token" class="form-control form-control-sm" autocomplete="false" >
+            <br>
+            <label for="birthday">开发者token</label>
+            <input type="text" disabled id="dev_token" class="form-control form-control-sm" autocomplete="false" >
+
+            <div class=" mt-4 mb-2">
+                <button class="btn btn-info" id="start" onclick="saveBot()">保存机器人</button>
+            </div>
+
+        </div>
+        <!--/.Panel 1-->
+
+        <!--Panel 2-->
+        <div class="tab-pane fade" id="panel12" role="tabpanel">
+            2
+
+        </div>
+        <!--/.Panel 2-->
+
+        <!--Panel 3-->
+        <div class="tab-pane fade" id="panel13" role="tabpanel">
+            3
+
+        </div>
+        <!--/.Panel 3-->
+
+
+
+    </div>
+
+
+
+</div>
+
+<div class="ui_right">
+
+	
+</div>
+
+  <div id="dialog-modal" title="会话测试"  style="display:none;">
+  <div class="dialog_mian">
+	<div class="ui_right_mid">
+		<img  src="/images/ui_06.jpg" /><span>你好！我是小白</span>
+	</div>
+	<div class="ui_right_right">
+		<span>你好！我是...</span><img  src="/images/ui_10.jpg" />
+	</div>
+	<div class="ui_right_btm1" id="dialog_btm">
+		<input class="" type="text" pattern="" placeholder="   输入对话">
+		<button type="button">发  送</button>
+
+	</div>
+		
+  </div>
+</div>
+</div>
+
+<div id="default-window-box" class="default-window-box" style="opacity: 1;display:none;">
+<div class="inner-container active"> 
+   <div class="default-modal-header">
+    <button type="button" class="close right">&times;</button>
+    <h4 class="title">为&quot;aaa&quot;添加提示语</h4>
+    <input type="hidden" id="ownParameterId">
+   </div>
+   <div class="default-modal-body">
+    <div class="row params-modal-head clearfix">
+     <div class="params-attribute-cell prompt-name">
+      名称
+     </div>
+     <div class="params-attribute-cell prompt-datatype">
+      类型
+     </div>
+     <div class="params-attribute-cell prompt-value">
+      取值
+     </div>
+    </div>
+    <div class="row params-modal-attributes clearfix">
+     <div class="params-attribute-cell">
+      <input type="text" id="prompt-name" data-key="false" class="prompt-name" value="aaa" placeholder="Enter name..." />
+     </div>
+     <div class="params-attribute-cell">
+     <input type="text" id="prompt-datatype" data-key="false" class="prompt-datatype" value="aaa" placeholder="选择类型..." />
+      <!-- <label class="aly-input prompt-datatype" id="prompt-datatype" placeholder="选择类型..."></label> -->
+     </div>
+     <div class="params-attribute-cell">
+      <div class="textcomplete-wrapper">
+       <ul class="dropdown-menu-p">
+        <li class="textcomplete-item active"><a href="javascript:void(0)">${aaa}</a></li>
+       </ul>
+       <label id="prompt-value" class="prompt-value" contenteditable="true" placeholder="输入默认值">${aaa}</label>
+      </div>
+     </div>
+    </div>
+    <div class="prompt-table">
+     <div class="prompt-cell prompt-cell-first"></div>
+     <div class="prompt-cell prompt-cell-second">
+      提示语
+     </div>
+    </div>
+    <div class="prompt-table intent-param-prompts-editor ui-sortable" id="intent-param-prompts-editor">
+     <div class="prompt-row">
+      <div class="prompt-cell prompt-cell-first">
+       1
+      </div>
+      <div class="prompt-cell prompt-cell-second">
+       <div class="borderless" contenteditable="true" onkeydown="enter_prompt(this,event)" onkeyup="create_prompt(this,event)" placeholder="输入提示语句…"></div>
+      </div>
+      <div class="prompt-cell prompt-cell-actions">
+      <!-- <a href="javascript:void(0)" class="ico-item" style="display: none;"><span class="flaticon glyphicon glyphicon-resize-vertical m_title ui-sortable-handle"></span></a>-->
+       <a class="visible-on-hover prompt-remove" href="javascript:void(0)" onclick="prompt_remove_rows(this)" style="display: none;"><span class="fa fa-trash-o"></span></a>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="modal-footer">
+    <button type="button" id="close_default_window" class="btn btn-default">保存</button>
+   </div>
+  </div> 
+</div>
+
+<script type="text/javascript" src="/libs/jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="/src/js/alert/alert.js"></script>
+<script type="text/javascript" src="/libs/layui/layui.js"></script>
+<script type="text/javascript" src="/libs/vue-js/vue.js"></script>
+<script type="text/javascript" src="/libs/toastr/toastr.js"></script>
+<script type="text/javascript" src="/libs/jquery-ui/jquery-ui.js"></script>
+<script type="text/javascript" src="/libs/jquery.z-pager.js"></script>
+<script type="text/javascript" src="/libs/jquery.tagsinput.js"></script>
+<script type="text/javascript" src="/libs/bootstrap/bootstrap.js"></script>
+<script type="text/javascript" src="/libs/mdb/mdb.min.js"></script>
+<script type="text/javascript" src="/libs/check.js"></script>
+<script type="text/javascript" src="/src/index.js"></script>
+<!--<script type="text/javascript" src="/src/workshop/intent.js"></script>-->
+<script type="text/javascript">
+    var agentId = urlPara ('agentId=');
+    $(document).ready(function(){
+        loadLeft();
+    });
+    function loadLeft(){
+        $.get("/src/workshop/left.html", function(data) {
+            $('#leftmenu').html(data);
+            loadBots();
+        }, "html");
+    }
+
+    layui.use('laydate', function() {
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#birthday'
+            , lang: 'en'
+            ,value: new Date()
+        });
+    });
+
+
+    var image = '';
+    function selectImage(file){
+        if(!file.files || !file.files[0]){
+            return;
+        }
+        image = '';
+        var reader = new FileReader();
+        reader.onload = function(evt){
+            document.getElementById('avatar').src = evt.target.result;
+            image = evt.target.result;
+            //updateBot();
+
+        }
+        reader.readAsDataURL(file.files[0]);
+    }
+
+    function openfile(){
+        document.getElementById('file_image').click();
+    }
+
+    $(document).ajaxSend(function (e, xhr, options) {
+        var token = getItems('token');
+        xhr.setRequestHeader('token', token);
+    });
+    queryAgentsById();
+    function queryAgentsById(){
+/*        $.get(host + '/v1/Agents/'+agentId, function(){
+            initFormValues(json);
+        });*/
+        $.ajax({
+            url: host + '/v1/Agents/'+agentId,
+            type: "GET",
+            datType: "JSON",
+            contentType: "application/json",
+            data: {},
+            success: function (json) {
+               console.dir([json]);
+                initFormValues(json);
+            },error: function(e) {
+            }
+        });
+    }
+    var botId = '';
+    function initFormValues(info){
+        var $name = $("#name");
+        var $description = $("#description");
+        var $birthday = $("#birthday");
+        var $language = $("#language");
+        var $client_token = $("#client_token");
+        var $dev_token = $("#dev_token");
+        var isPublic = $("input[name='isPublic']:checked").val();
+        var published = info.published;
+        botId = info.id;
+        $name.val(info.firstName+info.lastName);
+        $description.val(info.description);
+        $birthday.val(info.birthday);
+        $language.val(info.language);
+
+        if(info.avatar){
+            document.getElementById('avatar').src = info.avatar;
+        }
+        if(published){
+            $("#isPublic1").removeAttribute('checked');
+            $("#isPublic2").attr('checked',true);
+        }else{
+            $("#isPublic2").removeAttribute('checked');
+            $("#isPublic1").attr('checked',true);
+        }
+        $client_token.val(info.clientToken);
+        $dev_token.val(info.devToken);
+    }
+
+
+    function saveBot(){
+        var $name = $("#name");
+        var name = $name.val();
+        var $description = $("#description");
+        var description = $description.val();
+        var $birthday = $("#birthday");
+        var birthday = $birthday.val();
+        var $language = $("#language");
+        var language = $language.val();
+        var isPublic = $("input[name='isPublic']:checked").val();
+        if(!name){
+            jqueryAlert({
+                'content' : '请输入机器人名称'
+            })
+            return false;
+        }
+        var data={};
+        data.id = botId;
+        data.name=name;
+        data.description=description;
+        data.published= isPublic == 1 ? true:false;
+        data.avatar=image;
+        data.birthday = birthday;
+        data.language = language;
+
+        $.ajax({
+            url: host + '/v1/Agents',
+            type: "put",
+            datType: "JSON",
+            contentType: "application/json",
+            data: data,
+            success: function (json) {
+                toastr.success("编辑成功",'ok');
+                window.location.reload();
+            },error: function(e) {
+                jqueryAlert({
+                    'content' :'网络异常，请稍后重试'
+                })
+            }
+        });
+       /* $.put(host + '/v1/Agents', data, function(){
+            toastr.success("编辑成功",'ok');
+            window.location.reload();
+        });*/
+    }
+
+</script>
+</body>
+
+</html>
+
+

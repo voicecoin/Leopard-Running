@@ -100,7 +100,9 @@ $(document).ready(function () {
         var language = $language.val();
         var isPublic = $("input[name='isPublic']:checked").val();
         if(!name){
-            toastr.error('请输入机器人名称', '错误');
+            jqueryAlert({
+                'content' : '请输入机器人名称'
+            })
             return false;
         }
         var data={};
