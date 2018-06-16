@@ -6,11 +6,20 @@ var intentId=null;
 //1 list 2 editor
 var showModel=1;
 
-
-
 function saveIntent(){
 	genIntentData();
 }
+
+function trainAgent(){
+	jqueryAlert({
+        'content' :'正在训练模型，请稍后...'
+	})
+	
+	$.get(host + "/v1/agents/" + agentId + "/train", function(data) {
+        toastr.success("训练模型完成！", "OK");
+    }); 
+}
+
 var isSaving = false;
 function genIntentData(){
 	var $intentName = $("#intent-name");
