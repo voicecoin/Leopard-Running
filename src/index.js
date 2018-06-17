@@ -1,7 +1,6 @@
-var userHost = 'https://om.yaya.ai';
+var userHost = 'http://om.yaya.ai';
 var host = 'https://api.yaya.ai';
 host = 'http://api.yaya.ai';
-var userHost = 'http://om.yaya.ai';
 
 
 $(document).ready(function () {

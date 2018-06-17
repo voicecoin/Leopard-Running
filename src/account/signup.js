@@ -1,4 +1,4 @@
-var host = 'https://om.yaya.ai';
+var host = 'http://om.yaya.ai';
 
 $(document).ready(function(){
 

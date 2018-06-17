@@ -46,7 +46,7 @@ $(document).ready(function () {
           username: email,
           password: password
       };
-    $.post('https://om.yaya.ai/token', data)
+    $.post('http://om.yaya.ai/token', data)
     .done(function (token) {
       localStorage.token = token;
  //       setItems('token',token);
