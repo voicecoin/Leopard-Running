@@ -1,6 +1,5 @@
 var conversationId = '';
 var baseUrl = 'http://api.yaya.ai';
-//baseUrl = 'http://149.28.132.134:128';
 
 $(document).ready(function(){
     initPageFontSize();
@@ -51,7 +50,7 @@ function setAnimation(){
 }
 function sendEvent(){
     conversationId = urlPara ('conversationId=');
-    sendApi();
+    //sendApi();
 }
 function sendApi(){
     var token = urlPara ('token=');
@@ -147,7 +146,7 @@ function buildQuestionInputHtml() {
     html += '<img src="img/common/mic.gif" onclick="showSpeaking();startButton();" class="img-mic"/>';
     html += '<img src="img/common/mic-animate.gif" onclick="hideSpeaking();startButton();" class="img-animate"/>';
     html += '<input type="text" autocomplete="false" class="my-question-input" id="my-question-input" placeholder="在这里输入..." />';
-    html += '<button type="submit" onclick="sendEvent();"></button></div>';
+    html += '<button type="submit" id="sendButton" onclick="sendEvent();"></button></div>';
     html += '<div class="clrfix press-enter-tip">按回车键发送</div>';
     return html;
 }
