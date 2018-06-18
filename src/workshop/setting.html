@@ -34,6 +34,18 @@
         .setting-page-ul{
             border-bottom: 1px solid #ddd;
         }
+        .top-input,
+        .top-input:active,
+        .top-input:focus{
+            display: inline-block;
+            width: 80%;
+            margin-left: 20px;
+            border: none;
+            border-bottom: 1px solid #ddd;
+            border-radius: 0;
+            height: 55px;
+            box-shadow: none;
+        }
     </style>
 </head>
 
@@ -45,6 +57,10 @@
 
 <div class="ui_mid">
 
+    <div>
+        <input type="text" id="name" class="top-input form-control form-control-sm" placeholder="机器人名称" autocomplete="false">
+        <button class="btn btn-info waves-effect waves-light" id="start" onclick="saveBot()">保存机器人</button>
+    </div>
 
     <ul class="nav setting-page-ul">
         <li class="nav-item">
@@ -55,6 +71,9 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#panel13" role="tab">导入和导出</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#panel14" role="tab">域名信息</a>
         </li>
     </ul>
 
@@ -67,9 +86,9 @@
 
             <!-- Default input name -->
             <!--<label for="bot-name">机器人名称</label>-->
-            <input type="text" id="name" class="form-control form-control-sm" placeholder="机器人名称" autocomplete="false">
+            <!--<input type="text" id="name" class="form-control form-control-sm" placeholder="机器人名称" autocomplete="false">
 
-            <br>
+            <br>-->
 
             <!-- Default textarea message -->
             <textarea type="text" id="description" class="md-textarea form-control" placeholder="简单描述机器人，便于其他人理解" autocomplete="false"></textarea>
@@ -113,32 +132,36 @@
             </div>
             <br>
             <label for="birthday">客户端token</label>
-            <input type="text" readonly id="client_token" class="form-control form-control-sm" autocomplete="false" >
+            <div id="client_token"> </div>
             <br>
             <label for="birthday">开发者token</label>
-            <input type="text" disabled id="dev_token" class="form-control form-control-sm" autocomplete="false" >
+            <div id="dev_token"> </div>
 
-            <div class=" mt-4 mb-2">
+           <!-- <div class=" mt-4 mb-2">
                 <button class="btn btn-info" id="start" onclick="saveBot()">保存机器人</button>
-            </div>
+            </div>-->
 
         </div>
         <!--/.Panel 1-->
 
         <!--Panel 2-->
         <div class="tab-pane fade" id="panel12" role="tabpanel">
-            2
+
 
         </div>
         <!--/.Panel 2-->
 
         <!--Panel 3-->
         <div class="tab-pane fade" id="panel13" role="tabpanel">
-            3
+
 
         </div>
         <!--/.Panel 3-->
 
+        <div class="tab-pane fade" id="panel14" role="tabpanel">
+
+
+        </div>
 
 
     </div>

@@ -112,8 +112,9 @@ function scrollToEnd(){//滚动到底部
     var h = $("#page-container").height() + 999999;
     $("#page-container").animate( {scrollTop: h}, 200);
 }
-
-function buildLeftTooltipHtml(content,animate){
+var botPayloadData;
+function buildLeftTooltipHtml(data,animate) {
+    botPayloadData = data.payload;
     var botImg = window.top.$("#dialog_img").attr('src');
     var style = null;
     if(botImg && botImg.indexOf('voicecoin') == -1){
@@ -131,8 +132,8 @@ function buildLeftTooltipHtml(content,animate){
     html += '</div>';
     html += '<div class="tooltip-content '+animate+' animated">';
     html += '<div>';
-    html += content;
-//    html += '<a href="javascript:;" style="color: #1d52f0;" onclick="zhenduan();">诊断</a>';
+    html += data.fulfillmentText;
+    html += '<a href="javascript:;" style="color: #1d52f0;" onclick="zhenduan();">诊断</a>';
     html+='</div>';
 
     html+='</div>';
@@ -140,9 +141,10 @@ function buildLeftTooltipHtml(content,animate){
     return html;
 }
 
+
 function zhenduan(){
     mydialog = jqueryAlert({
-        'content' : '诊断内容诊断内容诊断内容诊断内容诊断内容',
+        'content' : JSON.stringify(botPayloadData),
         'modal'   : true,
         'buttons' :{
             '确定' : function(){

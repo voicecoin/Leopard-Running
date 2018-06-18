@@ -10,7 +10,7 @@ $(document).ready(function(){
 
   // receive message
   connection.on("ReceiveMessage", (data) => {
-    var answerHtml = buildLeftTooltipHtml(data.fulfillmentText,'');
+    var answerHtml = buildLeftTooltipHtml(data,'');
     $("#dummy-pois").append(answerHtml);
 
     $("#my-question-input").val('');

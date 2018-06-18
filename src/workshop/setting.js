@@ -59,7 +59,7 @@ function initFormValues(info){
     var isPublic = $("input[name='isPublic']:checked").val();
     var published = info.published;
     botId = info.id;
-    $name.val(info.firstName+info.lastName);
+    $name.val(info.name);
     $description.val(info.description);
     $birthday.val(info.birthday);
     $language.val(info.language);
@@ -68,14 +68,14 @@ function initFormValues(info){
         document.getElementById('avatar').src = info.avatar;
     }
     if(published){
-        $("#isPublic1").removeAttribute('checked');
+        $("#isPublic1").removeAttr('checked');
         $("#isPublic2").attr('checked',true);
     }else{
-        $("#isPublic2").removeAttribute('checked');
+        $("#isPublic2").removeAttr('checked');
         $("#isPublic1").attr('checked',true);
     }
-    $client_token.val(info.clientToken);
-    $dev_token.val(info.devToken);
+    $client_token.html(info.clientAccessToken);
+    $dev_token.html(info.developerAccessToken);
 }
 
 
