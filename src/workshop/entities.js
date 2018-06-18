@@ -852,7 +852,7 @@ function submitEntity(){
 		if(data.entries.length>0)
 		{
 			data.agentId =agentId;
-
+            var apiurl = host + '/v1/Entities/' + agentId;
 			$.post(apiurl, data, function(){
                 isSaving = false;
 				toastr.success("保存成功",'ok');
@@ -874,6 +874,7 @@ function submitEntity(){
         $.put(apiurl, data, function(){
             isSaving = false;
             toastr.success("保存成功",'ok');
+            location.reload();
         }).fail(function (xhr, status, error) {
             isSaving = false;
             jqueryAlert({

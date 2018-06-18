@@ -1,12 +1,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <script>
 function menuEvent(){
-	$("#ui_a1").mouseover(function(){
+    /*$("#ui_a1").mouseover(function(){
         $("#Img1").attr("src","/images/icon_01_b.png");
          });
         $("#ui_a1").mouseout(function(){
         $("#Img1").attr("src","/images/icon_01_a.png");
-        }); 
+        }); */
         $("#ui_a2").mouseover(function(){
         $("#Img2").attr("src","/images/icon_02_b.png");
          });
@@ -73,7 +73,14 @@ function menuChangeBot(id,nowbotname){
 //    window.location.href = '/src/workshop/entities.html?agentId='+id;
     for(var i=0;i<menuBots.length;i++){
     	if(menuBots[i].id==id){
-    		menuBots[i].avatar='';
+//    		menuBots[i].avatar='';
+//			$("#dialog_img").attr('src',menuBots[i].avatar);
+			if(menuBots[i].avatar){
+                $("#Img1").attr('src',menuBots[i].avatar);
+			}
+            var newUrl = changeUrlArg(location.href,'agentId', id);
+            newUrl = changeUrlArg(newUrl,'language',  menuBots[i].language);
+            history.replaceState(null,null,newUrl)
 //            setItems('agentId',id);
  //   		$.cookie("currentBot",JSON.stringify(menuBots[i]),{"expires":1});
     		break;
@@ -93,6 +100,9 @@ function loadBots(){
 	         robts += '<li><a href="javascript:void(0);" onclick="menuChangeBot(\''+robt.id+'\',\''+robt.name+'\')">' + robt.name + '</a></li>';
 	         if(robt.id==agentId){
 	        	 $("#nowbot").html(robt.name);
+	        	 if(robt.avatar){
+                     $("#Img1").attr('src',robt.avatar);
+				 }
 	         }
 	       }
 	       $("#botlistmenu").html(robts).parent().find('.caret').css({"display":"inline-block"});
@@ -161,7 +171,7 @@ $("body").click(function(e){
 		<div class="ui_side_list">
 			<div class="ui_side_list_li"  id="ui_a1">
 				<div class="ui_side_list_li_left" >
-					<img id="Img1" src="/images/icon_01_a.png" />
+					<img id="Img1" src="/images/icon_01_b.png" style="width:40px;height:40px;" />
 				</div>
 				<div class="ui_side_list_li_right">
 					 <div class="dropdown">

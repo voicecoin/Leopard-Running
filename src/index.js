@@ -183,6 +183,16 @@ function urlPara (v){
 var conversationId = '';
 function queryByAgentId(agentI, isReset) {
     var agentId = urlPara ('agentId=');
+    var checkBot = setInterval(function() {
+        var bot =  getBotById(agentId);
+        if(bot){
+            clearInterval(checkBot);
+            if(bot.avatar){
+                $("#dialog_img").attr('src',bot.avatar);
+            }
+        }
+    }, 100);
+
     var url = host + '/v1/Conversation/'+agentId + '/start';
     if(isReset){
         url = host + '/v1/Conversation/'+conversationId+'/reset';
@@ -209,6 +219,102 @@ function queryByAgentId(agentI, isReset) {
     })
 }
 
+function getBotById(agentId){
+    var bot = null;
+    if(agentId && menuBots && menuBots.length > 0){
+        for(var i = 0;i < menuBots.length;i++){
+            if(agentId == menuBots[i].id){
+                bot = menuBots[i];
+                break;
+            }
+        }
+    }
+    return bot;
+}
+
 function reloadIframe(agentId , isReset){
     queryByAgentId(agentId, isReset);
+}
+
+
+function changeURLPar(destiny, par, par_value)
+{
+    var pattern = par+'=([^&]*)';
+    var replaceText = par+'='+par_value;
+    if (destiny.match(pattern))
+    {
+        var tmp = '/\\'+par+'=[^&]*/';
+        tmp = destiny.replace(eval(tmp), replaceText);
+        return (tmp);
+    }
+    else
+    {
+        if (destiny.match('[\?]'))
+        {
+            return destiny+'&'+ replaceText;
+        }
+        else
+        {
+            return destiny+'?'+replaceText;
+        }
+    }
+    return destiny+'\n'+par+'\n'+par_value;
+}
+
+function changeUrlArg(url, arg, val){
+    var pattern = arg+'=([^&]*)';
+    var replaceText = arg+'='+val;
+    return url.match(pattern) ? url.replace(eval('/('+ arg+'=)([^&]*)/gi'), replaceText) : (url.match('[\?]') ? url+'&'+replaceText : url+'?'+replaceText);
+}
+
+
+function addToUrl(obj){
+    var aprotocol = location.protocol;
+    var ahost = location.host;
+    var apath = location.pathname;
+    var asearch = location.search;
+    var ahash = location.hash;
+    var result = '';
+    console.log(obj);
+    var joinObj = function(joinObj_obj){
+        var result = '';
+        for(var i in joinObj_obj){
+            result += i + '=' + joinObj_obj[i];
+        }
+        return result;
+    };
+    var splitSearchToObj = function(str){
+        var resObj = {};
+        var arr = str.split('&');
+        for(var i = 0; i < arr.length; i++){
+            resObj[arr[i]] = arr[i];
+        }
+        return resObj;
+    };
+    var existObjKey = function(existObjKey_obj, str){
+        for(var i in existObjKey_obj){
+            if(i == str){
+                return true;
+            }
+        }
+        return false;
+    };
+    var objExtend = function(obj, obj){
+        var result = {};
+        for(var i in obj){
+            if(existObjKey(obj, i)){
+                result[i] = obj[i];
+            }else{
+                result[i] = obj[i];
+            }
+        }
+    };
+    if(asearch == ''){
+        console.log(obj);
+        result = aprotocol + '//' + ahost + apath + '?' + joinObj(obj) + ahash;
+    }else{
+        var oldSearchObj = splitSearchToObj(asearch.substr());
+        result = aprotocol + '//' + ahost + apath + joinObj(objExtend(oldSearchObj, obj)) + ahash;
+    }
+    return result;
 }

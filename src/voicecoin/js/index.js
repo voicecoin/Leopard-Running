@@ -1,5 +1,6 @@
 var conversationId = '';
 var baseUrl = 'http://api.yaya.ai';
+var mydialog;
 
 $(document).ready(function(){
     initPageFontSize();
@@ -112,14 +113,44 @@ function scrollToEnd(){//滚动到底部
 }
 
 function buildLeftTooltipHtml(content,animate){
+    var botImg = window.top.$("#dialog_img").attr('src');
+    var style = null;
+    if(botImg && botImg.indexOf('voicecoin') == -1){
+        style = 'background: url('+botImg+') 0% 0% / 100% 100% no-repeat';
+    }
+
     var html = '';
-    html += '<div class="tooltip tooltip-left clrfix">\n' +
-        '                    <div class="tooltip-item  animated">\n' +
-        '                    </div>\n' +
-        '                    <div class="tooltip-content '+animate+' animated">'+content+'</div>\n' +
-        '                </div>'
+    html += '<div class="tooltip tooltip-left clrfix">';
+    if(style){
+        html += '<div class="tooltip-item  animated" style="'+style+'">';
+    }else{
+        html += '<div class="tooltip-item  animated">';
+    }
+
+    html += '</div>';
+    html += '<div class="tooltip-content '+animate+' animated">';
+    html += '<div>';
+    html += content;
+//    html += '<a href="javascript:;" style="color: #1d52f0;" onclick="zhenduan();">诊断</a>';
+    html+='</div>';
+
+    html+='</div>';
+    html += '</div>';
     return html;
 }
+
+function zhenduan(){
+    mydialog = jqueryAlert({
+        'content' : '诊断内容诊断内容诊断内容诊断内容诊断内容',
+        'modal'   : true,
+        'buttons' :{
+            '确定' : function(){
+                mydialog.close();
+            }
+        }
+    })
+}
+
 function buildRightTooltipHtml(content,animate){//bounceInRight
     var html = '';
     html += '<div class="tooltip tooltip-right clrfix">';
