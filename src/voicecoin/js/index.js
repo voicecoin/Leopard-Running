@@ -1,5 +1,6 @@
 var conversationId = '';
 var baseUrl = 'http://api.yaya.ai';
+
 var mydialog;
 
 $(document).ready(function(){
