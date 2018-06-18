@@ -160,7 +160,7 @@ $(document).ready(function () {
       var currentBot=getBot(id);
       $.cookie("currentBot",JSON.stringify(currentBot),{"expires":1});
       
-      window.location.href='intent.html?agentId='+id;
+      window.location.href='intent.html?agentId='+id + '&language='+ urlPara ('language=');
     }
     
     function editEntity(id){
@@ -168,7 +168,7 @@ $(document).ready(function () {
       var s=JSON.stringify(currentBot);
       console.log(s);
       $.cookie("currentBot",JSON.stringify(currentBot),{"expires":1});
-      window.location.href='entities.html?agentId='+id;
+      window.location.href='entities.html?agentId='+id + '&language='+ urlPara ('language=');
     }
     
     function testdialog(id){

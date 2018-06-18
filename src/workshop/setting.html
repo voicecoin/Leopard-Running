@@ -21,8 +21,18 @@
   <link rel="stylesheet" type="text/css" href="/css/scrollstyle.css" >
   <link rel="stylesheet" type="text/css" href="/src/workshop/intent.css" />
     <style type="text/css">
-        .pills-secondary .nav-link.active {
-            background-color: #4285f4!important;
+        .setting-page-ul .nav-link{
+            font-size:16px;
+            padding: 15px 20px;
+            border-bottom:2px solid #fff;
+        }
+        .setting-page-ul .nav-link.active {
+            background: none !important;
+            color: #4078f6;
+            border-bottom:2px solid #4078f6;
+        }
+        .setting-page-ul{
+            border-bottom: 1px solid #ddd;
         }
     </style>
 </head>
@@ -36,7 +46,7 @@
 <div class="ui_mid">
 
 
-    <ul class="nav md-pills nav-justified pills-secondary">
+    <ul class="nav setting-page-ul">
         <li class="nav-item">
             <a class="nav-link active" data-toggle="tab" href="#panel11" role="tab">基本信息</a>
         </li>

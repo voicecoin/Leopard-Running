@@ -70,7 +70,7 @@ function menuChangeBot(id,nowbotname){
     $("#nowbot").html(nowbotname);
     console.dir(['dd']);
     $("#botlistmenu").hide();
-//    window.location.href = '/src/workshop/entities.html?agentId='+id;
+    window.location.href = '/src/workshop/intent.html?agentId='+id + '&language='+ urlPara ('language=');
     for(var i=0;i<menuBots.length;i++){
     	if(menuBots[i].id==id){
 //    		menuBots[i].avatar='';
@@ -80,6 +80,7 @@ function menuChangeBot(id,nowbotname){
 			}
             var newUrl = changeUrlArg(location.href,'agentId', id);
             newUrl = changeUrlArg(newUrl,'language',  menuBots[i].language);
+            window.location.href = newUrl;
             history.replaceState(null,null,newUrl)
 //            setItems('agentId',id);
  //   		$.cookie("currentBot",JSON.stringify(menuBots[i]),{"expires":1});
@@ -113,24 +114,24 @@ function loadBots(){
 
 function goIntent(){
 
-    window.location.href='intent.html?agentId='+agentId;
+    window.location.href='intent.html?agentId='+agentId + '&language='+ urlPara ('language=');
 }
 
 function goSettingPage(){
-    window.location.href='setting.html?agentId='+agentId;
+    window.location.href='setting.html?agentId='+agentId + '&language='+ urlPara ('language=');
 }
 
 function goEntity(){
 
-	  window.location.href='entities.html?agentId='+agentId;
+	  window.location.href='entities.html?agentId='+agentId + '&language='+ urlPara ('language=');
 }
 
 function goDomains(){
-	window.location.href='domains.html?agentId='+agentId;
+	window.location.href='domains.html?agentId='+agentId + '&language='+ urlPara ('language=');
 }
 
 function goIntegrations(){
-	window.location.href='integrations.html?agentId='+agentId;
+	window.location.href='integrations.html?agentId='+agentId + '&language='+ urlPara ('language=');
 }
 
 function logoutLeft(){
