@@ -9,9 +9,8 @@ $(document).ready(function(){
     .build();
 
   // receive message
-  connection.on("ReceiveMessage", (user, message) => {
-    const msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    var answerHtml = buildLeftTooltipHtml(msg,'');
+  connection.on("ReceiveMessage", (data) => {
+    var answerHtml = buildLeftTooltipHtml(data.fulfillmentText,'');
     $("#dummy-pois").append(answerHtml);
 
     $("#my-question-input").val('');
