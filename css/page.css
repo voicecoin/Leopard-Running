@@ -148,3 +148,9 @@
 	background: -o-linear-gradient(50deg, #5E5CE6, #A769DE) !important;
 	background: linear-gradient(40deg, #5E5CE6, #A769DE) !important;
 }
+
+.footer-copyright {
+	background: -webkit-linear-gradient(50deg, #5E5CE6, #A769DE) !important;
+	background: -o-linear-gradient(50deg, #5E5CE6, #A769DE) !important;
+	background: linear-gradient(40deg, #5E5CE6, #A769DE) !important;
+}
