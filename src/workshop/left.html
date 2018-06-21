@@ -67,7 +67,8 @@ menuEvent();
 var menuBots=[];
 
 function menuChangeBot(id,nowbotname){
-    $("#nowbot").html(nowbotname);
+	$("#nowbot").html(nowbotname);
+	
     console.dir(['dd']);
     $("#botlistmenu").hide();
     window.location.href = '/src/workshop/intent.html?agentId='+id + '&language='+ urlPara ('language=');
@@ -100,16 +101,16 @@ function loadBots(){
 	         //robt.id='f3123461-cdeb-4f0f-bdea-8b2c984115e8';
 	         robts += '<li><a href="javascript:void(0);" onclick="menuChangeBot(\''+robt.id+'\',\''+robt.name+'\')">' + robt.name + '</a></li>';
 	         if(robt.id==agentId){
-	        	 $("#nowbot").html(robt.name);
+				 $("#nowbot").html(robt.name);
 	        	 if(robt.avatar){
                      $("#Img1").attr('src',robt.avatar);
+				 } else if (checkBotAvatar(robt.name)){
+					$("#Img1").attr('src',checkBotAvatar(robt.name));
 				 }
 	         }
-	       }
+		   }
 	       $("#botlistmenu").html(robts).parent().find('.caret').css({"display":"inline-block"});
-		
 	});
-
 }
 
 function goIntent(){
@@ -172,7 +173,7 @@ $("body").click(function(e){
 		<div class="ui_side_list">
 			<div class="ui_side_list_li"  id="ui_a1">
 				<div class="ui_side_list_li_left" >
-					<img id="Img1" src="/images/icon_01_b.png" style="width:40px;height:40px;" />
+					<img id="Img1" src="/images/icon_01_b.png" style="width:40px;height:40px;border-radius:20px;" />
 				</div>
 				<div class="ui_side_list_li_right">
 					 <div class="dropdown">
