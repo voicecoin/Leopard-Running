@@ -112,31 +112,62 @@ function scrollToEnd(){//滚动到底部
     var h = $("#page-container").height() + 999999;
     $("#page-container").animate( {scrollTop: h}, 200);
 }
-var botPayloadData;
-function buildLeftTooltipHtml(data,animate) {
-    botPayloadData = data.payload;
-    var botImg = window.top.$("#dialog_img").attr('src');
-    var style = null;
-    if(botImg && botImg.indexOf('voicecoin') == -1){
-        style = 'background: url('+botImg+') 0% 0% / 100% 100% no-repeat';
+
+var defaultBotAvatars = {
+    default: [
+        "/src/voicecoin/img/avatar/default0.png",
+        "/src/voicecoin/img/avatar/default1.png",
+    ],
+    Voicebot: [
+        "/src/voicecoin/img/avatar/default0.png",
+        "/src/voicecoin/img/avatar/default1.png",
+    ],
+    AppleStore: [
+        "/src/voicecoin/img/avatar/apple0.png",
+        "/src/voicecoin/img/avatar/apple1.png",
+    ],
+    Yayabot: [
+        "/src/voicecoin/img/avatar/yaya0.png",
+        "/src/voicecoin/img/avatar/yaya1.png",
+    ],
+    Spotify: [
+        "/src/voicecoin/img/avatar/spotify0.png",
+        "/src/voicecoin/img/avatar/spotify1.png",
+    ],
+};
+
+function checkBotAvatar(sender, active) {
+    var avatar = defaultBotAvatars[sender];
+    if (!avatar) {
+        avatar = defaultBotAvatars["default"];
     }
+    if (active) {
+        return avatar[1];
+    }
+    return avatar[0];
+}
+
+var botPayloadData;
+function buildLeftTooltipHtml(data, animate) {
+    botPayloadData = data.payload;
+    var style = 'background: url(' + checkBotAvatar(data.sender, true) + ') 0% 0% / 100% 100% no-repeat; border-radius: 20px;';
 
     var html = '';
     html += '<div class="tooltip tooltip-left clrfix">';
-    if(style){
-        html += '<div class="tooltip-item  animated" style="'+style+'">';
-    }else{
+    if (style) {
+        html += '<div class="tooltip-item  animated" style="' + style + '">';
+    } else {
         html += '<div class="tooltip-item  animated">';
     }
 
     html += '</div>';
-    html += '<div class="tooltip-content '+animate+' animated">';
+    html += '<div class="tooltip-content ' + animate + ' animated">';
     html += '<div>';
     html += data.fulfillmentText;
     html += '<br><a href="javascript:;" style="color: #1d52f0;" onclick="zhenduan();">诊断</a>';
-    html+='</div>';
+    html += '</div>';
 
-    html+='</div>';
+    html += '</div>';
     html += '</div>';
     return html;
 }
