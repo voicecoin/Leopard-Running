@@ -181,6 +181,41 @@ function urlPara (v){
     } else { return '';}
 }
 var conversationId = '';
+
+var defaultBotAvatars = {
+    default: [
+        "/src/voicecoin/img/avatar/default0.png",
+        "/src/voicecoin/img/avatar/default1.png",
+    ],
+    Voicebot: [
+        "/src/voicecoin/img/avatar/default0.png",
+        "/src/voicecoin/img/avatar/default1.png",
+    ],
+    AppleStore: [
+        "/src/voicecoin/img/avatar/apple0.png",
+        "/src/voicecoin/img/avatar/apple1.png",
+    ],
+    Yayabot: [
+        "/src/voicecoin/img/avatar/yaya0.png",
+        "/src/voicecoin/img/avatar/yaya1.png",
+    ],
+    Spotify: [
+        "/src/voicecoin/img/avatar/spotify0.png",
+        "/src/voicecoin/img/avatar/spotify1.png",
+    ],
+};
+
+function checkBotAvatar(sender, active) {
+    var avatar = defaultBotAvatars[sender];
+    if (!avatar) {
+        avatar = defaultBotAvatars["default"];
+    }
+    if (active) {
+        return avatar[1];
+    }
+    return avatar[0];
+}
+
 function queryByAgentId(agentI, isReset) {
     var agentId = urlPara ('agentId=');
     var checkBot = setInterval(function() {
@@ -189,6 +224,8 @@ function queryByAgentId(agentI, isReset) {
             clearInterval(checkBot);
             if(bot.avatar){
                 $("#dialog_img").attr('src',bot.avatar);
+            } else{
+                $("#dialog_img").attr('src',checkBotAvatar(bot.name, true));
             }
         }
     }, 100);
