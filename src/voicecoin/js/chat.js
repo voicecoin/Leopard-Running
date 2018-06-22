@@ -30,6 +30,11 @@ $(document).ready(function(){
     scrollToEnd();
   });
 
+  // transfer agent, conversation changed then convey last message.
+  connection.on("Transfer", (data) => {
+    connection.invoke("SendMessage", conversationId, data.fulfillmentText).catch(err => console.error(err.toString()));
+  });
+
   // start web socket
   connection.start().catch(err => console.error(err.toString()));
 
