@@ -177,15 +177,27 @@
             </p>
             <input name="ml-threshold" value="0.3" type="text">
             <div class=" mt-4 mb-2">
-                <button class="btn btn-info" id="start" onclick="javascript(0)">训练</button>
+                <button class="btn btn-info" id="" onclick="javascript(0)">训练</button>
             </div>
         </div>
         <!--/.Panel 2-->
 
         <!--Panel 3-->
         <div class="tab-pane fade" id="panel13" role="tabpanel">
-
-
+            <ul>
+                <li>
+                    <button class="btn btn-info" id="" onclick="javascript(0)">导出ZIP</button>
+                    <h4>Create a backup of the agent</h4>
+                </li>
+                <li>
+                    <button class="btn btn-info" id="" onclick="javascript(0)">从ZIP中恢复</button>
+                    <h4>Replace the current agent version with a new one. All the intents and entities in the older version will be deleted.</h4>
+                </li>
+                <li>
+                    <button class="btn btn-info" id="" onclick="javascript(0)">导入ZIP</button>
+                    <h4>Upload new intents and entities without deleting the current ones. Intents and entities with the same name will be replaced with the newer version.</h4>
+                </li>
+            </ul>
         </div>
         <!--/.Panel 3-->
 
