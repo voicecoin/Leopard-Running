@@ -67,6 +67,11 @@ function sendChatContent(){
 var two_line = /\n\n/g;
 var one_line = /\n/g;
 var first_char = /\S/;
+var recognizing = false;
+var ignore_onend;
+var start_timestamp;
+var recognition;        
+
 
 // speech to text
 function initSTT() {
@@ -80,13 +85,10 @@ function initSTT() {
                 ['cmn-Hans-HK', '普通话 (香港)'],
                 ['cmn-Hant-TW', '中文 (台灣)']]];
 
-    var recognizing = false;
-    var ignore_onend;
-    var start_timestamp;
     if (!('webkitSpeechRecognition' in window)) {
         upgrade();
     } else {
-        var recognition = new webkitSpeechRecognition();
+        recognition = new webkitSpeechRecognition();
         recognition.continuous = true;
         recognition.interimResults = true;
         recognition.onstart = function() {
