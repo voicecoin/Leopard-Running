@@ -490,6 +490,7 @@ function intentEventHandle(){
                         userSay.id='';
 						var userSaysHtml=addUserSay(userSay);
 						$(".usersaystable").append(userSaysHtml);
+                        selectUserSayText();
 						usersayEventHandler();
 						$("#addUserSay").val("");
 					},error: function(e) {
@@ -768,6 +769,40 @@ function hideOrShowPrompts(){
 	
 }
 
+function selectUserSayText(){
+    //对文件进行选中
+    var funGetSelectTxt = function() {
+        var txt = '';
+        if(document.selection) {
+            txt = document.selection.createRange().text;
+        } else {
+            txt = document.getSelection();
+        }
+        return txt.toString();
+    };
+
+    //显示图片
+    $('.usersaystable .usersay').mouseup(function(e) {
+        var $item = $(this);
+        if (e.target.id == 'imgSinaShare' || e.target.id == 'imgQqShare') {
+            return
+        }
+        e = e || window.event;
+        var txt = funGetSelectTxt(),
+            sh = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0,
+            left = (e.clientX - 40 < 0) ? e.clientX + 20 : e.clientX - 40,
+            top = (e.clientY - 40 < 0) ? e.clientY + sh + 20 : e.clientY + sh - 40;
+        if (txt) {
+			var itemId = $item.attr('id');
+            autoCompleteLineHight(itemId,txt);
+        	console.dir([txt]);
+        } else {
+            $(".select-entity-menu").remove();
+        }
+    });
+
+}
+
 
 function usersayEventHandler(){
 	$(".usersay").off("click").on('click',function(){
@@ -823,6 +858,28 @@ function autoCompleteEntity(id,key){
 	})
 }
 
+function autoCompleteLineHight(id,key){
+    $.get(host + '/v1/Entities/'+agentId+'/Query?name='+key, function(json){
+        initAutoCompleteDiv(id,json.items);
+    })
+}
+
+function lineHighWords($item,value){
+	var lineHighWordsText = $item.text().replace( /\s{2,}/g, ' ' ).toLowerCase();
+    var searchVal = $.trim( value ).toLowerCase();
+    if( searchVal.length )
+    {
+        if(lineHighWordsText.indexOf( searchVal ) != -1 ){
+            $item.html( $item.html().replace( new RegExp( searchVal+'(?!([^<]+)?>)', 'gi' ), '<span class="highlight">$&</span>' ) );
+		}
+        else{
+
+
+		}
+    }
+
+}
+
 
 function setValueToInput(id,value){
 	if(id.indexOf("pd")>-1){
@@ -831,6 +888,8 @@ function setValueToInput(id,value){
 		$("#"+id).val(value);
 		var nowParameterId=$("#ownParameterId").val();
 		$("#pd"+nowParameterId).val(value);
+    }else if(id && id.indexOf("userSayId")>-1){
+        lineHighWords($("#"+id),value);
 	}else{
 		var t=$("#"+id).find('.entityselect:first').children('span').get(0);
 		t.innerHTML="@"+value;
@@ -847,12 +906,15 @@ function initAutoCompleteDiv(id,data){
 	var _left=0;
 	var _top=0;
 	//参数类型
-	if(id.indexOf("pd")>-1){
+	if(id && id.indexOf("pd")>-1){
 		_left=$("#"+id).offset().left;
 		_top=$("#"+id).offset().top+20;
-	}else if(id.indexOf("prompt-datatype")>-1){
+	}else if(id && id.indexOf("prompt-datatype")>-1){
 		_left=$("#"+id).offset().left;
 		_top=$("#"+id).offset().top+20;
+    }else if(id && id.indexOf("userSayId")>-1){
+        _left=$("#"+id).offset().left+ 130;
+        _top=$("#"+id).offset().top+40;
 	}else{
 		_left=$("#"+id).offset().left+300;
 		_top=$("#"+id).offset().top+120;
@@ -1006,8 +1068,9 @@ function addUserSay(userSay){
              datahtml+='</span>';
          }
 	 }
+	 var userSayId = userSay.id || 'userSayId'+ new Date().getTime();
 	 
-	 userSaysHtml+='<div class="ub ub-ver usersay" id="'+userSay.id+'">';
+	 userSaysHtml+='<div class="ub ub-ver usersay" id="'+userSayId+'">';
 	 userSaysHtml+='<div  class="ub" style="width:100%;min-height:40px;height:auto;margin-bottom: -1px; border: 1px solid rgb(221, 221, 221);">';
 		 userSaysHtml+='<div class="ub ub-ver ub-ac ub-pc" style="width:10%">';
 		 userSaysHtml+='<i class="fa ng-scope fa-quote-right" style="color: #b7bbc4;"></i>';
