@@ -1,18 +1,17 @@
-$(document).ready(function(){ 
-
-  var $dummyPois = $("#dummy-pois");
-  initSTT();
-
-  // set up connection
-  const connection = new signalR.HubConnectionBuilder()
+var $dummyPois = $("#dummy-pois");
+// set up connection
+const connection = new signalR.HubConnectionBuilder()
     .withUrl(baseUrl + "/chatHub")
     .build();
+var isSendingChat = false;
+$(document).ready(function(){
+  initSTT();
 
   // receive message
   connection.on("ReceiveMessage", (data) => {
     var answerHtml = buildLeftTooltipHtml(data,'');
     $("#dummy-pois").append(answerHtml);
-
+    isSendingChat = false;
     $("#my-question-input").val('');
     scrollToEnd();
   });
@@ -38,25 +37,32 @@ $(document).ready(function(){
   // start web socket
   connection.start().catch(err => console.error(err.toString()));
 
-  setTimeout(function(){
+/*  setTimeout(function(){
     $("#sendButton").click(event => {
-      var $myQuestionInput = $("#my-question-input");
-      
-      var myQuestionInput = $myQuestionInput.val();
-      var rightHtml = buildRightTooltipHtml(myQuestionInput,'');
-      $dummyPois.append(rightHtml);
-      
-
-      const conversationId = urlPara ('conversationId=');;
-      const message = $("#my-question-input").val();
-      // send message to web socket
-      connection.invoke("SendMessage", conversationId, message).catch(err => console.error(err.toString()));
-      event.preventDefault();
+        event.preventDefault();
+        sendChatContent();
     });
-  },500);
+  },500);*/
 
 
 });
+
+function sendChatContent(){
+    var $myQuestionInput = $("#my-question-input");
+
+    var myQuestionInput = $myQuestionInput.val();
+    var rightHtml = buildRightTooltipHtml(myQuestionInput,'');
+    $dummyPois.append(rightHtml);
+
+
+    const conversationId = urlPara ('conversationId=');;
+    const message = $("#my-question-input").val();
+    // send message to web socket
+    if(!isSendingChat) {
+        isSendingChat = true;
+        connection.invoke("SendMessage", conversationId, message).catch(err => console.error(err.toString()));
+    }
+}
 
 var two_line = /\n\n/g;
 var one_line = /\n/g;

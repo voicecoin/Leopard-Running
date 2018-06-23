@@ -1,9 +1,3 @@
-var conversationId = '';
-var baseUrl = 'http://api.yaya.ai';
-//baseUrl = 'http://localhost:128';
-
-var mydialog;
-
 $(document).ready(function(){
     initPageFontSize();
     setAnimation();
@@ -54,6 +48,7 @@ function setAnimation(){
 function sendEvent(){
     conversationId = urlPara ('conversationId=');
     //sendApi();
+    sendChatContent();
 }
 function sendApi(){
     var token = urlPara ('token=');
@@ -165,7 +160,7 @@ function buildLeftTooltipHtml(data, animate) {
     html += '<div class="tooltip-content ' + animate + ' animated">';
     html += '<div>';
     html += data.fulfillmentText;
-    html += '<br><a href="javascript:;" style="color: #1d52f0;" onclick="zhenduan();">诊断</a>';
+    html += '<br><a href="javascript:;" style="color: #1d52f0;" onclick="zhenduan();"> [诊断信息]</a>';
     html += '</div>';
 
     html += '</div>';
@@ -175,8 +170,11 @@ function buildLeftTooltipHtml(data, animate) {
 
 
 function zhenduan(){
-    mydialog = jqueryAlert({
-        'content' : JSON.stringify(botPayloadData),
+    botPayloadData = formatJson(botPayloadData);
+    var html = '<textarea readonly id="RawJson" name="json" style="resize:none; height:400px;width:600px;" class="resizable processed">'+botPayloadData+'</textarea>';
+
+    mydialog = window.top.jqueryAlert({
+        'content' : html,
         'modal'   : true,
         'buttons' :{
             '确定' : function(){
@@ -184,6 +182,7 @@ function zhenduan(){
             }
         }
     })
+ //   $(window.top,"#RawJson").val(botPayloadData);
 }
 
 function buildRightTooltipHtml(content,animate){//bounceInRight
