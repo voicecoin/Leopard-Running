@@ -102,8 +102,8 @@ body{
 }
 
 #canvas-bg .canvas-footer{
-   /* background-image: url('../img/common/features-bg.svg');
-    background-repeat: no-repeat;*/
+    background-image: url('../img/common/features-bg.svg');
+    background-repeat: no-repeat;
     background-size: 100% auto;
     background-size: cover;
     background-position: bottom;

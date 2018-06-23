@@ -565,6 +565,12 @@ a:active,a:hover,a:link,a:visited {
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
 }
+.fa.fa-gear{
+    color:#999;
+}
+.fa.fa-gear:hover{
+    color:#000;
+}
 .alert-operation-tip {
     display: none;
     margin: 0 0 30px;
@@ -1056,4 +1062,8 @@ img {
     margin-top: -2px;
     transform: rotate(45deg) scale(.95);
     margin-left: -14px;
+}
+
+iframe{
+    vertical-align: top;
 }

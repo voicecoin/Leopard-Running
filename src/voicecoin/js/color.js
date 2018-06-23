@@ -78,4 +78,4 @@ function fun () {
 fun ();*/
 
 
-//setInterval(updateGradient,10);
+setInterval(updateGradient,10);
