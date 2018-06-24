@@ -1340,7 +1340,8 @@ vertical-align: middle;
 }
 
 .isMeta{
-background-color:rgb(255, 205, 246)
+background-color:rgb(255, 205, 246);
+    cursor: pointer;
 }
 
 

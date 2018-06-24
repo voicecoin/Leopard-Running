@@ -20,6 +20,18 @@ function trainAgent(){
     }); 
 }
 
+function getInnerSpan(node){
+	var innerNode;
+	if(node.innerHTML == node.innerText){
+        innerNode = node;
+		return innerNode;
+	}
+	if(node.childNodes && node.childNodes.length > 0){
+      return getInnerSpan(node.childNodes[0]);
+	}
+	return innerNode;
+}
+
 var isSaving = false;
 function genIntentData(){
 	var $intentName = $("#intent-name");
@@ -60,21 +72,29 @@ function genIntentData(){
                     var dataitem={};
 					var node = childNodes[i];
 					if(node.nodeName == 'SPAN') {
-                        dataitem.text = node.innerText;
-                        var attributes = node.attributes;
+						var innerNode = getInnerSpan(node);
+                        dataitem.text = innerNode.innerText;
+                        var attributes = innerNode.attributes;
                         var metaValue = '';
+                        var data_color = '#FFCDF6';
                         for (var j = 0;j < attributes.length;j++){
                         	if(attributes[j].nodeName == 'meta-type'){
                                 metaValue = attributes[j].nodeValue;
                                 break;
 							}
 						}
+                        for (var j = 0;j < attributes.length;j++){
+                            if(attributes[j].nodeName == 'data-color'){
+                                data_color = attributes[j].nodeValue;
+                                break;
+                            }
+                        }
                         dataitem.alias= metaValue;
                         dataitem.meta= metaValue;
-                        dataitem.color= null;
-                        if(dataitem.color==null){
+                        dataitem.color= data_color;
+                        /*if(dataitem.color==null){
                             dataitem.color='#FFCDF6';
-                        }
+                        }*/
 					}else if(node.nodeName == '#text'){
                         dataitem.text= node.nodeValue;
 					}
@@ -892,10 +912,19 @@ function autoCompleteEntity(id,key){
 
 var allEntitiesList = [];
 function autoCompleteLineHight(id,key){
+    key = key || '';
     $.get(host + '/v1/Entities/'+agentId+'/Query?name='+key, function(json){
         allEntitiesList = json.items;
         initAutoCompleteDiv(id,json.items);
     })
+}
+
+function clickLineHeight(obj){
+	var $obj = $(obj);
+	var $usersaytext = $obj.parentsUntil('.usersaystable').find('.usersaytext');
+    $usersaytext.attr('linehightWord',$obj.text());
+    var id = $usersaytext.attr("id");
+    autoCompleteLineHight(id,'');
 }
 
 function getEntityById(id){
@@ -911,16 +940,23 @@ function getEntityById(id){
 	return entity;
 }
 
-function lineHighWords($item,value,entityId){
+function lineHighWords(id,value,entityId){
+	var $item = $("#"+id);
 	var lineHighWordsText = $item.text().replace( /\s{2,}/g, ' ' ).toLowerCase();
 	var linehightWord = $item.attr('linehightWord');
 	if(linehightWord){
         var searchVal = $.trim( linehightWord ).toLowerCase();
         if( searchVal.length )
         {
+            var entity = getEntityById(entityId);
+            var color = entity.color || '#FFCDF6';
             if(lineHighWordsText.indexOf( searchVal ) != -1 ){
 //            	var allSpan = $item.find(".usersaytext").html();
-                $item.html( $item.html().replace( new RegExp( searchVal+'(?!([^<]+)?>)', 'gi' ), '<span class="isMeta highlight" meta-type="'+value+'">$&</span>' ) );
+				var html = '<span onclick="clickLineHeight(this)" class="isMeta" meta-type="'+value+'">$&</span>';
+				if(color) {
+					html = '<span data-color="'+color+'" style="background-color: '+color+'" onclick="clickLineHeight(this)" class="isMeta" meta-type="'+value+'">$&</span>';
+				}
+                $item.html( $item.html().replace( new RegExp( searchVal+'(?!([^<]+)?>)', 'gi' ), html ) );
             }
             else{
 
@@ -929,7 +965,7 @@ function lineHighWords($item,value,entityId){
 
             /*var apiurl = host + '/v1/Entities/' + entityId;
             isSaving = true;
-            var entity = getEntityById(entityId);
+
             if(entity && entity.entries){
                 entity.entries.push({
                     synonyms:[linehightWord],
@@ -958,7 +994,7 @@ function setValueToInput(id,value,entityId){
 		var nowParameterId=$("#ownParameterId").val();
 		$("#pd"+nowParameterId).val(value);
     }else if($("#"+id).hasClass('usersaytext')){//usersay
-        lineHighWords($("#"+id),value,entityId);
+        lineHighWords(id,value,entityId);
 	}else{
 		var t=$("#"+id).find('.entityselect:first').children('span').get(0);
 		t.innerHTML="@"+value;
@@ -1130,8 +1166,9 @@ function addUserSay(userSay){
 
 
              if(data[j].meta){
+             	var color = data[j].color || '#FFCDF6';
                  datahtml+='<span';
-                 datahtml+=' class="isMeta" meta-type="'+data[j].meta+'" style="background-color:'+data[j].color+'"';
+                 datahtml+=' data-color="'+color+'" style="background-color: '+color+'" onclick="clickLineHeight(this)" class="isMeta" meta-type="'+data[j].meta+'" ';
                  metaarray.push(data[j]);
                  datahtml+='>';
                  datahtml+=data[j].text;

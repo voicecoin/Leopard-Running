@@ -160,7 +160,7 @@ function buildLeftTooltipHtml(data, animate) {
     html += '<div class="tooltip-content ' + animate + ' animated">';
     html += '<div>';
     html += data.fulfillmentText;
-    html += '<br><a href="javascript:;" style="color: #1d52f0;" onclick="zhenduan();"> [诊断信息]</a>';
+    html += '<br><a href="javascript:;" style="color: #1d52f0;" onclick="zhenduan(this);"> [诊断信息]</a>';
     html += '</div>';
 
     html += '</div>';
@@ -168,10 +168,14 @@ function buildLeftTooltipHtml(data, animate) {
     return html;
 }
 
-
-function zhenduan(){
-    botPayloadData = formatJson(botPayloadData);
-    var html = '<textarea readonly id="RawJson" name="json" style="resize:none; height:400px;width:600px;" class="resizable processed">'+botPayloadData+'</textarea>';
+function zhenduan(obj){
+    var $obj = $(obj);
+    var botPayloadDataDone = formatJson(botPayloadData);
+   /* if($obj.attr('isDone') != 'done'){
+        botPayloadData = formatJson(botPayloadData);
+    }
+    $obj.attr('isDone','done');*/
+    var html = '<textarea readonly id="RawJson" name="json" style="resize:none; height:400px;width:600px;" class="resizable processed">'+botPayloadDataDone+'</textarea>';
 
     mydialog = window.top.jqueryAlert({
         'content' : html,
