@@ -51,9 +51,38 @@ function genIntentData(){
 		usersay.text='';
 		usersay.data=[];
         var texts=$(this).find(".usersaytext:first span");
-        $.each(texts,function(){
-        	var dataitem={};
-        	if($(this).hasClass("isMeta")){
+       // $.each(texts,function(){
+
+        	var span = texts[0];
+            var childNodes = span.childNodes;
+            if (childNodes && childNodes.length > 0) {
+            	for (var i = 0;i < childNodes.length;i++) {
+                    var dataitem={};
+					var node = childNodes[i];
+					if(node.nodeName == 'SPAN') {
+                        dataitem.text = node.innerText;
+                        var attributes = node.attributes;
+                        var metaValue = '';
+                        for (var j = 0;j < attributes.length;j++){
+                        	if(attributes[j].nodeName == 'meta-type'){
+                                metaValue = attributes[j].nodeValue;
+                                break;
+							}
+						}
+                        dataitem.alias= metaValue;
+                        dataitem.meta= metaValue;
+                        dataitem.color= null;
+                        if(dataitem.color==null){
+                            dataitem.color='#FFCDF6';
+                        }
+					}else if(node.nodeName == '#text'){
+                        dataitem.text= node.nodeValue;
+					}
+                    usersay.text+=dataitem.text;
+                    usersay.data.push(dataitem);
+				}
+			}
+        	/*if($(this).hasClass("isMeta")){
         		var metatexts=$(this).parent().parent().parent().find(".usersaymeta").children('div');
         		dataitem.alias=metatexts[0].innerHTML;
         		dataitem.meta=metatexts[1].firstChild.innerHTML;
@@ -63,12 +92,14 @@ function genIntentData(){
         			dataitem.color='#FFCDF6';
         		}
         	}else{
-        		dataitem.text=$(this).html();
-        	}
-        	usersay.text+=dataitem.text;
-        	usersay.data.push(dataitem);
+               // var content = $(this).html();
+               // var res=content.replace(/(.*)<[^>]*>.*<\/[^>]*>(.*)/,"$1$2");
+        		dataitem.text= $(this).html();
+        	}*/
+        //	usersay.text+=dataitem.text;
+        //	usersay.data.push(dataitem);
         	
-        });
+       // });
         intentNow.userSays.push(usersay);
         
     });  
@@ -782,7 +813,7 @@ function selectUserSayText(){
     };
 
     //显示图片
-    $('.usersaystable .usersay').mouseup(function(e) {
+    $('.usersaystable .usersay .usersaytext').mouseup(function(e) {
         var $item = $(this);
         if (e.target.id == 'imgSinaShare' || e.target.id == 'imgQqShare') {
             return
@@ -794,7 +825,8 @@ function selectUserSayText(){
             top = (e.clientY - 40 < 0) ? e.clientY + sh + 20 : e.clientY + sh - 40;
         if (txt) {
 			var itemId = $item.attr('id');
-            autoCompleteLineHight(itemId,txt);
+            $item.attr('linehightWord',txt);
+            autoCompleteLineHight(itemId,'');
         	console.dir([txt]);
         } else {
             $(".select-entity-menu").remove();
@@ -858,38 +890,75 @@ function autoCompleteEntity(id,key){
 	})
 }
 
+var allEntitiesList = [];
 function autoCompleteLineHight(id,key){
     $.get(host + '/v1/Entities/'+agentId+'/Query?name='+key, function(json){
+        allEntitiesList = json.items;
         initAutoCompleteDiv(id,json.items);
     })
 }
 
-function lineHighWords($item,value){
+function getEntityById(id){
+	var entity;
+	if(id && allEntitiesList && allEntitiesList.length > 0){
+		for (var i = 0;i < allEntitiesList.length;i++) {
+			if(id == allEntitiesList[i].id){
+                entity = allEntitiesList[i];
+				break;
+			}
+		}
+	}
+	return entity;
+}
+
+function lineHighWords($item,value,entityId){
 	var lineHighWordsText = $item.text().replace( /\s{2,}/g, ' ' ).toLowerCase();
-    var searchVal = $.trim( value ).toLowerCase();
-    if( searchVal.length )
-    {
-        if(lineHighWordsText.indexOf( searchVal ) != -1 ){
-            $item.html( $item.html().replace( new RegExp( searchVal+'(?!([^<]+)?>)', 'gi' ), '<span class="highlight">$&</span>' ) );
-		}
-        else{
+	var linehightWord = $item.attr('linehightWord');
+	if(linehightWord){
+        var searchVal = $.trim( linehightWord ).toLowerCase();
+        if( searchVal.length )
+        {
+            if(lineHighWordsText.indexOf( searchVal ) != -1 ){
+//            	var allSpan = $item.find(".usersaytext").html();
+                $item.html( $item.html().replace( new RegExp( searchVal+'(?!([^<]+)?>)', 'gi' ), '<span class="isMeta highlight" meta-type="'+value+'">$&</span>' ) );
+            }
+            else{
 
 
-		}
-    }
+            }
 
+            /*var apiurl = host + '/v1/Entities/' + entityId;
+            isSaving = true;
+            var entity = getEntityById(entityId);
+            if(entity && entity.entries){
+                entity.entries.push({
+                    synonyms:[linehightWord],
+                    value : linehightWord
+                });
+                $.put(apiurl, entity, function(){
+                    isSaving = false;
+                    toastr.success("保存成功",'ok');
+                }).fail(function (xhr, status, error) {
+                    isSaving = false;
+                    jqueryAlert({
+                        'content' :'网络异常，请稍后重试'
+                    })
+                });
+			}*/
+        }
+	}
 }
 
 
-function setValueToInput(id,value){
+function setValueToInput(id,value,entityId){
 	if(id.indexOf("pd")>-1){
 		$("#"+id).val(value);
 	}else if(id.indexOf("prompt-datatype")>-1){
 		$("#"+id).val(value);
 		var nowParameterId=$("#ownParameterId").val();
 		$("#pd"+nowParameterId).val(value);
-    }else if(id && id.indexOf("userSayId")>-1){
-        lineHighWords($("#"+id),value);
+    }else if($("#"+id).hasClass('usersaytext')){//usersay
+        lineHighWords($("#"+id),value,entityId);
 	}else{
 		var t=$("#"+id).find('.entityselect:first').children('span').get(0);
 		t.innerHTML="@"+value;
@@ -912,9 +981,9 @@ function initAutoCompleteDiv(id,data){
 	}else if(id && id.indexOf("prompt-datatype")>-1){
 		_left=$("#"+id).offset().left;
 		_top=$("#"+id).offset().top+20;
-    }else if(id && id.indexOf("userSayId")>-1){
-        _left=$("#"+id).offset().left+ 130;
-        _top=$("#"+id).offset().top+40;
+    }else if(id && id.indexOf("userSayTextId")>-1){
+        _left=$("#"+id).offset().left+ 100;
+        _top=$("#"+id).offset().top;
 	}else{
 		_left=$("#"+id).offset().left+300;
 		_top=$("#"+id).offset().top+120;
@@ -927,7 +996,7 @@ function initAutoCompleteDiv(id,data){
 	html+='<input id="filterParam" type="text" placeholder="Filter..." class="filterParam" value="" name=""></div>';
 	html+='<ul class="menu-list">';
 	for(var i=0;i<data.length;i++){
-		html+='<li><a href="javascript:void(0)" class="filterItem" onclick="setValueToInput(\''+id+'\',\''+data[i].name+'\');">'+data[i].name+'</a></li>';
+		html+='<li><a href="javascript:void(0)" class="filterItem" onclick="setValueToInput(\''+id+'\',\''+data[i].name+'\',\''+data[i].id+'\');">'+data[i].name+'</a></li>';
 	}
 	html+='</ul>';
 	
@@ -1056,26 +1125,33 @@ function addUserSay(userSay){
 	 var metaarray=[];
 	 if(userSay && userSay.data){
          var data=userSay.data;
+         datahtml+='<span>';
          for(var j=0;j<data.length;j++){
 
-             datahtml+='<span';
-             if(data[j].meta!=null){
-                 datahtml+=' class="isMeta" style="background-color:'+data[j].color+'"';
+
+             if(data[j].meta){
+                 datahtml+='<span';
+                 datahtml+=' class="isMeta" meta-type="'+data[j].meta+'" style="background-color:'+data[j].color+'"';
                  metaarray.push(data[j]);
-             }
-             datahtml+='>';
-             datahtml+=data[j].text;
-             datahtml+='</span>';
+                 datahtml+='>';
+                 datahtml+=data[j].text;
+                 datahtml+='</span>';
+             }else{
+                 datahtml+=data[j].text;
+			 }
+
+
          }
+         datahtml+='</span>';
 	 }
-	 var userSayId = userSay.id || 'userSayId'+ new Date().getTime();
+	 var userSayId = userSay.id;
 	 
 	 userSaysHtml+='<div class="ub ub-ver usersay" id="'+userSayId+'">';
 	 userSaysHtml+='<div  class="ub" style="width:100%;min-height:40px;height:auto;margin-bottom: -1px; border: 1px solid rgb(221, 221, 221);">';
 		 userSaysHtml+='<div class="ub ub-ver ub-ac ub-pc" style="width:10%">';
 		 userSaysHtml+='<i class="fa ng-scope fa-quote-right" style="color: #b7bbc4;"></i>';
 		 userSaysHtml+='</div>';
-		 userSaysHtml+='<div class="ub ub-ver ub-pc template-editor-holder usersaytext" contenteditable="" placeholder="Add User expression" style="width:80%;word-wrap: break-word;word-break: break-all;">'+datahtml+'</div>';
+		 userSaysHtml+='<div class="ub ub-ver ub-pc template-editor-holder usersaytext" id="userSayTextId'+ new Date().getTime()+'" contenteditable="" placeholder="Add User expression" style="width:80%;word-wrap: break-word;word-break: break-all;">'+datahtml+'</div>';
 		 userSaysHtml+='<div class="ub ub-ver ub-ac ub-pc uhide iconcontainer" style="width:10%">';
 //		 userSaysHtml+='<a href="javascript:void(0)" class="ico-item"><span class="fa fa-trash-o"></span></a>';
 		 userSaysHtml+='<a href="javascript:void(0)" class="ico-item delusersayicon"><span class="fa fa-trash-o del_icon"></span></a>';
@@ -1268,8 +1344,8 @@ function initIntent(intent){
 		 userSaysHtml+=addUserSay(userSay);
 	 }
 	 $(".usersaystable").html(userSaysHtml);
-	 
-	 
+
+    selectUserSayText();
 		
 	 if(intent.responses.length>0){	
 	 	 $("#action").val(intent.responses[0].action);
