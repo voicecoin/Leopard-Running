@@ -137,7 +137,7 @@ function buildLeftTooltipHtml(data, animate) {
     html += '<div class="tooltip-content ' + animate + ' animated">';
     html += '<div>';
     html += data.fulfillmentText;
-    html += '<br><a href="javascript:;" style="color: #1d52f0;" onclick="zhenduan(this);"> [诊断信息]</a>';
+    html += '<br><a href="javascript:;" style="font-size: 10px;color: #36a0e1;" onclick="zhenduan(this);"> [诊断信息]</a>';
     html += '</div>';
 
     html += '</div>';
