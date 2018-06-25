@@ -192,7 +192,7 @@ var defaultBotAvatars = {
         "/src/voicecoin/img/avatar/default1.png",
     ],
     AppleStore: [
-        "/src/voicecoin/img/avatar/apple0.png",
+        "/src/voicecoin/img/avatar/apple1.png",
         "/src/voicecoin/img/avatar/apple1.png",
     ],
     Yayabot: [
