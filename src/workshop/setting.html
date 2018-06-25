@@ -150,30 +150,28 @@
         <!--Panel 2-->
         <div class="tab-pane fade" id="panel12" role="tabpanel">
             <h4>
-                MATCH MODE
+                匹配模式
             </h4>
             <p>
-                Select the match mode that suits your agent best.
+                选择合适您的机器人的匹配模式
             </p>
             <ul style="list-style-type: circle;">
                 <li>
-                    Use the Hybrid (Rule-based and ML) mode for agents with a small number of examples/templates in intents, especially the ones
-                    using composite entities.
+                    当语料比较少时请使用混合（规则和机器学习）模式，特别是当机器人需要使用组合实体识别的功能时。
                 </li>
                 <li>
-                    Use ML only mode for agents with a large number of examples in intents, especially the ones using @sys.any
+                    只有在语料数量较大里才使用机器学习模式，比如用了 @sys.any 来标注实体时。
                 </li>
             </ul>
             <select id="match-mode" name="match-mode" class="form-control" style="display: block !important;">
-                <option value="Hybrid" selected="">Hybrid (Rule-based and ML)</option>
-                <option value="en">ML only</option>
+                <option value="Hybrid" selected="">混合（规则和机器学习）模式</option>
+                <option value="en">机器学习模式</option>
             </select>
             <h4 class=" mt-4">
-                ML CLASSIFICATION THRESHOLD
+                机器学习分类阀值
             </h4>
             <p>
-                Define the threshold value for the confidence score. If the returned value is less than the threshold value, then a fallback
-                intent will be triggered or, if there is no fallback intents defined, no intent will be triggered.
+                定义置信区间最大阀值。如果返回值币阀值小，则返回默认回复，如果默认回复未定义，则返回空值。
             </p>
             <input name="ml-threshold" value="0.3" type="text">
             <div class=" mt-4 mb-2">
