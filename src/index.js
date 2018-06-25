@@ -222,6 +222,11 @@ function queryByAgentId(agentI, isReset) {
         var bot =  getBotById(agentId);
         if(bot){
             clearInterval(checkBot);
+
+            if (bot.name) {
+                $("#dialog_botname").html(bot.name);
+            }
+
             if(bot.avatar){
                 $("#dialog_img").attr('src',bot.avatar);
             } else{
