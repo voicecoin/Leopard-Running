@@ -131,7 +131,12 @@ body{background: url(../images/bg.png) repeat;background-size:100%;font-family: 
 
 
 /*ui閻ｅ矂娼�*/
-.ui_side{background:#f9f9f9 repeat;width:180px;text-align: center;float:left;
+.ui_side{
+    background:#f9f9f9 repeat;
+    width:180px;
+    min-width: 180px;
+    text-align: center;
+    float:left;
     position: fixed;
     left:0;
     top:0;
