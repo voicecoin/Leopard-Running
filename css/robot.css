@@ -572,6 +572,7 @@ a:active,a:hover,a:link,a:visited {
 }
 .fa.fa-gear{
     color:#999;
+    font-size: 16px;
 }
 .fa.fa-gear:hover{
     color:#000;
