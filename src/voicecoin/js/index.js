@@ -109,29 +109,6 @@ function scrollToEnd(){//滚动到底部
     $("#page-container").animate( {scrollTop: h}, 200);
 }
 
-var defaultBotAvatars = {
-    default: [
-        "/src/voicecoin/img/avatar/default0.png",
-        "/src/voicecoin/img/avatar/default1.png",
-    ],
-    Voicebot: [
-        "/src/voicecoin/img/avatar/default0.png",
-        "/src/voicecoin/img/avatar/default1.png",
-    ],
-    AppleStore: [
-        "/src/voicecoin/img/avatar/apple0.png",
-        "/src/voicecoin/img/avatar/apple1.png",
-    ],
-    Yayabot: [
-        "/src/voicecoin/img/avatar/yaya0.png",
-        "/src/voicecoin/img/avatar/yaya1.png",
-    ],
-    Spotify: [
-        "/src/voicecoin/img/avatar/spotify0.png",
-        "/src/voicecoin/img/avatar/spotify1.png",
-    ],
-};
-
 function checkBotAvatar(sender, active) {
     var avatar = defaultBotAvatars[sender];
     if (!avatar) {

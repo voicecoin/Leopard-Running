@@ -43,8 +43,6 @@ $(document).ready(function(){
         sendChatContent();
     });
   },500);*/
-
-
 });
 
 function sendChatContent(){
