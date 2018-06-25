@@ -154,3 +154,9 @@
 	background: -o-linear-gradient(50deg, #5E5CE6, #A769DE) !important;
 	background: linear-gradient(40deg, #5E5CE6, #A769DE) !important;
 }
+
+.navbar-brand-logo {
+	height: 30px;
+	margin-top: -4px;
+	margin-right: 8px;
+}
