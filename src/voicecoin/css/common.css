@@ -20,6 +20,7 @@ body{
 	font-family: "Microsoft YaHei","Segoe UI", "Lucida Grande", Helvetica, Arial,sans-serif;
     -webkit-overflow-scrolling: touch;
     overflow-scrolling: touch;
+    overflow: hidden;
 }
 
 /*滚动条*/
@@ -403,14 +404,16 @@ body{
 .dummy-tooltip .search{
     position: fixed;
     bottom:10px;
-    left:0;
+    /* left:0; */
+    left: calc((100vw - 340px)/ 2);
     width: 340px;
 }
+
 .dummy-tooltip .search img{
     height: 46px;
     border-radius: 5px;
     position: absolute;
-    left: 10px;
+    /* left: 10px; */
     cursor: pointer;
 }
 .dummy-tooltip .search .img-animate{
@@ -424,6 +427,25 @@ body{
 }
 .dummy-tooltip .search input{
     width:258px;
+}
+
+.dummy-tooltip-540 .search{
+    position: fixed;
+    width:640px;
+    left: calc((100vw - 640px) / 2);
+    bottom: 60px;
+ }
+
+ .dummy-tooltip-540 .search img{
+    height: 46px;
+    border-radius: 5px;
+    position: absolute;
+    /* left: 10px; */
+    cursor: pointer;
+}
+
+.dummy-tooltip-540 .search .my-question-input {
+    width: 560px;
 }
 
     /*loading*/
