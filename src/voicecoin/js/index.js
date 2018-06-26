@@ -18,7 +18,6 @@ function initPageFontSize(){
 function calContanerHeight(){
     var winHg = $(window).height();
     var winWd = $(window).width();
-    console.log(winWd);
     var $pageContainer = $("#page-container");
     var $pageHeader = $pageContainer.find('.page-header');
     var $pageBody = $pageContainer.find('.page-body');
