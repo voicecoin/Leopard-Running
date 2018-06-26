@@ -1000,7 +1000,7 @@ img {
 #dialog-bot .ui_right_top{
     height: 60px;
     border-bottom:none;
-    background: #1d52f0;
+    /* background: #1d52f0; */
     color: #fff;
     padding:0 20px;
     line-height: 60px;
