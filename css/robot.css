@@ -171,7 +171,7 @@ body{background: url(../images/bg.png) repeat;background-size:100%;font-family: 
 .ui_mid_03_btm{color:#808080;font-size:14px;padding-left:10px;padding-bottom:5px;}
 .ui_mid_03{border-bottom:1px solid #EDEEF0;width:80%;float: left;}
 .ui_mid_04{width:80%;float: left;}
-.ui_3_right{;float: right;padding-top:50px;color:#000000;font-size:14px;}
+.ui_3_right{float: right;padding-top:50px;color:#000000;font-size:14px;}
 .ui_3_1{padding-top:20px;color:#000000;font-size:14px;
     padding-bottom:20px;}
 .ui_3_1 a{color:#000000;}
