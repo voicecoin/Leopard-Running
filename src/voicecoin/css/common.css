@@ -335,7 +335,7 @@ body{
     float: right;
 }
 .d7 input {
-   width: 240px;
+   width: 230px;
    /* width:88%;*/
     height: 42px;
     padding-left: 15px;
@@ -346,6 +346,7 @@ body{
     position: relative;
     transition: .3s linear;
     float:right;
+    margin-right: 10px;
     font-size:14px;
 }
 
@@ -371,7 +372,7 @@ body{
     border: none;
     position: absolute;
     top: 0;
-    right: 0;
+    right: 10px;
     cursor: pointer;
 }
 .dummy-tooltip.dummy-tooltip-540 .d7 button{
@@ -413,7 +414,7 @@ body{
     height: 46px;
     border-radius: 5px;
     position: absolute;
-    /* left: 10px; */
+    left: 10px;
     cursor: pointer;
 }
 .dummy-tooltip .search .img-animate{
@@ -426,7 +427,7 @@ body{
     display: block;
 }
 .dummy-tooltip .search input{
-    width:258px;
+    width:250px;
 }
 
 .dummy-tooltip-540 .search{
@@ -445,7 +446,7 @@ body{
 }
 
 .dummy-tooltip-540 .search .my-question-input {
-    width: 560px;
+    width: 540px;
 }
 
     /*loading*/
