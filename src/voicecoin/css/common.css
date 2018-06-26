@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 /* CSS Document */
-body,ul,ol,dl,dt,li,dd,p,form,h1,h2,h3{margin:0;padding:0; font-weight:normal;}
+body,ul,ol,dl,dt,li,dd,p,form,h1,h2,h3{margin:0;padding:0; font-weight:normal;min-width: 350px;}
 body{font-size:14px; background:#281e65; color:#fff;font-family:"Microsoft YaHei",tahoma,arial,sans-serif;font-weight: normal;}
 i,em{font-style:normal; vertical-align:middle;}
 img{border:none;}
@@ -353,19 +353,19 @@ body{
 }
 
 .dummy-tooltip.dummy-tooltip-540 .d7 input{
-    height: 50px;
+    height: 42px;
     font-size: 17px;
 }
 
 .d7 input:focus {
     /*width:88%;*/
-    border:2px solid #1d52f0;
+    border:2px solid white;
 }
 
 
 .d7 button {
     width: 35px;
-    height: 48px;
+    height: 42px;
     background: none;
     border: none;
     position: absolute;
@@ -374,7 +374,7 @@ body{
     cursor: pointer;
 }
 .dummy-tooltip.dummy-tooltip-540 .d7 button{
-    height:57px;
+    height:42px;
 }
 .d7 button:after{
     /*content: "\f002";*/
@@ -388,7 +388,7 @@ body{
 }
 
 .dummy-tooltip.dummy-tooltip-540 .d7 button:after{
-    font-size:25px;
+    /* font-size:25px; */
 }
 
 .press-enter-tip{
