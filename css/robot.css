@@ -241,8 +241,9 @@ body{background: url(../images/bg.png) repeat;background-size:100%;font-family: 
 .ui_icon_right{float:right;padding-left:10px;}
 .ui_icon_right img{width:20px;height:20px;}
 .ui_btn{border:none;background-color: #F7F7F7;color:#808080;}
- :focus{outline:0;}/*鐠嬮攱鐡�*/
+ :focus{outline:none !important;}/*鐠嬮攱鐡�*/
 .ui_btn button::-moz-focus-inner {border: 0;}/*閻忣偆瀚�*/
+.ui_btn:hover{color: #4F4949;outline: none !important;}
 .ui_launch{margin-right:15px;}
 .dialog_mian{height:450px;}
 .ui_right_right span{color:#4285F6;font-size:14px;padding-right:20px;}
