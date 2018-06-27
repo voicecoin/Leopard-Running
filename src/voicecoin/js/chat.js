@@ -1,11 +1,23 @@
 var $dummyPois = $("#dummy-pois");
+
 // set up connection
 const connection = new signalR.HubConnectionBuilder()
     .withUrl(baseUrl + "/chatHub")
     .build();
+
 var isSendingChat = false;
+var conversationId = urlPara ('conversationId=');
+const agentId = urlPara ('agentId=');
+
 $(document).ready(function(){
+  ajaxSetup();
+
   initSTT();
+  
+  // init session
+  if(!conversationId) {
+    initSession(agentId, false)
+  }
 
   // receive message
   connection.on("ReceiveMessage", (data) => {
@@ -45,6 +57,40 @@ $(document).ready(function(){
   },500);*/
 });
 
+function ajaxSetup(){
+    $.ajaxSetup({
+        processData: false,
+        dataType: "json",
+        contentType: "application/json",
+        beforeSend: function (request, settings) {
+            settings.data = JSON.stringify(settings.data);
+            request.setRequestHeader("Authorization", "bearer " + localStorage.token);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            //s_tip(JSON.stringify(jqXHR), 'fail');
+        }
+    });
+}
+
+function initSession(agentId, isReset){
+    var url = baseUrl + '/v1/Conversation/'+ agentId + '/start';
+    if(isReset){
+        url = baseUrl + '/v1/Conversation/'+ conversationId +'/reset';
+    }
+
+    $.get(url, function(data){
+        conversationId = data;
+    });
+    /*$.ajax({
+        type: 'get',
+        url: url,
+        data: {},
+        success: function (response) {
+            conversationId = response;
+        }
+    })*/
+}
+
 function sendChatContent(){
     var $myQuestionInput = $("#my-question-input");
 
@@ -52,8 +98,6 @@ function sendChatContent(){
     var rightHtml = buildRightTooltipHtml(myQuestionInput,'');
     $dummyPois.append(rightHtml);
 
-
-    const conversationId = urlPara ('conversationId=');;
     const message = $("#my-question-input").val();
     // send message to web socket
     if(!isSendingChat) {

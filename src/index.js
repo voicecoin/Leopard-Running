@@ -1,7 +1,7 @@
 var userHost = 'http://om.yaya.ai';
 var host = 'http://api.yaya.ai';
-//host = 'http://localhost:128';
-
+//userHost = '';
+//host = '';
 
 $(document).ready(function () {
     $.ajaxSetup({

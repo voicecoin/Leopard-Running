@@ -1,6 +1,5 @@
-var conversationId = '';
 var baseUrl = 'http://api.yaya.ai';
-//baseUrl = 'http://localhost:128';
+//baseUrl = '';
 
 var mydialog;
 var formatJson = function (json, options) {
