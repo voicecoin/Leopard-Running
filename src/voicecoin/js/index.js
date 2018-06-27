@@ -25,8 +25,10 @@ function calContanerHeight(){
     $pageContainer.css({"max-height":hg});
     if(winWd >= 700){
         $pageContainer.find('.dummy-tooltip').addClass('dummy-tooltip-540');
+        $pageContainer.css("max-height", "calc(100vh - 160px)");
     }else if(winWd<640){
         $pageContainer.find('.dummy-tooltip').removeClass('dummy-tooltip-540');
+        $pageContainer.css("max-height", "calc(100vh - 68px)");
     }
 }
 

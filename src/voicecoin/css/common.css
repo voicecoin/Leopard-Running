@@ -115,7 +115,6 @@ body{
 }
 
 .page-container{
-	position: relative;
 	left:0;
 	top:0;
 	width:100%;
@@ -125,9 +124,9 @@ body{
     overflow-y: auto;
     overflow-x: hidden;
 /*    max-height:90% !important;*/
-    max-height: 340px !important;
     overflow: auto;
     overflow-x: hidden;
+    z-index: 100;
 }
 
 .page-header{
@@ -140,9 +139,11 @@ body{
 }
 
 .page-body{
+    position: relative;
     padding:20px 0;
     -webkit-overflow-scrolling: touch;
     overflow-scrolling: touch;
+    z-index: 100;
 }
 
 .d1 {background: #A3D0C3;}
