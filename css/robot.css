@@ -200,6 +200,8 @@ body{background: url(../images/bg.png) repeat;background-size:100%;font-family: 
 .ui_side_list_li_right{float: left;line-height: 40px;}
 .ui_side_list_li_right a{color:#808080;}
 .ui_side_list_li_right a:hover{color:#4F4949;}
+.ui_side_list_li_right_link{color:#808080;}
+.ui_side_list_li_right_link:hover{color:#4F4949;}
 /*.caret{margin-left:10px;}*/
 .ui_list1{margin-top:40px;}
 .dropdown{
