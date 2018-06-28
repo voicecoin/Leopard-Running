@@ -134,8 +134,23 @@ body{
     position: relative;
 }
 
+.page-header .logo{
+    position: absolute;
+    left: 20px;
+    top: 10px;
+    z-index: 100;
+}
+
 .page-header .logo img{
     height:38px;
+}
+
+.page-header .robot-name{
+    position: absolute;
+    top: 22px;
+    right: 20px;
+    z-index: 100;
+    font-size: 15px;
 }
 
 .page-body{
