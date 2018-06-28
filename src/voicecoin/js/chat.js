@@ -73,6 +73,10 @@ function ajaxSetup(){
 }
 
 function initSession(agentId, isReset){
+    if(!agentId){
+        agentId = 'fd9f1b29-fed8-4c68-8fda-69ab463da126'
+    }
+    
     var url = baseUrl + '/v1/Conversation/'+ agentId + '/start';
     if(isReset){
         url = baseUrl + '/v1/Conversation/'+ conversationId +'/reset';

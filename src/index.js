@@ -1,5 +1,5 @@
-var userHost = 'http://om.yaya.ai';
-var host = 'http://api.yaya.ai';
+var userHost = 'https://www.voicebot.pro';
+var host = 'https://www.voicebot.pro/';
 //userHost = '';
 //host = '';
 

@@ -47,7 +47,6 @@ function setAnimation(){
     },200);
 }
 function sendEvent(){
-    conversationId = urlPara ('conversationId=');
     //sendApi();
     sendChatContent();
 }

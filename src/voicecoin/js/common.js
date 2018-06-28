@@ -1,4 +1,4 @@
-var baseUrl = 'http://api.yaya.ai';
+var baseUrl = 'https://www.voicebot.pro/';
 //baseUrl = '';
 
 var mydialog;
