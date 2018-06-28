@@ -21,6 +21,9 @@ $(document).ready(function(){
 
   // receive message
   connection.on("ReceiveMessage", (data) => {
+    if(data.audioPath){
+        audios.push(data.audioPath);
+    }
     var answerHtml = buildLeftTooltipHtml(data,'');
     $("#dummy-pois").append(answerHtml);
     isSendingChat = false;
@@ -55,6 +58,10 @@ $(document).ready(function(){
         sendChatContent();
     });
   },500);*/
+
+    setInterval(function(){ 
+        playAudio();
+    }, 100);
 });
 
 function ajaxSetup(){
@@ -214,4 +221,22 @@ function startButton(event) {
   // recognition.onstart();
   ignore_onend = false;
   // start_timestamp = event.timeStamp;
+}
+
+var audios = [];
+var isPlayingAudio = false;
+function playAudio(){
+    if(isPlayingAudio) return; 
+    if(audios.length == 0) return;
+
+    isPlayingAudio = true;
+    var audio = new Audio(audios[0]);
+    audios.shift();
+
+    audio.onended = function() {
+        console.log("The audio has ended");
+        isPlayingAudio = false;
+    };
+    
+    audio.play();
 }
