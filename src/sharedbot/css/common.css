@@ -130,13 +130,19 @@ body{
 }
 
 .page-header{
-    padding: 10px 3%;
-    position: relative;
+    position: fixed;
+    height: 60px;
+    width: 100vw;
+    max-height: 60px;
+    /* padding: 10px 3%; */
+    top: 0;
+    z-index: 200;
+    background: rgb(218, 25, 25);
 }
 
 .page-header .logo{
     position: absolute;
-    left: 20px;
+    right: 20px;
     top: 10px;
     z-index: 100;
 }
@@ -145,17 +151,34 @@ body{
     height:38px;
 }
 
-.page-header .robot-name{
-    position: absolute;
+.page-header .robot-header {
+    /* position: absolute;
     top: 22px;
     right: 20px;
-    z-index: 100;
-    font-size: 15px;
+    z-index: 100; */
+}
+
+.robot-header-avatar {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    bottom: 8px;
+    background-size: 100% 100%;
+    border-radius: 22px;
+    border: solid 2px white;
+    background-color: white;
+}
+
+.page-header .robot-header .robot-name{
+    font-size: 17px;
+    position: absolute;
+    bottom: 19px;
+    padding-left: 60px;
 }
 
 .page-body{
     position: relative;
-    padding:20px 0;
+    padding: 70px 0 20px 0
     -webkit-overflow-scrolling: touch;
     overflow-scrolling: touch;
     z-index: 100;
@@ -554,4 +577,5 @@ body{
         box-shadow: 0 2.5em 0 0 #FFF;
     }
 }
+
 

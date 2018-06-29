@@ -197,7 +197,7 @@ function checkBotAvatar(sender, active) {
     return avatar[0];
 }
 
-function queryByAgentId(agentI, isReset) {
+function queryByAgentId(agentId, isReset) {
     var agentId = urlPara ('agentId=');
     var checkBot = setInterval(function() {
         var bot =  getBotById(agentId);
@@ -231,7 +231,7 @@ function queryByAgentId(agentI, isReset) {
             var $iframe = $dialog_bot.find('iframe');
             $dialog_bot.attr('agentId',agentId);
             var language = urlPara ('language=');
-            var src = '../sharedbot/index.html?conversationId='+conversationId+'&token='+localStorage.token+'&language='+language;
+            var src = '../sharedbot/index.html?conversationId='+conversationId+'&token='+localStorage.token+'&language='+language+'&agentId='+agentId;
             console.dir([$iframe]);
             $iframe.attr('src',src);
         },

@@ -59,7 +59,7 @@ $(document).ready(function () {
         });
       },500);*/
 
-    updateRobotName();
+    updateRobotHeader();
     setInterval(function () {
         playAudio();
     }, 100);
@@ -92,7 +92,6 @@ function initSession(agentId, isReset){
 
     $.get(url, function(data){
         conversationId = data;
-        updateRobotName();
     });
     /*$.ajax({
         type: 'get',
@@ -104,16 +103,17 @@ function initSession(agentId, isReset){
     })*/
 }
 
-function updateRobotName() {
-    var agent = 'fd9f1b29-fed8-4c68-8fda-69ab463da126';
+function updateRobotHeader() {
+    var agent = agentId ? agentId : 'fd9f1b29-fed8-4c68-8fda-69ab463da126';
     var url = baseUrl + '/v1/Agents/' + agent;
-
     $.ajax({
         type: 'get',
         url: url,
         data: {},
         success: function (response) {
             $('.robot-name').html(response.name);
+            var bg = 'url('+checkBotAvatar(response.name, true)+')  0% 0% / 100% 100% no-repeat';
+            $('div#robot-avatar').css("background", bg);
         }
     })
 }
