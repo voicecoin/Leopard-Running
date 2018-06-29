@@ -96,6 +96,7 @@ function monitorInput(){
     $myQuestionInput.bind('keyup', function(event) {
         if (event.keyCode == "13") {
             sendEvent();
+            $("#my-question-input").val('');
         }
     }).bind('focus',function(event){
         scrollToEnd();
