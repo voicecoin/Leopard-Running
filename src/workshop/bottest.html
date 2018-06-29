@@ -1,88 +1,101 @@
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
- <style>
-
- 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style>
 </style>
 <script>
-
-
-function enterHander(obj, event, type){
-	var v=$("#testtxt").val();
-	if(v.length>0 && event.keyCode == 13 ){
-		sendTest();
-		return false;
+	function enterHander(obj, event, type) {
+		var v = $("#testtxt").val();
+		if (v.length > 0 && event.keyCode == 13) {
+			sendTest();
+			return false;
+		}
 	}
-}
 
-function sendTest(){
-	
-	
-	var testtxt=$("#testtxt").val();
-	if(testtxt.length>0){
-		
-		var html='<div class="ui_right_right">';
-		
-		html+='<span>'+testtxt+'</span>';
-		html+='<img  src="images/ui_10.jpg" />';
-		html+='</div>';
-		$("#testcontent").append(html);
-		
-		var currentBot=JSON.parse($.cookie("currentBot"));
-        var url = host + "/v1/Conversation/Text?ClientAccessToken=" + currentBot.clientAccessToken + "&SessionId=" + currentBot.userId + "&Text=" + testtxt;
-        $.get(url, null, function (json) {
-            var html = '<div class="ui_right_mid">';
-            html += '<img  src="images/ui_06.jpg" />';
-            html += '<span>' + json + '</span>';
-            html += '</div>';
-            $("#testcontent").append(html);
-            $("#testtxt").val('');
-        }, 'text');
+	function sendTest() {
+
+
+		var testtxt = $("#testtxt").val();
+		if (testtxt.length > 0) {
+
+			var html = '<div class="ui_right_right">';
+
+			html += '<span>' + testtxt + '</span>';
+			html += '<img  src="images/ui_10.jpg" />';
+			html += '</div>';
+			$("#testcontent").append(html);
+
+			var currentBot = JSON.parse($.cookie("currentBot"));
+			var url = host + "/v1/Conversation/Text?ClientAccessToken=" + currentBot.clientAccessToken + "&SessionId=" +
+				currentBot.userId + "&Text=" + testtxt;
+			$.get(url, null, function (json) {
+				var html = '<div class="ui_right_mid">';
+				html += '<img  src="images/ui_06.jpg" />';
+				html += '<span>' + json + '</span>';
+				html += '</div>';
+				$("#testcontent").append(html);
+				$("#testtxt").val('');
+			}, 'text');
+		}
 	}
-}
 
 
-function bottestdiaolog(){
-	var currentBot=JSON.parse($.cookie("currentBot"));
-	var nowBotContent='';
-	$("#dialog-bot").dialog(
-  		{
-  			title:"和"+currentBot.name+"机器人聊天",
-  			modal: true,
-  			height: 500,
-  			open: function( event, ui ) {
-  				console.log(".ui_right_main open");
-  				$("#testcontent").addClass('tmptestcontent');
-  				$("#botdialogbuttom").addClass('tmpui_right_btm');
-  				$(".ui_right_top").hide();
-  			},
-  			beforeClose: function( event, ui ) {
-  				console.log(".ui_right_main beforeClose");
-  				
-  				$(".ui_right_top").show();
-  				nowBotContent=$("#dialog-bot").html();
-  				
-  			},
-  			close: function( event, ui ) {
-  				console.log(".ui_right_main close");
-  				
-  				$(".ui_right").html(nowBotContent);
-  				$("#testcontent").removeClass('tmptestcontent');
-  				$("#botdialogbuttom").removeClass('tmpui_right_btm');
-  				$("#dialog-bot").dialog( "destroy" );
-  			}
-  		}
-	 );  
-}
+	function bottestdiaolog() {
+		var currentBot = JSON.parse($.cookie("currentBot"));
+		var nowBotContent = '';
+		$("#dialog-bot").dialog({
+			title: "和" + currentBot.name + "机器人聊天",
+			modal: true,
+			height: 500,
+			open: function (event, ui) {
+				console.log(".ui_right_main open");
+				$("#testcontent").addClass('tmptestcontent');
+				$("#botdialogbuttom").addClass('tmpui_right_btm');
+				$(".ui_right_top").hide();
+			},
+			beforeClose: function (event, ui) {
+				console.log(".ui_right_main beforeClose");
 
-function cleanDialog(){
-    var $dialog_bot = $("#dialog-bot");
-    reloadIframe(agentId,true);
-}
+				$(".ui_right_top").show();
+				nowBotContent = $("#dialog-bot").html();
+
+			},
+			close: function (event, ui) {
+				console.log(".ui_right_main close");
+
+				$(".ui_right").html(nowBotContent);
+				$("#testcontent").removeClass('tmptestcontent');
+				$("#botdialogbuttom").removeClass('tmpui_right_btm');
+				$("#dialog-bot").dialog("destroy");
+			}
+		});
+	}
+
+	function cleanDialog() {
+		var $dialog_bot = $("#dialog-bot");
+		reloadIframe(agentId, true);
+	}
+
+	function toggleExpand() {
+		var $frame = $('iframe#bot-frame');
+		if ($frame.width() > 350) {
+			// 缩小
+			$frame.css({
+				height: '460px',
+				width: '350px'
+			});
+
+		} else {
+			// 放大
+			$frame.css({
+				height: 'calc(100vh - 100px)',
+				width: 'calc(100vw - 60px)'
+			});
+		}
+	}
 </script>
 
-<div id="dialog-bot" title="会话测试" >
+<div id="dialog-bot" title="会话测试">
 
-<div class="ui_right_main">
+	<div class="ui_right_main">
 
 		<!-- <div id="dialog-header" class="ui_right_top">
 			<a href="javascript:void(0);" onclick="bottestdiaolog();">
@@ -97,13 +110,13 @@ function cleanDialog(){
 			</a>
 		</div> -->
 
-		<iframe src="" style="height:460px;width:350px;border:none;" scrolling="0"></iframe>
+		<iframe id="bot-frame" src="" style="height:460px;width:350px;border:none;" scrolling="0"></iframe>
 
 		<!--<div id="testcontent">
 		
 		
 		</div>-->
-		
+
 		<!-- <div class="ui_right_mid">
 
 			<img  src="images/ui_06.jpg" /><span>你好！我是小白</span>
@@ -126,7 +139,7 @@ function cleanDialog(){
 	</div>
 </div>
 
-<div class="dialog-bot-button dialog-bot-expand " id="dialog-bot-expand" onclick="">
+<div class="dialog-bot-button dialog-bot-expand " id="dialog-bot-expand" onclick="toggleExpand();">
 	<span class="dialog-btn-icon">
 		<i class="fas fa-expand"></i>
 	</span>
