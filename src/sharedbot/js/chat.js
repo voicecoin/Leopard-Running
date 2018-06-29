@@ -114,6 +114,7 @@ function updateRobotHeader() {
             $('.robot-name').html(response.name);
             var bg = 'url('+checkBotAvatar(response.name, true)+')  0% 0% / 100% 100% no-repeat';
             $('div#robot-avatar').css("background", bg);
+            $('.robot-header').css("opacity", 1);
         }
     })
 }
