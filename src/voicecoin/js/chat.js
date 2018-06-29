@@ -9,54 +9,60 @@ var isSendingChat = false;
 var conversationId = urlPara ('conversationId=');
 const agentId = urlPara ('agentId=');
 
-$(document).ready(function(){
-  ajaxSetup();
+$(document).ready(function () {
+    ajaxSetup();
 
-  initSTT();
-  
-  // init session
-  if(!conversationId) {
-    initSession(agentId, false)
-  }
+    initSTT();
 
-  // receive message
-  connection.on("ReceiveMessage", (data) => {
-    var answerHtml = buildLeftTooltipHtml(data,'');
-    $("#dummy-pois").append(answerHtml);
-    isSendingChat = false;
-    $("#my-question-input").val('');
-    scrollToEnd();
-  });
+    // init session
+    if (!conversationId) {
+        initSession(agentId, false)
+    }
 
-  // show loading
-  connection.on("ShowLoading", () => {
-    var loadingHtml = buildLoadingHtml();
-    $dummyPois.append(loadingHtml);
-    scrollToEnd();
-  });
-
-  // hide loading
-  connection.on("HideLoading", () => {
-    $dummyPois.parent().find('.load-container').remove();
-    scrollToEnd();
-  });
-
-  // transfer agent, conversation changed then convey last message.
-  connection.on("Transfer", (data) => {
-    connection.invoke("SendMessage", conversationId, data.fulfillmentText).catch(err => console.error(err.toString()));
-  });
-
-  // start web socket
-  connection.start().catch(err => console.error(err.toString()));
-
-/*  setTimeout(function(){
-    $("#sendButton").click(event => {
-        event.preventDefault();
-        sendChatContent();
+    // receive message
+    connection.on("ReceiveMessage", (data) => {
+        if (data.audioPath) {
+            audios.push(data.audioPath);
+        }
+        var answerHtml = buildLeftTooltipHtml(data, '');
+        $("#dummy-pois").append(answerHtml);
+        isSendingChat = false;
+        $("#my-question-input").val('');
+        scrollToEnd();
     });
-  },500);*/
 
-updateRobotName();
+    // show loading
+    connection.on("ShowLoading", () => {
+        var loadingHtml = buildLoadingHtml();
+        $dummyPois.append(loadingHtml);
+        scrollToEnd();
+    });
+
+    // hide loading
+    connection.on("HideLoading", () => {
+        $dummyPois.parent().find('.load-container').remove();
+        scrollToEnd();
+    });
+
+    // transfer agent, conversation changed then convey last message.
+    connection.on("Transfer", (data) => {
+        connection.invoke("SendMessage", conversationId, data.fulfillmentText).catch(err => console.error(err.toString()));
+    });
+
+    // start web socket
+    connection.start().catch(err => console.error(err.toString()));
+
+    /*  setTimeout(function(){
+        $("#sendButton").click(event => {
+            event.preventDefault();
+            sendChatContent();
+        });
+      },500);*/
+
+    updateRobotName();
+    setInterval(function () {
+        playAudio();
+    }, 100);
 });
 
 function ajaxSetup(){
@@ -231,4 +237,22 @@ function startButton(event) {
   // recognition.onstart();
   ignore_onend = false;
   // start_timestamp = event.timeStamp;
+}
+
+var audios = [];
+var isPlayingAudio = false;
+function playAudio(){
+    if(isPlayingAudio) return; 
+    if(audios.length == 0) return;
+
+    isPlayingAudio = true;
+    var audio = new Audio(audios[0]);
+    audios.shift();
+
+    audio.onended = function() {
+        console.log("The audio has ended");
+        isPlayingAudio = false;
+    };
+    
+    audio.play();
 }
