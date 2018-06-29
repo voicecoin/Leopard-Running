@@ -76,7 +76,6 @@ function bottestdiaolog(){
 
 function cleanDialog(){
     var $dialog_bot = $("#dialog-bot");
-    var agentId = $dialog_bot.attr('agentId');
     reloadIframe(agentId,true);
 }
 </script>
@@ -126,7 +125,20 @@ function cleanDialog(){
 
 	</div>
 </div>
-<div class="dialog-bot-switch" id="dialog-bot-switch" onclick="showHideBotDialog();">
+
+<div class="dialog-bot-button dialog-bot-expand " id="dialog-bot-expand" onclick="">
+	<span class="dialog-btn-icon">
+		<i class="fas fa-expand"></i>
+	</span>
+</div>
+
+<div class="dialog-bot-button dialog-bot-reload " id="dialog-bot-reload" onclick="cleanDialog();">
+	<span class="dialog-btn-icon">
+		<i class="fas fa-sync-alt"></i>
+	</span>
+</div>
+
+<div class="dialog-bot-button dialog-bot-switch" id="dialog-bot-switch" onclick="showHideBotDialog();">
 	<span class="dot-01"></span>
 	<span class="dot-02"></span>
 	<span class="dot-03"></span>

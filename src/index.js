@@ -165,6 +165,8 @@ function deleteItem(name){
 }
 
 function showHideBotDialog() {
+    $('#dialog-bot-reload').fadeToggle( "fast", "linear" );
+    $('#dialog-bot-expand').fadeToggle( "fast", "linear" );
     var $dialog_bot_switch = $("#dialog-bot-switch");
     var $dialog_bot = $("#dialog-bot");
     if(!$dialog_bot_switch.hasClass('open')){
