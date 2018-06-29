@@ -1,7 +1,11 @@
 var userHost = 'https://www.voicebot.pro';
 var host = 'https://www.voicebot.pro/';
-//userHost = '';
-//host = '';
+if(window.location.host == 'localhost:128' ||
+    window.location.protocol == 'https:') {
+    userHost = '';
+    host = '';
+}
+
 
 $(document).ready(function () {
     $.ajaxSetup({

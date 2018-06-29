@@ -246,8 +246,7 @@ function playAudio(){
     if(audios.length == 0) return;
 
     isPlayingAudio = true;
-    var audio = new Audio(audios[0]);
-    audios.shift();
+    var audio = new Audio(audios.shift());
 
     audio.onended = function() {
         console.log("The audio has ended");
