@@ -55,6 +55,8 @@ $(document).ready(function(){
         sendChatContent();
     });
   },500);*/
+
+updateRobotName();
 });
 
 function ajaxSetup(){
@@ -84,6 +86,7 @@ function initSession(agentId, isReset){
 
     $.get(url, function(data){
         conversationId = data;
+        updateRobotName();
     });
     /*$.ajax({
         type: 'get',
@@ -93,6 +96,20 @@ function initSession(agentId, isReset){
             conversationId = response;
         }
     })*/
+}
+
+function updateRobotName() {
+    var agent = 'fd9f1b29-fed8-4c68-8fda-69ab463da126';
+    var url = baseUrl + `v1/Agents/${agent}`;
+
+    $.ajax({
+        type: 'get',
+        url: url,
+        data: {},
+        success: function (response) {
+            $('.robot-name').html(response.name);
+        }
+    })
 }
 
 function sendChatContent(){
