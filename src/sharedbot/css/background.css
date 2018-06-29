@@ -35,8 +35,8 @@ body {
 
 .wave_1 {
 	animation-name: wave_1;
-	animation-duration: 34000ms;
-	animation-delay: -12000ms;
+	animation-duration: 68000ms;
+	animation-delay: -24000ms;
 	top: -1.0em;
 	z-index: 1;
 	opacity: 0.10;
@@ -46,8 +46,8 @@ body {
 
 .wave_2 {
 	animation-name: wave_2;
-	animation-duration: 32000ms;
-	animation-delay: -6000ms;
+	animation-duration: 64000ms;
+	animation-delay: -12000ms;
 	top: -2.0em;
 	z-index: 2;
 	opacity: 0.25;
@@ -57,8 +57,8 @@ body {
 
 .wave_3 {
 	animation-name: wave_3;
-	animation-duration: 28000ms;
-	animation-delay: -24000ms;
+	animation-duration: 56000ms;
+	animation-delay: -48000ms;
 	top: -3.0em;
 	z-index: 3;
 	opacity: 0.50;
@@ -68,8 +68,8 @@ body {
 
 .wave_4 {
 	animation-name: wave_4;
-	animation-duration: 26000ms;
-	animation-delay: -18000ms;
+	animation-duration: 52000ms;
+	animation-delay: -36000ms;
 	top: -4.0em;
 	z-index: 4;
 	opacity: 0.75;
@@ -79,8 +79,8 @@ body {
 
 .wave_5 {
 	animation-name: wave_5;
-	animation-duration: 30000ms;
-	animation-delay: -30000ms;
+	animation-duration: 60000ms;
+	animation-delay: -60000ms;
 	top: -5.0em;
 	z-index: 5;
 	opacity: 0.90;
