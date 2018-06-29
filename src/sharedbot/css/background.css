@@ -15,7 +15,7 @@ body {
 .waves {
 	width: 100%;
 	height: 25vh;
-	min-height: calc(10em + 64px);
+	min-height: calc(10em + 75px);
 	position: fixed;
 	top: 0;
 	overflow: hidden;
