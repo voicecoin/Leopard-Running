@@ -1,5 +1,9 @@
 var baseUrl = 'https://www.voicebot.pro/';
-//baseUrl = '';
+if(window.location.host == 'localhost:128' ||
+    window.location.protocol == 'https:') {
+        baseUrl = '';
+}
+
 
 var mydialog;
 var formatJson = function (json, options) {
