@@ -231,7 +231,7 @@ function queryByAgentId(agentI, isReset) {
             var $iframe = $dialog_bot.find('iframe');
             $dialog_bot.attr('agentId',agentId);
             var language = urlPara ('language=');
-            var src = '../voicecoin/index.html?conversationId='+conversationId+'&token='+localStorage.token+'&language='+language;
+            var src = '../sharedbot/index.html?conversationId='+conversationId+'&token='+localStorage.token+'&language='+language;
             console.dir([$iframe]);
             $iframe.attr('src',src);
         },
