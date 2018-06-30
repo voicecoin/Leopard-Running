@@ -164,7 +164,7 @@ body{
     background-size: 100% 100%;
     border-radius: 22px;
     border: solid 2px white;
-    background-color: white;
+    background-color: white !important;
 }
 
 .page-header .robot-header .robot-name{
