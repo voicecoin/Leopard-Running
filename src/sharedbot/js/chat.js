@@ -105,7 +105,7 @@ function initSession(agentId, isReset){
 
 function updateRobotHeader() {
     var agent = agentId ? agentId : 'fd9f1b29-fed8-4c68-8fda-69ab463da126';
-    var url = baseUrl + '/v1/Agents/' + agent;
+    var url = baseUrl + '/v1/Agents/' + agent + '/public';
     $.ajax({
         type: 'get',
         url: url,

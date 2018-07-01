@@ -1,4 +1,4 @@
-var baseUrl = 'https://www.voicebot.pro/';
+var baseUrl = 'https://www.voicebot.pro';
 if(window.location.host == 'localhost:128' ||
     window.location.protocol == 'https:') {
         baseUrl = '';
