@@ -10,6 +10,7 @@
   <link rel="stylesheet" type="text/css" href="/css/robot.css">
   <link rel="stylesheet" type="text/css" href="/css/ui-box.css" />
   <link rel="stylesheet" href="/libs/jquery-ui/jquery-ui.css" >
+  <link href="/libs/layui/css/layui.css" rel="stylesheet">
 
   <style>
     .input-lg{padding:0;font-size:14px;height: auto;}
@@ -49,39 +50,7 @@ h4, .h4 {
     font-size: 1.7em;
 }
   </style>
-  <script type="text/javascript" src="/libs/jquery/jquery-3.3.1.js"></script>
-  <script type="text/javascript"src="/libs/jquery-ui/jquery-ui.js"></script>
-  <script type="text/javascript" src="/libs/popper/popper.js"></script>
-  <script type="text/javascript"src="/libs/bootstrap/bootstrap.js"></script>
-  <script type="text/javascript"src="/libs/mdb/mdb.min.js"></script>
-  <script type="text/javascript"src="/libs/check.js"></script>
-  <script type="text/javascript"src="/libs/jquery.tagsinput.js"></script>
-  <script type="text/javascript"src="/src/index.js"></script>
-    <script>
-    var agentId = null;
-    $(document).ready(function () {
-        agentId = getQuery('agentId');
-        //showList();
-        loadLeft();
-        loadRight();
-    });
 
-    function loadRight(){
-    	$.get("bottest.html", function(data) {
-            $('.ui_right').html(data);
-            reloadIframe(agentId);
-        });
-    }
-    
-    function loadLeft() {
-        $.get("left.html", function (data) {
-            $('#leftmenu').html(data);
-            loadBots();
-        });
-    }
-
-
-</script>
 
 
 </head>
@@ -164,7 +133,39 @@ h4, .h4 {
 
 
 
+<script type="text/javascript" src="/libs/jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript"src="/libs/jquery-ui/jquery-ui.js"></script>
+<script type="text/javascript" src="/libs/popper/popper.js"></script>
+<script type="text/javascript"src="/libs/bootstrap/bootstrap.js"></script>
+<script type="text/javascript"src="/libs/mdb/mdb.min.js"></script>
+<script type="text/javascript"src="/libs/check.js"></script>
+<script type="text/javascript"src="/libs/jquery.tagsinput.js"></script>
+<script type="text/javascript"src="/src/index.js"></script>
+  <script>
+  var agentId = null;
+  $(document).ready(function () {
+      agentId = getQuery('agentId');
+      //showList();
+      loadLeft();
+      loadRight();
+  });
 
+  function loadRight(){
+      $.get("bottest.html", function(data) {
+          $('.ui_right').html(data);
+          reloadIframe(agentId);
+      });
+  }
+  
+  function loadLeft() {
+      $.get("left.html", function (data) {
+          $('#leftmenu').html(data);
+          loadBots();
+      });
+  }
+
+
+</script>
 
 
 
