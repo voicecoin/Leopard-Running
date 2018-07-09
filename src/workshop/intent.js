@@ -335,7 +335,7 @@ function initIntents(isSearch){
         });
 	}else{
 		html += '<div style="font-size:14px;line-height: 30px;">';
-		html += '<div><i class="fa  fa-gg-circle" style="font-size: 18px;margin: 0 5px 0 0;"></i>识别会话意图是聊天机器人最核心的一个能力，例如当用户说“明天天气如何？”或者“明天会下雨吗？”机器人就会识别出来这是一个“查询天气”的意图。当机器人正确识别意图之后，就可以给出相应的行动或者回复。</div>';
+		html += '<div><i class="fas  fa-gg-circle" style="font-size: 18px;margin: 0 5px 0 0;"></i>识别会话意图是聊天机器人最核心的一个能力，例如当用户说“明天天气如何？”或者“明天会下雨吗？”机器人就会识别出来这是一个“查询天气”的意图。当机器人正确识别意图之后，就可以给出相应的行动或者回复。</div>';
         html += '<div style="margin-top:10px;">你可以为机器人创建一系列的会话意图，并为每个意图添加若干句短语，我们的机器学习算法会教会机器人自动识别这些意图。</div>';
         html += '</div>';
         $(".list-group").parent().html(html);
@@ -1186,7 +1186,7 @@ function addUserSay(userSay){
 	 userSaysHtml+='<div class="ub ub-ver usersay" id="'+userSayId+'">';
 	 userSaysHtml+='<div  class="ub" style="width:100%;min-height:40px;height:auto;margin-bottom: -1px; border: 1px solid rgb(221, 221, 221);">';
 		 userSaysHtml+='<div class="ub ub-ver ub-ac ub-pc" style="width:10%">';
-		 userSaysHtml+='<i class="fa ng-scope fa-quote-right" style="color: #b7bbc4;"></i>';
+		 userSaysHtml+='<i class="fas ng-scope fa-quote-right" style="color: #b7bbc4;"></i>';
 		 userSaysHtml+='</div>';
 		 userSaysHtml+='<div class="ub ub-ver ub-pc template-editor-holder usersaytext" id="userSayTextId'+ new Date().getTime()+'" contenteditable="" placeholder="Add User expression" style="width:80%;word-wrap: break-word;word-break: break-all;">'+datahtml+'</div>';
 		 userSaysHtml+='<div class="ub ub-ver ub-ac ub-pc uhide iconcontainer" style="width:10%">';
