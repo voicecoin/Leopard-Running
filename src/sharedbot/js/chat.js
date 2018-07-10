@@ -31,6 +31,13 @@ $(document).ready(function () {
         scrollToEnd();
     });
 
+    // receive system notification
+    connection.on("SystemNotification", (data) => {
+        var answerHtml = buildLeftTooltipHtml(data, '');
+        $("#dummy-pois").append(answerHtml);
+        scrollToEnd();
+    });
+
     // show loading
     connection.on("ShowLoading", () => {
         var loadingHtml = buildLoadingHtml();
