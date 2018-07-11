@@ -6,8 +6,8 @@ const connection = new signalR.HubConnectionBuilder()
     .build();
 
 var isSendingChat = false;
-var conversationId = urlPara ('conversationId=');
-const agentId = urlPara ('agentId=');
+var conversationId = urlPara('conversationId=');
+const agentId = urlPara('agentId=');
 
 $(document).ready(function () {
     ajaxSetup();
@@ -33,9 +33,12 @@ $(document).ready(function () {
 
     // receive system notification
     connection.on("SystemNotification", (data) => {
-        var answerHtml = buildSystemNotificationHtml(data, '');
-        console.log(data);
-        $("#dummy-pois").append(answerHtml);
+        if (data) {
+            var answerHtml = buildSystemNotificationHtml(data, '');
+            if (answerHtml) {
+                $("#dummy-pois").append(answerHtml);
+            }
+        }
         scrollToEnd();
     });
 
@@ -73,7 +76,7 @@ $(document).ready(function () {
     }, 100);
 });
 
-function ajaxSetup(){
+function ajaxSetup() {
     $.ajaxSetup({
         processData: false,
         dataType: "json",
@@ -88,17 +91,17 @@ function ajaxSetup(){
     });
 }
 
-function initSession(agentId, isReset){
-    if(!agentId){
+function initSession(agentId, isReset) {
+    if (!agentId) {
         agentId = 'fd9f1b29-fed8-4c68-8fda-69ab463da126'
     }
-    
-    var url = baseUrl + '/v1/Conversation/'+ agentId + '/start';
-    if(isReset){
-        url = baseUrl + '/v1/Conversation/'+ conversationId +'/reset';
+
+    var url = baseUrl + '/v1/Conversation/' + agentId + '/start';
+    if (isReset) {
+        url = baseUrl + '/v1/Conversation/' + conversationId + '/reset';
     }
 
-    $.get(url, function(data){
+    $.get(url, function (data) {
         conversationId = data;
     });
     /*$.ajax({
@@ -120,23 +123,23 @@ function updateRobotHeader() {
         data: {},
         success: function (response) {
             $('.robot-name').html(response.name);
-            var bg = 'url('+checkBotAvatar(response.name, true)+')  0% 0% / 100% 100% no-repeat';
+            var bg = 'url(' + checkBotAvatar(response.name, true) + ')  0% 0% / 100% 100% no-repeat';
             $('div#robot-avatar').css("background", bg);
             $('.robot-header').css("opacity", 1);
         }
     })
 }
 
-function sendChatContent(){
+function sendChatContent() {
     var $myQuestionInput = $("#my-question-input");
 
     var myQuestionInput = $myQuestionInput.val();
-    var rightHtml = buildRightTooltipHtml(myQuestionInput,'');
+    var rightHtml = buildRightTooltipHtml(myQuestionInput, '');
     $dummyPois.append(rightHtml);
 
     const message = $("#my-question-input").val();
     // send message to web socket
-    if(!isSendingChat) {
+    if (!isSendingChat) {
         isSendingChat = true;
         connection.invoke("SendMessage", conversationId, message).catch(err => console.error(err.toString()));
     }
@@ -148,20 +151,22 @@ var first_char = /\S/;
 var recognizing = false;
 var ignore_onend;
 var start_timestamp;
-var recognition;        
+var recognition;
 
 
 // speech to text
 function initSTT() {
-  var langs =
-        [
-            ['English',  ['en-AU', 'Australia'],
-                ['en-CA', 'Canada'],
-                ['en-GB', 'United Kingdom'],
-                ['en-US', 'United States']],
-            ['中文',             ['cmn-Hans-CN', '普通话 (中国大陆)'],
-                ['cmn-Hans-HK', '普通话 (香港)'],
-                ['cmn-Hant-TW', '中文 (台灣)']]];
+    var langs = [
+        ['English', ['en-AU', 'Australia'],
+            ['en-CA', 'Canada'],
+            ['en-GB', 'United Kingdom'],
+            ['en-US', 'United States']
+        ],
+        ['中文', ['cmn-Hans-CN', '普通话 (中国大陆)'],
+            ['cmn-Hans-HK', '普通话 (香港)'],
+            ['cmn-Hant-TW', '中文 (台灣)']
+        ]
+    ];
 
     if (!('webkitSpeechRecognition' in window)) {
         upgrade();
@@ -169,10 +174,10 @@ function initSTT() {
         recognition = new webkitSpeechRecognition();
         recognition.continuous = true;
         recognition.interimResults = true;
-        recognition.onstart = function() {
+        recognition.onstart = function () {
             recognizing = true;
         };
-        recognition.onerror = function(event) {
+        recognition.onerror = function (event) {
             if (event.error == 'no-speech') {
                 ignore_onend = true;
             }
@@ -183,7 +188,7 @@ function initSTT() {
                 ignore_onend = true;
             }
         };
-        recognition.onend = function() {
+        recognition.onend = function () {
             recognizing = false;
             if (ignore_onend) {
                 return;
@@ -192,7 +197,7 @@ function initSTT() {
                 return;
             }
         };
-        recognition.onresult = function(event) {
+        recognition.onresult = function (event) {
             var final_transcript = '';
             for (var i = event.resultIndex; i < event.results.length; ++i) {
                 if (event.results[i].isFinal) {
@@ -202,65 +207,68 @@ function initSTT() {
             final_transcript = capitalize(final_transcript);
             var $my_question_input = $("#my-question-input");
             $my_question_input.val(final_transcript);
-            if(final_transcript.length > 0) {
+            if (final_transcript.length > 0) {
                 console.log(final_transcript);
-				sendEvent();
-				hideSpeaking();
-				startButton();
+                sendEvent();
+                hideSpeaking();
+                startButton();
                 // add send message and clear input box
             }
-            
-/*            final_span.innerHTML = linebreak(final_transcript);
-            interim_span.innerHTML = linebreak(interim_transcript);
-            if (final_transcript || interim_transcript) {
-                showButtons('inline-block');
-            }*/
-//            console.dir([final_transcript,capitalize(final_transcript),interim_transcript,linebreak(final_transcript),linebreak(interim_transcript)]);
+
+            /*            final_span.innerHTML = linebreak(final_transcript);
+                        interim_span.innerHTML = linebreak(interim_transcript);
+                        if (final_transcript || interim_transcript) {
+                            showButtons('inline-block');
+                        }*/
+            //            console.dir([final_transcript,capitalize(final_transcript),interim_transcript,linebreak(final_transcript),linebreak(interim_transcript)]);
         };
     }
 }
 
 function linebreak(s) {
-  return s.replace(two_line, '<p></p>').replace(one_line, '<br>');
+    return s.replace(two_line, '<p></p>').replace(one_line, '<br>');
 }
 
 function capitalize(s) {
-  return s.replace(first_char, function(m) { return m.toUpperCase(); });
+    return s.replace(first_char, function (m) {
+        return m.toUpperCase();
+    });
 }
 
 function startButton(event) {
-  var lang = 'cmn-Hans-CN';
-  var language = urlPara ('language=');
-  if(language == 'en'){
-      lang = 'en-US';
-  }
-  if (recognizing) {
-      recognition.stop();
-      recognizing = false;
-      return;
-  }
-  recognizing = true;
-  final_transcript = '';
-  recognition.lang = lang;//select_dialect.value;
-  recognition.start();
-  // recognition.onstart();
-  ignore_onend = false;
-  // start_timestamp = event.timeStamp;
+    var lang = 'cmn-Hans-CN';
+    var language = urlPara('language=');
+    if (language == 'en') {
+        lang = 'en-US';
+    }
+    if (recognizing) {
+        recognition.stop();
+        recognizing = false;
+        return;
+    }
+    recognizing = true;
+    final_transcript = '';
+    recognition.lang = lang; //select_dialect.value;
+    recognition.start();
+    // recognition.onstart();
+    ignore_onend = false;
+    // start_timestamp = event.timeStamp;
 }
 
 var audios = [];
 var isPlayingAudio = false;
-function playAudio(){
-    if(isPlayingAudio) return; 
-    if(audios.length == 0) return;
+
+function playAudio() {
+    if (isPlayingAudio) return;
+    if (audios.length == 0) return;
 
     isPlayingAudio = true;
     var audio = new Audio(audios.shift());
 
-    audio.onended = function() {
+    audio.onended = function () {
         console.log("The audio has ended");
         isPlayingAudio = false;
     };
-    
+
     audio.play();
 }
