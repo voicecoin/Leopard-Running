@@ -145,6 +145,21 @@ function buildLeftTooltipHtml(data, animate) {
     return html;
 }
 
+function buildSystemNotificationHtml(data, animate) {
+    botPayloadData = data.payload;
+    var style = 'background: url(' + checkBotAvatar(data.sender, true) + ') 0% 0% / 100% 100% no-repeat; border-radius: 22px; border:solid 2px white;background-color: white;';
+
+    var html = '';
+    html += '<div class="tooltip clrfix">';
+
+    html += '<div style="cursor:pointer;background-color:rgba(192, 192,192,0.3);background-color: rgba(192, 192,192,0.5);margin: 10px auto;text-align: center;padding: 5px 20px;width: fit-content;border-radius: 15px;" onclick="zhenduan(this);">';
+    html += data.fulfillmentText;
+
+    html += '</div>';
+    html += '</div>';
+    return html;
+}
+
 function zhenduan(obj){
     var $obj = $(obj);
     var botPayloadDataDone = formatJson(botPayloadData);

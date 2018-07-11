@@ -33,7 +33,8 @@ $(document).ready(function () {
 
     // receive system notification
     connection.on("SystemNotification", (data) => {
-        var answerHtml = buildLeftTooltipHtml(data, '');
+        var answerHtml = buildSystemNotificationHtml(data, '');
+        console.log(data);
         $("#dummy-pois").append(answerHtml);
         scrollToEnd();
     });
