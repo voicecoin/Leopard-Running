@@ -46,8 +46,34 @@ function openfile(){
 function queryAgentsById(){
     $.get(host + '/v1/Agents/'+agentId, function(data){
         initFormValues(data);
+        buildVnsHtml(data);
     });
 }
+
+function buildVnsHtml(data) {
+    var html = ""
+
+    if (data) {
+        html += "<h3>名称</h3><br>";
+        html += data.name + "<br>";
+        html += "<h3 style='margin-top: 20px;'>机器人ID</h3><br>";
+        html += data.id + "<br>";
+        html += "<h3 style='margin-top: 20px;'>创建日期</h3><br>";
+        html += data.birthday + "<br>";
+        html += "<h3 style='margin-top: 20px;'>描述</h3><br>";
+        html += data.description + "<br>";
+        html += "<h3 style='margin-top: 20px;'>对话语言</h3><br>";
+        html += data.language + "<br>";
+       
+        html += "<h3 style='margin-top: 20px;'>Client Access Token</h3><br>";
+        html += data.clientAccessToken + "<br>";
+        html += "<h3 style='margin-top: 20px;'>Developer Access Token</h3><br>";
+        html += data.developerAccessToken + "<br>";
+      
+        $('#panel14').html(html);
+    }
+}
+
 var botId = '';
 function initFormValues(info){
     var $name = $("#name");
