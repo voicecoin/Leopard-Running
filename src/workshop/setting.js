@@ -124,3 +124,19 @@ function saveBot(){
         window.location.reload();
     });*/
 }
+
+$(function () {
+	var url_string = window.location.href;
+	var url = new URL(url_string);
+    var agentId = url.searchParams.get('agentId');
+    var language = url.searchParams.get('language');
+    var link ="https://www.voicebot.pro/sharedbot";
+    if (agentId) {
+        link += "?agentId=" + agentId;
+        if (language) {
+            link += "&language="+ language;
+        }
+    }
+	$('#share-bot').html(link);
+	$('#share-bot').attr("href",link);
+});
