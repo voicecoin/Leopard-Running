@@ -98,7 +98,8 @@ body{
 	position:fixed;
 	top:0;
 	left:0;
-	background-color: #566473;
+    /* background-color: #566473; */
+    background-color: #637FED;
 }
 
 #canvas-bg .canvas-footer{
