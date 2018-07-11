@@ -455,6 +455,7 @@ body{
     /* left:0; */
     left: calc((100vw - 340px)/ 2);
     width: 340px;
+    min-height: 46px;
 }
 
 .dummy-tooltip .search img{
@@ -464,6 +465,7 @@ body{
     left: 10px;
     cursor: pointer;
 }
+
 .dummy-tooltip .search .img-animate{
     display: none;
 }
@@ -480,6 +482,7 @@ body{
 .dummy-tooltip-540 .search{
     position: fixed;
     width:640px;
+    min-height: 46px;
     left: calc((100vw - 640px) / 2);
     bottom: 60px;
  }

@@ -194,10 +194,16 @@ function buildRightTooltipHtml(content,animate){//bounceInRight
 function showSpeaking() {
     var $obj = $("#search-input-question");
     $obj.addClass('on-speaking');
+    $('#my-question-input').hide();
+    $('#sendButton').hide();
+    $('.dummy-tooltip .search img').css('left','calc(50% - 13px)');
 }
 function hideSpeaking() {
     var $obj = $("#search-input-question");
     $obj.removeClass('on-speaking');
+    $('#my-question-input').show();
+    $('#sendButton').show();
+    $('.dummy-tooltip .search img').css('left','10px');
 }
 
 function buildQuestionInputHtml() {
