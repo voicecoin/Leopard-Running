@@ -104,7 +104,7 @@ function initSession(agentId, isReset) {
     }
 
     $.get(url, function (data) {
-        conversationId = data;
+        conversationId = data.conversationId;
     });
     /*$.ajax({
         type: 'get',
