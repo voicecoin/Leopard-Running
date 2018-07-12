@@ -21,6 +21,8 @@ $(document).ready(function () {
 
     // receive message
     connection.on("ReceiveMessage", (data) => {
+        console.log({action: "ReceiveMessage", data: data});
+
         if (data.audioPath) {
             audios.push(data.audioPath);
         }
@@ -33,11 +35,10 @@ $(document).ready(function () {
 
     // receive system notification
     connection.on("SystemNotification", (data) => {
-        if (data) {
-            var answerHtml = buildSystemNotificationHtml(data, '');
-            if (answerHtml) {
-                $("#dummy-pois").append(answerHtml);
-            }
+        console.log({action: "SystemNotification", data: data});
+        var answerHtml = buildSystemNotificationHtml(data, '');
+        if (answerHtml) {
+            $("#dummy-pois").append(answerHtml);
         }
         scrollToEnd();
     });
@@ -57,6 +58,7 @@ $(document).ready(function () {
 
     // transfer agent, conversation changed then convey last message.
     connection.on("Transfer", (data) => {
+        console.log({action: "Transfer", data: data});
         connection.invoke("SendMessage", conversationId, data.fulfillmentText).catch(err => console.error(err.toString()));
     });
 
