@@ -124,7 +124,7 @@ function checkBotAvatar(sender, active) {
 var botPayloadData;
 function buildLeftTooltipHtml(data, animate) {
     botPayloadData = data.payload;
-    var style = 'background: url(' + checkBotAvatar(data.sender, true) + ') 0% 0% / 100% 100% no-repeat; border-radius: 22px; border:solid 2px white;background-color: white;';
+    var style = 'background: url(' + checkBotAvatar(data.sender, true) + ') 0% 0% / 100% 100% no-repeat; border-radius: 20px; /* border-radius: 22px; border:solid 2px white;background-color: white;*/';
 
     var html = '';
     html += '<div class="tooltip tooltip-left clrfix">';

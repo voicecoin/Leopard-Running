@@ -163,9 +163,10 @@ body{
     position: absolute;
     bottom: 8px;
     background-size: 100% 100%;
-    border-radius: 22px;
-    border: solid 2px white;
-    background-color: white !important;
+    border-radius: 20px;
+    /* border-radius: 22px; */
+    /* border: solid 2px white; */
+    /* background-color: white !important; */
 }
 
 .page-header .robot-header .robot-name{
