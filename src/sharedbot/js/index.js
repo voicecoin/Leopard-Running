@@ -136,7 +136,7 @@ function buildLeftTooltipHtml(data, animate) {
 
     html += '</div>';
     html += '<div class="tooltip-content ' + animate + ' animated">';
-    html += '<div style="cursor:pointer;" onclick="zhenduan(this);">';
+    html += '<div style="cursor:pointer;word-break: break-word;" onclick="zhenduan(this);">';
     html += data.fulfillmentText;
     html += '</div>';
 
@@ -152,7 +152,7 @@ function buildSystemNotificationHtml(data, animate) {
     var html = '';
     html += '<div class="tooltip clrfix">';
 
-    html += '<div style="cursor:pointer;background-color:rgba(192, 192,192,0.3);background-color: rgba(192, 192,192,0.5);margin: 10px auto;text-align: center;padding: 5px 20px;width: fit-content;border-radius: 15px;" onclick="zhenduan(this);">';
+    html += '<div style="cursor:pointer;background-color:rgba(192, 192,192,0.3);background-color: rgba(192, 192,192,0.5);margin: 10px auto;text-align: center;padding: 5px 20px;width: fit-content;border-radius: 15px; word-break: break-word;" onclick="zhenduan(this);">';
     html += data.fulfillmentText;
 
     html += '</div>';
