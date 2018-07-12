@@ -172,3 +172,13 @@ $(function () {
 	$('#share-bot').html(link);
 	$('#share-bot').attr("href",link);
 });
+
+function trainAgent(){
+	jqueryAlert({
+        'content' :'正在训练模型，请稍后...'
+	})
+	
+	$.get(host + "/v1/agents/" + agentId + "/train", function(data) {
+        toastr.success("训练模型完成！", "OK");
+    }); 
+}
