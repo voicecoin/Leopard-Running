@@ -46,29 +46,35 @@ function openfile(){
 function queryAgentsById(){
     $.get(host + '/v1/Agents/'+agentId, function(data){
         initFormValues(data);
-        buildVnsHtml(data);
+        buildVnsHtml(data.vns);
     });
 }
 
-function buildVnsHtml(data) {
+function buildVnsHtml(vns) {
     var html = ""
 
-    if (data) {
-        html += "<h4>名称</h4><br>";
-        html += data.name + "<br>";
-        html += "<h4 style='margin-top: 20px;'>机器人ID</h4><br>";
-        html += data.id + "<br>";
-        html += "<h4 style='margin-top: 20px;'>创建日期</h4><br>";
-        html += data.birthday + "<br>";
-        html += "<h4 style='margin-top: 20px;'>描述</h4><br>";
-        html += data.description + "<br>";
-        html += "<h4 style='margin-top: 20px;'>对话语言</h4><br>";
-        html += data.language + "<br>";
+    if (vns) {
+
+        html += "<h4>Address</h4><br>";
+        html += vns.address + "<br>";
+        html += "<h4 style='margin-top: 20px;'>Address is Mine</h4><br>";
+        html += vns.address_is_mine + "<br>";
+        html += "<h4 style='margin-top: 20px;'>Days Added</h4><br>";
+        html += vns.days_added + "<br>";
+        html += "<h4 style='margin-top: 20px;'>Domain</h4><br>";
+        html += vns.domain + "<br>";
+        html += "<h4 style='margin-top: 20px;'>Height</h4><br>";
+        html += vns.height + "<br>";
        
-        html += "<h4 style='margin-top: 20px;'>Client Access Token</h4><br>";
-        html += data.clientAccessToken + "<br>";
-        html += "<h4 style='margin-top: 20px;'>Developer Access Token</h4><br>";
-        html += data.developerAccessToken + "<br>";
+        html += "<h4 style='margin-top: 20px;'>Operation</h4><br>";
+        html += vns.operation + "<br>";
+        html += "<h4 style='margin-top: 20px;'>Time</h4><br>";
+        html += vns.time + "<br>";
+
+        html += "<h4 style='margin-top: 20px;'>Tx ID</h4><br>";
+        html += vns.txid + "<br>";
+        html += "<h4 style='margin-top: 20px;'>Value</h4><br>";
+        html += vns.value + "<br>";
       
         $('#panel14').html(html);
     }
