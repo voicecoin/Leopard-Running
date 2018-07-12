@@ -139,7 +139,7 @@ body{
     top: 0;
     z-index: 200;
     /* background: #637FED; */
-    background: rgba(128, 128, 128, 0.2);
+    background: rgba(238, 238, 238, 1);
 }
 
 .page-header .logo{
