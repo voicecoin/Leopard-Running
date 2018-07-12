@@ -138,7 +138,8 @@ body{
     /* padding: 10px 3%; */
     top: 0;
     z-index: 200;
-    background: #637FED;
+    /* background: #637FED; */
+    background: rgba(238, 238, 238, 0.3);
 }
 
 .page-header .logo{

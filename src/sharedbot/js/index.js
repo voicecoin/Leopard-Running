@@ -121,6 +121,10 @@ function checkBotAvatar(sender, active) {
     return avatar[0];
 }
 
+function updateLeftAvatar(data) {
+    $('.left-avatar').css('background-image', "url(" + checkBotAvatar(data.sender, false) +")");
+}
+
 var botPayloadData;
 function buildLeftTooltipHtml(data, animate) {
     botPayloadData = data.payload;
@@ -129,7 +133,7 @@ function buildLeftTooltipHtml(data, animate) {
     var html = '';
     html += '<div class="tooltip tooltip-left clrfix">';
     if (style) {
-        html += '<div class="tooltip-item  animated" style="' + style + '">';
+        html += '<div class="tooltip-item  animated left-avatar" style="' + style + '">';
     } else {
         html += '<div class="tooltip-item  animated">';
     }

@@ -26,6 +26,9 @@ $(document).ready(function () {
         if (data.audioPath) {
             audios.push(data.audioPath);
         }
+        
+        updateLeftAvatar(data);
+        
         var answerHtml = buildLeftTooltipHtml(data, '');
         $("#dummy-pois").append(answerHtml);
         isSendingChat = false;
